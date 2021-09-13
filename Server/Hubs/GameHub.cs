@@ -1,16 +1,14 @@
-﻿using Microsoft.AspNetCore.SignalR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Common.Models;
+using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 
 namespace Server.Hubs
 {
     public class GameHub : Hub
     {
-        public async Task SendPositions(string player, string playstate)
+        public async Task SendPositions(Snake player)
         {
-            await Clients.All.SendAsync("RecievePositions", player, playstate);
+            await Clients.All.SendAsync("ReceivePositions", player);
         }
     }
 }
