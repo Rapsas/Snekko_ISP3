@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNet.SignalR.Client;
-using Snakey.Config;
+﻿using Snakey.Config;
 using Snakey.Managers;
 using Snakey.Maps;
 using System;

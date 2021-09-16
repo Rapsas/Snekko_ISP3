@@ -8,7 +8,7 @@ namespace Server.Hubs
     {
         public async Task SendPositions(Snake player)
         {
-            await Clients.All.SendAsync("ReceivePositions", player);
+            await Clients.All.SendAsync("RecievePositions", player);
         }
     }
 }
