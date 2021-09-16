@@ -5,8 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Snakey"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Title="Snakey snakey" SizeToContent="WidthAndHeight">
+    <StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label Name="ScoreLabel" Content="Score: 0"></Label>
+        </StackPanel>
+        <Border BorderBrush="Green" BorderThickness="5">
+            <Canvas Name="GameArea" ClipToBounds="True" Width="800" Height="600" Background="Beige">
+            </Canvas>
+        </Border>
+    </StackPanel>
 </Window>
