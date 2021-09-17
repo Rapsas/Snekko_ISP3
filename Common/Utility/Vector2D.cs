@@ -11,5 +11,14 @@
             Y = y;
         }
         
+        public static Vector2D operator +(Vector2D left, (int X, int Y) right)
+        {
+            return new Vector2D(left.X + right.X, left.Y + right.Y);
+        }
+
+        public static Vector2D operator -(Vector2D left, (int X, int Y) right)
+        {
+            return new Vector2D(left.X - right.X, left.Y - right.Y);
+        }
     }
 }

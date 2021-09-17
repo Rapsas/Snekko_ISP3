@@ -1,4 +1,5 @@
-﻿using Snakey.Config;
+﻿using Common.Utility;
+using Snakey.Config;
 using Snakey.Managers;
 using Snakey.Maps;
 using System;
@@ -49,8 +50,21 @@ namespace Snakey
             // Gaming
             ClearScreen();
             DrawGameGrid();
+            DrawSnake();
+            GameState.GetInstance().Player.Move();
         }
 
+        public void DrawSnake()
+        {
+            var gameState = GameState.GetInstance();
+
+            var player = gameState.Player;
+            DrawSquare(player.HeadLocation);
+            foreach (var partLocation in player.BodyParts)
+            {
+                DrawSquare(partLocation);
+            }
+        }
         public void ClearScreen()
         {
             var gameState = GameState.GetInstance();
@@ -67,7 +81,6 @@ namespace Snakey
                 gameState.GameArea.Children.Add(line);
             }
         }
-
         private void InitializeGrid()
         {
             var gameState = GameState.GetInstance();
@@ -100,5 +113,21 @@ namespace Snakey
                 gameState.GameMap.GridLines.Add(line2);
             }
         }
+        private void DrawSquare(Vector2D location)
+        {
+            Rectangle r = new()
+            {
+                Fill = Brushes.Black,
+                Width = Settings.CellSize,
+                Height = Settings.CellSize
+            };
+
+            GameState.GetInstance().GameArea.Children.Add(r);
+            Canvas.SetLeft(r, location.X);
+            Canvas.SetTop(r, location.Y);
+
+        }
+
+
     }
 }

@@ -2,8 +2,6 @@
 using Common.Utility;
 using Snakey.Config;
 using System.Collections.Generic;
-using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace Common.Models
 {
@@ -23,7 +21,21 @@ namespace Common.Models
 
         public void Move()
         {
-            
+            switch (CurrentMovementDirection)
+            {
+                case MovementDirection.Up:
+                    HeadLocation += (0, Settings.CellSize);
+                    break;
+                case MovementDirection.Down:
+                    HeadLocation -= (0, Settings.CellSize);
+                    break;
+                case MovementDirection.Left:
+                    HeadLocation -= (Settings.CellSize, 0);
+                    break;
+                case MovementDirection.Right:
+                    HeadLocation += (Settings.CellSize, 0);
+                    break;
+            }
         }
 
         public void Expand()
