@@ -1,5 +1,6 @@
-﻿using Common.Models;
-using Snakey.Maps;
+﻿using Snakey.Maps;
+using Snakey.Models;
+using Snakey.Snacks;
 using System;
 using System.Collections.Generic;
 using System.Linq;

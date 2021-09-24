@@ -2,8 +2,9 @@
 using Common.Utility;
 using Snakey.Config;
 using System.Collections.Generic;
+using System.Windows;
 
-namespace Common.Models
+namespace Snakey.Models
 {
     public class Snake
     {
@@ -41,6 +42,10 @@ namespace Common.Models
         public void Expand()
         {
             BodyParts.Enqueue(HeadLocation);
+        }
+        public void Die()
+        {
+            MessageBox.Show("Game over");
         }
     }
 }

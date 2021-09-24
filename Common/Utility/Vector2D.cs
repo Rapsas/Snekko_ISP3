@@ -1,6 +1,6 @@
 ﻿namespace Common.Utility
 {
-    public class Vector2D
+    public struct Vector2D
     {
         public int X { get; }
         public int Y { get; }
