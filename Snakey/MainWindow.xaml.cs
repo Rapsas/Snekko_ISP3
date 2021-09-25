@@ -1,20 +1,12 @@
 ﻿using Common.Utility;
+using Microsoft.AspNetCore.SignalR.Client;
 using Snakey.Config;
 using Snakey.Managers;
 using Snakey.Maps;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Snakey
@@ -24,6 +16,10 @@ namespace Snakey
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        public MultiplayerManager MultiplayerManager { get; set; }
+        public GameState GameState { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -31,29 +27,60 @@ namespace Snakey
         }
         public void InitializeGameComponents()
         {
-            var gameState = GameState.GetInstance();
+            GameState = GameState.GetInstance();
             // Setup snek player
-            gameState.Player = new();
-            gameState.Snacks = new();
-            gameState.GameMap = new BasicMap();
+            GameState.Player = new();
+            GameState.Snacks = new();
+            GameState.GameMap = new BasicMap();
             // Setup gameloop
-            gameState.GameTimer = new();
-            gameState.GameTimer.Tick += GameLoop; ;
-            gameState.GameTimer.Interval = TimeSpan.FromMilliseconds(Settings.UpdateTimer);
-            gameState.GameTimer.Start();
+            GameState.GameTimer = new();
+            GameState.GameTimer.Tick += GameLoop; ;
+            GameState.GameTimer.Interval = TimeSpan.FromMilliseconds(Settings.UpdateTimer);
+            GameState.GameTimer.Start();
 
-            gameState.GameArea = GameArea;
+            GameState.GameArea = GameArea;
+
+            MultiplayerManager = new("http://localhost:5000/gameHub");
+            MultiplayerManager.ConnectToServer();
+
+            BindMethods();
         }
 
         private void GameLoop(object sender, EventArgs e)
         {
+            // Update with the server 
+            SendPositions();
+
             // Gaming
             ClearScreen();
             DrawGameGrid();
             DrawSnake();
-            GameState.GetInstance().Player.Move();
+            GameState.Player.Move();
         }
 
+        public void BindMethods()
+        {
+            MultiplayerManager.Connection.On<Package>("RecievePositions", (package) =>
+              {
+                  // Don't update urself
+                  if (package.SendersID != MultiplayerManager.Connection.ConnectionId)
+                  {
+                      Title = package.SendersID;
+                      // TODO: when in multiplayer use hashmap based on connection ID
+                      // or smt to quickly set shit
+
+                      // or OR we could just have 2 player classes in gamestate and just update
+                      // acordingly
+                      GameState.Player.HeadLocation = package.SnakeHeadLocation;
+                      GameState.Player.BodyParts = package.BodyLocation;
+                  }
+
+              });
+        }
+        public void SendPositions()
+        {
+            MultiplayerManager.Connection.SendAsync("SendPositions", GameState.Player.MakeServerPackage()).Wait();
+        }
         public void DrawSnake()
         {
             var gameState = GameState.GetInstance();
@@ -127,7 +154,6 @@ namespace Snakey
             Canvas.SetTop(r, location.Y);
 
         }
-
 
     }
 }
