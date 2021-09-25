@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using System;
+using System.Windows.Media.Animation;
 
 namespace Snakey.Managers
 {
     public class MultiplayerManager
     {
         public HubConnection Connection { get; set; }
+        public string ID { get { return Connection.ConnectionId; }  }
 
         public MultiplayerManager(string url)
         {

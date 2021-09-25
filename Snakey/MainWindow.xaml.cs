@@ -27,7 +27,7 @@ namespace Snakey
         }
         public void InitializeGameComponents()
         {
-            GameState = GameState.GetInstance();
+            GameState = GameState.Instance;
 
             // Setup snek player
             GameState.Player = new();
@@ -75,12 +75,11 @@ namespace Snakey
                       GameState.Player.HeadLocation = package.SnakeHeadLocation;
                       GameState.Player.BodyParts = package.BodyLocation;
                   }
-
               });
         }
         public void SendPositions()
         {
-            MultiplayerManager.Connection.SendAsync("SendPositions", GameState.Player.MakeServerPackage()).Wait();
+            MultiplayerManager.Connection.SendAsync("SendPositions", GameState.Player.MakeServerPackage(MultiplayerManager.ID)).Wait();
         }
         public void DrawSnake()
         {

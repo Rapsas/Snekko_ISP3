@@ -20,13 +20,13 @@ namespace Snakey.Models
             CurrentMovementDirection = MovementDirection.Right;
         }
 
-        public Package MakeServerPackage()
+        public Package MakeServerPackage(string senderID)
         {
             return new()
             {
                 SnakeHeadLocation = HeadLocation,
                 BodyLocation = BodyParts,
-                SendersID = GameState.GetInstance().Server.Connection.ConnectionId
+                SendersID = senderID,
             };
         }
         public void Move()
@@ -54,7 +54,6 @@ namespace Snakey.Models
         public void Die()
         {
             MessageBox.Show("Game over");
-            GameState.GetInstance().Server.Connection.StopAsync();
         }
     }
 }
