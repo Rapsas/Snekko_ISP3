@@ -1,11 +1,7 @@
-﻿using Snakey.Maps;
+﻿using Common.Models;
+using Snakey.Maps;
 using Snakey.Models;
-using Snakey.Snacks;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Threading;
 

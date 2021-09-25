@@ -1,9 +1,11 @@
-﻿using Common.Utility;
+﻿using Common.Models;
+using Common.Utility;
 using Microsoft.AspNetCore.SignalR.Client;
 using Snakey.Config;
 using Snakey.Managers;
 using Snakey.Maps;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -63,23 +65,27 @@ namespace Snakey
         {
             MultiplayerManager.Connection.On<Package>("RecievePositions", (package) =>
               {
-                  // Don't update urself
-                  if (package.SendersID != MultiplayerManager.Connection.ConnectionId)
-                  {
-                      Title = package.SendersID;
-                      // TODO: when in multiplayer use hashmap based on connection ID
-                      // or smt to quickly set shit
+                // or smt to quickly set shit
 
-                      // or OR we could just have 2 player classes in gamestate and just update
-                      // acordingly
-                      GameState.Player.HeadLocation = package.SnakeHeadLocation;
-                      GameState.Player.BodyParts = package.BodyLocation;
-                  }
+                // or OR we could just have 2 player classes in gamestate and just update
+                // acordingly
+                GameState.Player.HeadLocation = package.SnakeHeadLocation;
+                GameState.Player.BodyParts = package.BodyLocation;
               });
+
+            MultiplayerManager.Connection.On<List<Snack>>("RecieveSnackPositions", (snacks) =>
+            {
+                GameState.Snacks = snacks;
+            });
+        }
+        public void UpdateSnackPositions()
+        {
+            MultiplayerManager.Connection.SendAsync("SendSnackPositions", GameState.Snacks).Wait();
+
         }
         public void SendPositions()
         {
-            MultiplayerManager.Connection.SendAsync("SendPositions", GameState.Player.MakeServerPackage(MultiplayerManager.ID)).Wait();
+            MultiplayerManager.Connection.SendAsync("SendPositions", GameState.Player.MakeServerPackage()).Wait();
         }
         public void DrawSnake()
         {
