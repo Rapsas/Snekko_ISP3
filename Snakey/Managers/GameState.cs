@@ -11,9 +11,9 @@ using System.Windows.Threading;
 
 namespace Snakey.Managers
 {
-    public class GameState
+    public sealed class GameState
     {
-        private static GameState _instance = null;
+        private static readonly GameState _instance = new();
 
         public Snake Player { get; set; }
         public List<Snack> Snacks { get; set; }
@@ -21,14 +21,15 @@ namespace Snakey.Managers
         public Canvas GameArea { get; set; }
         public Map GameMap { get; set; }
 
+        static GameState() { }
         private GameState() { }
 
-        public static GameState GetInstance()
+        public static GameState Instance
         {
-            if (_instance is null)
-                _instance = new GameState();
-
-            return _instance;
+            get
+            {
+                return _instance;
+            }
         }
     }
 }

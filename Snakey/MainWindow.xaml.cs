@@ -28,6 +28,7 @@ namespace Snakey
         public void InitializeGameComponents()
         {
             GameState = GameState.GetInstance();
+
             // Setup snek player
             GameState.Player = new();
             GameState.Snacks = new();
@@ -83,7 +84,7 @@ namespace Snakey
         }
         public void DrawSnake()
         {
-            var gameState = GameState.GetInstance();
+            var gameState = GameState.Instance;
 
             var player = gameState.Player;
             DrawSquare(player.HeadLocation);
@@ -94,12 +95,12 @@ namespace Snakey
         }
         public void ClearScreen()
         {
-            var gameState = GameState.GetInstance();
+            var gameState = GameState.Instance;
             gameState.GameArea.Children.Clear();
         }
         private void DrawGameGrid()
         {
-            var gameState = GameState.GetInstance();
+            var gameState = GameState.Instance;
             if (gameState.GameMap.GridLines.Count == 0)
                 InitializeGrid();
 
@@ -110,7 +111,7 @@ namespace Snakey
         }
         private void InitializeGrid()
         {
-            var gameState = GameState.GetInstance();
+            var gameState = GameState.Instance;
             // Draw horizontal lines
             for (int row = 0; row < gameState.GameArea.ActualHeight; row += Settings.CellSize)
             {
@@ -149,7 +150,7 @@ namespace Snakey
                 Height = Settings.CellSize
             };
 
-            GameState.GetInstance().GameArea.Children.Add(r);
+            GameState.Instance.GameArea.Children.Add(r);
             Canvas.SetLeft(r, location.X);
             Canvas.SetTop(r, location.Y);
 
