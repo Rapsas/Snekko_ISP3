@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snakey.Snacks
+namespace Common.Models
 {
     public abstract class Snack
     {

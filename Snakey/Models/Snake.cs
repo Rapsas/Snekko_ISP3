@@ -20,13 +20,12 @@ namespace Snakey.Models
             CurrentMovementDirection = MovementDirection.Right;
         }
 
-        public Package MakeServerPackage(string senderID)
+        public Package MakeServerPackage()
         {
             return new()
             {
                 SnakeHeadLocation = HeadLocation,
                 BodyLocation = BodyParts,
-                SendersID = senderID,
             };
         }
         public void Move()

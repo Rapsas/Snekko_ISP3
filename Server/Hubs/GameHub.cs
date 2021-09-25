@@ -1,4 +1,5 @@
-﻿using Common.Utility;
+﻿using Common.Models;
+using Common.Utility;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,14 @@ namespace Server.Hubs
     {
         public async Task SendPositions(Package package)
         {
-            Console.WriteLine($"Got data from ID {Context.ConnectionId}");
-            await Clients.All.SendAsync("RecievePositions", package);
+            Console.WriteLine($"Got player data from ID {Context.ConnectionId}");
+            await Clients.AllExcept(Context.ConnectionId).SendAsync("RecieveSnackPositions", package);
+        }
+
+        public async Task SendSnackPositions(List<Snack> snacks)
+        {
+            Console.WriteLine($"Got snack data from ID {Context.ConnectionId}");
+            await Clients.AllExcept(Context.ConnectionId).SendAsync("RecieveSnackPositions", snacks);
         }
 
         public async override Task OnConnectedAsync()
