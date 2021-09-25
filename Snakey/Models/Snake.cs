@@ -1,6 +1,7 @@
 ﻿using Common.Enums;
 using Common.Utility;
 using Snakey.Config;
+using Snakey.Managers;
 using System.Collections.Generic;
 using System.Windows;
 
@@ -19,7 +20,15 @@ namespace Snakey.Models
             CurrentMovementDirection = MovementDirection.Right;
         }
 
-
+        public Package MakeServerPackage()
+        {
+            return new()
+            {
+                SnakeHeadLocation = HeadLocation,
+                BodyLocation = BodyParts,
+                SendersID = GameState.GetInstance().Server.Connection.ConnectionId
+            };
+        }
         public void Move()
         {
             switch (CurrentMovementDirection)
@@ -38,7 +47,6 @@ namespace Snakey.Models
                     break;
             }
         }
-
         public void Expand()
         {
             BodyParts.Enqueue(HeadLocation);
@@ -46,6 +54,7 @@ namespace Snakey.Models
         public void Die()
         {
             MessageBox.Show("Game over");
+            GameState.GetInstance().Server.Connection.StopAsync();
         }
     }
 }

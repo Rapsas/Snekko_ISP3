@@ -9,6 +9,6 @@ namespace Snakey.Config
     static class Settings
     {
         public static int CellSize { get; } = 20;
-        public static int UpdateTimer { get; set; } = 50;
+        public static int UpdateTimer { get; set; } = 1500;
     }
 }
