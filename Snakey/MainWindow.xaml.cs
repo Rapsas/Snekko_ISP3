@@ -1,4 +1,5 @@
-﻿using Common.Models;
+﻿using Common.Enums;
+using Common.Models;
 using Common.Utility;
 using Microsoft.AspNetCore.SignalR.Client;
 using Snakey.Config;
@@ -6,8 +7,10 @@ using Snakey.Managers;
 using Snakey.Maps;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -163,6 +166,32 @@ namespace Snakey
             await MultiplayerManager.ConnectToServer();
             BindMethods();
             ConnectButton.IsEnabled = false;
+        }
+
+        private void Keyboard_pressed(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.A:
+                    // Dont let snake go into itself
+                    if (GameState.Player.CurrentMovementDirection != MovementDirection.Right || GameState.Player.BodyParts.Count == 0)
+                        GameState.Player.CurrentMovementDirection = MovementDirection.Left;
+                    break;
+                case Key.W:
+                    if (GameState.Player.CurrentMovementDirection != MovementDirection.Down || GameState.Player.BodyParts.Count == 0)
+                        GameState.Player.CurrentMovementDirection = MovementDirection.Up;
+                    break;
+                case Key.S:
+                    if (GameState.Player.CurrentMovementDirection != MovementDirection.Up || GameState.Player.BodyParts.Count == 0)
+                        GameState.Player.CurrentMovementDirection = MovementDirection.Down;
+                    break;
+                case Key.D:
+                    if (GameState.Player.CurrentMovementDirection != MovementDirection.Left || GameState.Player.BodyParts.Count == 0)
+                        GameState.Player.CurrentMovementDirection = MovementDirection.Right;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

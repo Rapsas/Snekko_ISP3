@@ -5,13 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Snakey"
         mc:Ignorable="d"
-        Title="Snakey snakey" SizeToContent="WidthAndHeight">
-    <StackPanel>
-        <StackPanel Orientation="Horizontal">
+        Title="Snakey snakey" SizeToContent="WidthAndHeight" Keyboard.KeyDown="Keyboard_pressed">
+    <StackPanel >
+        
+        <StackPanel.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="Yellow" Offset="0.01" />
+                <GradientStop Color="Red" Offset="0.25" />
+                <GradientStop Color="Blue" Offset="0.95" />
+                <GradientStop Color="Beige" Offset="1.0" />
+            </LinearGradientBrush>
+        </StackPanel.Background>
+        
+        <StackPanel Orientation="Horizontal" Background="Beige">
             <Label Name="ScoreLabel" Content="Score: 0"></Label>
+            <Button Name="ConnectButton"  Content="Connect to server" Click="Sign_to_server"></Button>
         </StackPanel>
+        
         <Border BorderBrush="Green" BorderThickness="5">
-            <Canvas Name="GameArea" ClipToBounds="True" Width="800" Height="600" Background="Beige">
+            <Canvas Name="GameArea" ClipToBounds="True" Width="800" Height="600">
             </Canvas>
         </Border>
     </StackPanel>
