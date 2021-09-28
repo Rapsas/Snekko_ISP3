@@ -44,9 +44,6 @@ namespace Snakey
             GameState.GameArea = GameArea;
 
             MultiplayerManager = new("http://localhost:5000/gameHub");
-            MultiplayerManager.ConnectToServer();
-
-            BindMethods();
         }
 
         private void GameLoop(object sender, EventArgs e)
@@ -65,12 +62,10 @@ namespace Snakey
         {
             MultiplayerManager.Connection.On<Package>("RecievePositions", (package) =>
               {
-                // or smt to quickly set shit
-
-                // or OR we could just have 2 player classes in gamestate and just update
-                // acordingly
-                GameState.Player.HeadLocation = package.SnakeHeadLocation;
-                GameState.Player.BodyParts = package.BodyLocation;
+                 // we could just have 2 player classes in gamestate and just update acordingly
+                 GameState.Player.HeadLocation = package.SnakeHeadLocation;
+                 GameState.Player.BodyParts = package.SnakeBodyLocation;
+                 GameState.Player.CurrentMovementDirection = package.SnakeMovementDirection;
               });
 
             MultiplayerManager.Connection.On<List<Snack>>("RecieveSnackPositions", (snacks) =>
@@ -80,12 +75,14 @@ namespace Snakey
         }
         public void UpdateSnackPositions()
         {
-            MultiplayerManager.Connection.SendAsync("SendSnackPositions", GameState.Snacks).Wait();
+            if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
+                MultiplayerManager.Connection.SendAsync("SendSnackPositions", GameState.Snacks).Wait();
 
         }
         public void SendPositions()
         {
-            MultiplayerManager.Connection.SendAsync("SendPositions", GameState.Player.MakeServerPackage()).Wait();
+            if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
+                MultiplayerManager.Connection.SendAsync("SendPositions", GameState.Player.MakeServerPackage()).Wait();
         }
         public void DrawSnake()
         {
@@ -161,5 +158,11 @@ namespace Snakey
 
         }
 
+        private async void Sign_to_server(object sender, RoutedEventArgs e)
+        {
+            await MultiplayerManager.ConnectToServer();
+            BindMethods();
+            ConnectButton.IsEnabled = false;
+        }
     }
 }

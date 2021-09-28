@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using System;
+using System.Threading.Tasks;
 using System.Windows.Media.Animation;
 
 namespace Snakey.Managers
@@ -18,9 +19,9 @@ namespace Snakey.Managers
 
         }
 
-        public void ConnectToServer()
+        public async Task ConnectToServer()
         {
-            Connection.StartAsync();
+            await Connection.StartAsync();
         }
     }
 }
