@@ -23,6 +23,11 @@ namespace Common.Utility
             return new Vector2D(left.X - right.X, left.Y - right.Y);
         }
 
+        public bool IsOverlaping(Vector2D vector)
+        {
+            return vector.X == X && vector.Y == Y;
+        }
+
         public override string ToString()
         {
             return $"{X}:{Y}";
