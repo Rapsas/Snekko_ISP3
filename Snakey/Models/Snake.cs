@@ -29,6 +29,7 @@ namespace Snakey.Models
         }
         public void Move()
         {
+            BodyParts.Enqueue(HeadLocation);
             switch (CurrentMovementDirection)
             {
                 case MovementDirection.Up:
@@ -44,6 +45,8 @@ namespace Snakey.Models
                     HeadLocation += (Settings.CellSize, 0);
                     break;
             }
+            _ = BodyParts.Dequeue();
+
         }
         public void Expand()
         {

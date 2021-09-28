@@ -1,5 +1,4 @@
-﻿using Common.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +8,11 @@ namespace Snakey.Snacks
 {
     class BadSnack : Snack
     {
+        public override void Draw()
+        {
+            throw new NotImplementedException();
+        }
+
         public override void TriggerEffect()
         {
             throw new NotImplementedException();

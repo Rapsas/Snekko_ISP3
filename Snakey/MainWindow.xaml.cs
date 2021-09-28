@@ -1,12 +1,15 @@
 ﻿using Common.Enums;
-using Common.Models;
 using Common.Utility;
 using Microsoft.AspNetCore.SignalR.Client;
 using Snakey.Config;
+using Snakey.Factories;
 using Snakey.Managers;
 using Snakey.Maps;
+using Snakey.Snacks;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -58,6 +61,8 @@ namespace Snakey
             // Gaming
             ClearScreen();
             DrawGameGrid();
+            CheckSnackCollision();
+            DrawSnacks();
             DrawSnake();
             GameState.Player.Move();
         }
@@ -66,33 +71,116 @@ namespace Snakey
         {
             MultiplayerManager.Connection.On<Package>("RecievePositions", (package) =>
               {
-                 // we could just have 2 player classes in gamestate and just update acordingly
+                 // FIXME: we could just have 2 player classes in gamestate and just update GameState.Player2
                  GameState.Player.HeadLocation = package.SnakeHeadLocation;
                  GameState.Player.BodyParts = package.SnakeBodyLocation;
                  GameState.Player.CurrentMovementDirection = package.SnakeMovementDirection;
               });
 
-            MultiplayerManager.Connection.On<List<Snack>>("RecieveSnackPositions", (snacks) =>
+            MultiplayerManager.Connection.On<string>("RecieveSnackPositions", (snacks) =>
             {
-                GameState.Snacks = snacks;
+                var s = JsonSerializer.Deserialize<List<Snack>>(snacks); 
+                GameState.Snacks = s;
             });
         }
-        public void UpdateSnackPositions()
+        public void SendSnackPositions()
         {
             if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
-                MultiplayerManager.Connection.SendAsync("SendSnackPositions", GameState.Snacks).Wait();
+            {
+                var json = JsonSerializer.Serialize(GameState.Snacks);
+
+                MultiplayerManager.Connection.SendAsync("SendSnackPositions", json).Wait();
+            }
 
         }
         public void SendPositions()
         {
+
             if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
                 MultiplayerManager.Connection.SendAsync("SendPositions", GameState.Player.MakeServerPackage()).Wait();
         }
+
+        private void CheckSnackCollision()
+        {
+            bool ateSnack = false;
+            foreach (var snack in GameState.Snacks)
+            {
+                if (snack.Location.IsOverlaping(GameState.Player.HeadLocation))
+                {
+                    snack.TriggerEffect();
+                    snack.WasConsumed = true;
+                    GameState.Player.Expand();
+                    tmpCounter--;
+                    ateSnack = true;
+                }
+            }
+            GameState.Snacks.RemoveAll(x => x.WasConsumed /*&& x.EffectTimer <= 0*/);
+            if (ateSnack)
+                SendSnackPositions();
+        }
+        private void DrawSnacks()
+        {
+            PlaceSnackIfNeeded();
+            foreach (var item in GameState.Snacks)
+            {
+                if (item.WasConsumed) // Was already eaten
+                    continue;
+                item.Draw();
+            }
+        }
+        int tmpCounter = 0;
+        private void PlaceSnackIfNeeded()
+        {
+            if (tmpCounter >= Settings.MaximumSnackCount)
+                return;
+
+            Random rnd = new();
+            for (int i = 0; i < 100; i++) // 100 tries to place a snack randomly
+            {
+                if (tmpCounter >= Settings.MaximumSnackCount)
+                    return;
+                int rndX = rnd.Next(0, (int)GameArea.ActualWidth / Settings.CellSize) * Settings.CellSize;
+                int rndY = rnd.Next(0, (int)GameArea.ActualHeight / Settings.CellSize) * Settings.CellSize;
+
+                var snackLocation = new Vector2D(rndX, rndY);
+
+                if (GameState.Player.HeadLocation.IsOverlaping(snackLocation))
+                    continue; // Try again
+
+                bool overlapped = false;
+                foreach (var bodySegment in GameState.Player.BodyParts)
+                {
+                    if (bodySegment.IsOverlaping(snackLocation))
+                    {
+                        overlapped = true;
+                        break;
+                    }
+                }
+
+                if (overlapped)
+                    continue; // Try again
+
+                ISnackFactory factory = new SnackFactory();
+                Snack snack;
+                int c = rnd.Next(0, 11);
+                if (c <= 3)
+                    snack = factory.CreateGoodSnack();
+                else if (c > 3 && c <= 7)
+                {
+                    snack = factory.CreateGoodSnack();
+                }
+                else
+                    snack = factory.CreateGoodSnack();
+
+                snack.Location = snackLocation;
+                GameState.Snacks.Add(snack);
+                tmpCounter++;
+            }
+        }
+
         public void DrawSnake()
         {
-            var gameState = GameState.Instance;
-
-            var player = gameState.Player;
+            var player = GameState.Player;
             DrawSquare(player.HeadLocation);
             foreach (var partLocation in player.BodyParts)
             {
@@ -101,25 +189,22 @@ namespace Snakey
         }
         public void ClearScreen()
         {
-            var gameState = GameState.Instance;
-            gameState.GameArea.Children.Clear();
+            GameState.GameArea.Children.Clear();
         }
         private void DrawGameGrid()
         {
-            var gameState = GameState.Instance;
-            if (gameState.GameMap.GridLines.Count == 0)
+            if (GameState.GameMap.GridLines.Count == 0)
                 InitializeGrid();
 
-            foreach (var line in gameState.GameMap.GridLines)
+            foreach (var line in GameState.GameMap.GridLines)
             {
-                gameState.GameArea.Children.Add(line);
+                GameState.GameArea.Children.Add(line);
             }
         }
         private void InitializeGrid()
         {
-            var gameState = GameState.Instance;
             // Draw horizontal lines
-            for (int row = 0; row < gameState.GameArea.ActualHeight; row += Settings.CellSize)
+            for (int row = 0; row < GameState.GameArea.ActualHeight; row += Settings.CellSize)
             {
                 Line line = new()
                 {
@@ -130,10 +215,10 @@ namespace Snakey
                     StrokeThickness = 1,
                     Stroke = Brushes.Black
                 };
-                gameState.GameMap.GridLines.Add(line);
+                GameState.GameMap.GridLines.Add(line);
             }
             // Draw vertical lines
-            for (int column = 0; column < gameState.GameArea.ActualWidth; column += Settings.CellSize)
+            for (int column = 0; column < GameState.GameArea.ActualWidth; column += Settings.CellSize)
             {
                 Line line2 = new()
                 {
@@ -144,7 +229,7 @@ namespace Snakey
                     StrokeThickness = 1,
                     Stroke = Brushes.Black
                 };
-                gameState.GameMap.GridLines.Add(line2);
+                GameState.GameMap.GridLines.Add(line2);
             }
         }
         private void DrawSquare(Vector2D location)
@@ -162,13 +247,14 @@ namespace Snakey
 
         }
 
+
+
         private async void Sign_to_server(object sender, RoutedEventArgs e)
         {
             await MultiplayerManager.ConnectToServer();
             BindMethods();
             ConnectButton.IsEnabled = false;
         }
-
         private void Keyboard_pressed(object sender, KeyEventArgs e)
         {
             switch (e.Key)
