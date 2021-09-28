@@ -45,6 +45,7 @@ namespace Snakey
             GameState.GameTimer.Start();
 
             GameState.GameArea = GameArea;
+            GameState.ScoreLabel = ScoreLabel; 
 
             MultiplayerManager = new("http://localhost:5000/gameHub");
         }
