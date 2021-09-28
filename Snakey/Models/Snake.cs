@@ -1,9 +1,7 @@
 ﻿using Common.Enums;
 using Common.Utility;
 using Snakey.Config;
-using Snakey.Managers;
 using System.Collections.Generic;
-using System.Windows;
 
 namespace Snakey.Models
 {
@@ -25,7 +23,6 @@ namespace Snakey.Models
             return new()
             {
                 SnakeHeadLocation = HeadLocation,
-                BodyLocation = BodyParts,
                 SnakeBodyLocation = BodyParts,
                 SnakeMovementDirection = CurrentMovementDirection
             };
@@ -35,10 +32,10 @@ namespace Snakey.Models
             switch (CurrentMovementDirection)
             {
                 case MovementDirection.Up:
-                    HeadLocation += (0, Settings.CellSize);
+                    HeadLocation -= (0, Settings.CellSize);
                     break;
                 case MovementDirection.Down:
-                    HeadLocation -= (0, Settings.CellSize);
+                    HeadLocation += (0, Settings.CellSize);
                     break;
                 case MovementDirection.Left:
                     HeadLocation -= (Settings.CellSize, 0);
@@ -54,7 +51,6 @@ namespace Snakey.Models
         }
         public void Die()
         {
-            MessageBox.Show("Game over");
         }
     }
 }
