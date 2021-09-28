@@ -26,6 +26,8 @@ namespace Snakey.Models
             {
                 SnakeHeadLocation = HeadLocation,
                 BodyLocation = BodyParts,
+                SnakeBodyLocation = BodyParts,
+                SnakeMovementDirection = CurrentMovementDirection
             };
         }
         public void Move()

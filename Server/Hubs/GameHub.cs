@@ -11,14 +11,14 @@ namespace Server.Hubs
     {
         public async Task SendPositions(Package package)
         {
-            Console.WriteLine($"Got player data from ID {Context.ConnectionId}");
-            await Clients.AllExcept(Context.ConnectionId).SendAsync("RecieveSnackPositions", package);
+            Console.WriteLine($"Got player data from ID {Context.ConnectionId} with data {package.SnakeHeadLocation}");
+            await Clients.Others.SendAsync("RecievePositions", package);
         }
 
         public async Task SendSnackPositions(List<Snack> snacks)
         {
             Console.WriteLine($"Got snack data from ID {Context.ConnectionId}");
-            await Clients.AllExcept(Context.ConnectionId).SendAsync("RecieveSnackPositions", snacks);
+            await Clients.Others.SendAsync("RecieveSnackPositions", snacks);
         }
 
         public async override Task OnConnectedAsync()
@@ -27,7 +27,7 @@ namespace Server.Hubs
             await base.OnConnectedAsync();
         }
 
-        public async Task OnDisconnectedAsync()
+        public async override Task OnDisconnectedAsync(Exception exception)
         {
             Console.WriteLine($"Player disconnected with ID {Context.ConnectionId}");
             await base.OnDisconnectedAsync(new Exception("Disconnected player"));
