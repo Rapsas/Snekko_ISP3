@@ -8,7 +8,8 @@ namespace Snakey.Config
 {
     static class Settings
     {
-        public static int CellSize { get; } = 20;
-        public static int UpdateTimer { get; set; } = 1500;
+        public static int CellSize { get; } = 40;
+        public static int UpdateTimer { get; } = 100;
+        public static int MaximumSnackCount { get; } = 50;
     }
 }
