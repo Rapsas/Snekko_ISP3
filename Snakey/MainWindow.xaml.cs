@@ -243,20 +243,20 @@ namespace Snakey
         }
         private void DrawSquare(Vector2D location)
         {
+            // Since only snake uses this we could store it 
+            // and avoid unnecessery object creations
             Rectangle r = new()
             {
                 Fill = Brushes.Black,
-                Width = Settings.CellSize,
-                Height = Settings.CellSize
+                Width = Settings.CellSize - 8,
+                Height = Settings.CellSize - 8
             };
 
             GameState.Instance.GameArea.Children.Add(r);
-            Canvas.SetLeft(r, location.X);
-            Canvas.SetTop(r, location.Y);
+            Canvas.SetLeft(r, location.X + 4);
+            Canvas.SetTop(r, location.Y + 4);
 
         }
-
-
 
         private async void Sign_to_server(object sender, RoutedEventArgs e)
         {
