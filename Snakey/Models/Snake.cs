@@ -10,12 +10,13 @@ namespace Snakey.Models
         public Vector2D HeadLocation { get; set; }
         public Queue<Vector2D> BodyParts { get; set; }
         public MovementDirection CurrentMovementDirection { get; set; }
-
+        public bool IsDead { get; set; }
         public Snake()
         {
             HeadLocation = new Vector2D(0, 0);
             BodyParts = new();
             CurrentMovementDirection = MovementDirection.Right;
+            IsDead = false;
         }
 
         public Package MakeServerPackage()

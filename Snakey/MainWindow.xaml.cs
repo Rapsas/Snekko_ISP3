@@ -62,10 +62,21 @@ namespace Snakey
             // Gaming
             ClearScreen();
             DrawGameGrid();
+            CheckPlayerCollision();
             CheckSnackCollision();
             DrawSnacks();
             DrawSnake();
             GameState.Player.Move();
+        }
+
+        private void CheckPlayerCollision()
+        {
+            GameState.GameMap.PlayerCollisionCheck();
+            if (GameState.Player.IsDead)
+            {
+                MessageBox.Show($"Skill issue :/. Ur final score: {GameState.Score}");
+                Close();
+            }
         }
 
         public void BindMethods()
