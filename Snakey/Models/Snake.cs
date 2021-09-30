@@ -19,7 +19,7 @@ namespace Snakey.Models
             IsDead = false;
         }
 
-        public Package MakeServerPackage()
+        public PlayerPackage MakeServerPackage()
         {
             return new()
             {

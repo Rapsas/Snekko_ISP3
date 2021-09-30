@@ -81,7 +81,7 @@ namespace Snakey
 
         public void BindMethods()
         {
-            MultiplayerManager.Connection.On<Package>("RecievePositions", (package) =>
+            MultiplayerManager.Connection.On<PlayerPackage>("RecievePositions", (package) =>
               {
                  // FIXME: we could just have 2 player classes in gamestate and just update GameState.Player2
                  GameState.Player.HeadLocation = package.SnakeHeadLocation;

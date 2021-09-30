@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Common.Utility
 {
-    public struct Package
+    public struct PlayerPackage
     {
         public Vector2D SnakeHeadLocation{ get; set; }
         public MovementDirection SnakeMovementDirection { get; set; }

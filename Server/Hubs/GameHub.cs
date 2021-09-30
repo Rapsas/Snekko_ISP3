@@ -8,7 +8,7 @@ namespace Server.Hubs
 {
     public class GameHub : Hub
     {
-        public async Task SendPositions(Package package)
+        public async Task SendPositions(PlayerPackage package)
         {
             Console.WriteLine($"Got player data from ID {Context.ConnectionId} with data {package.SnakeHeadLocation}");
             await Clients.Others.SendAsync("RecievePositions", package);
