@@ -10,17 +10,13 @@ namespace Server.Hubs
     {
         public async Task SendPositions(Package package)
         {
-            //Console.WriteLine($"Got player data from ID {Context.ConnectionId} with data {package.SnakeHeadLocation}");
+            Console.WriteLine($"Got player data from ID {Context.ConnectionId} with data {package.SnakeHeadLocation}");
             await Clients.Others.SendAsync("RecievePositions", package);
         }
 
         public async Task SendSnackPositions(string snacks)
         {
-            Console.WriteLine($"Got snack data from ID {Context.ConnectionId}");
-            //foreach (var item in snacks)
-            //{
-            //    Console.WriteLine($"\t{item.Location}");
-            //}
+            //Console.WriteLine($"Got snack data from ID {Context.ConnectionId} with location {snacks.Location}");
             await Clients.Caller.SendAsync("RecieveSnackPositions", snacks);
         }
 

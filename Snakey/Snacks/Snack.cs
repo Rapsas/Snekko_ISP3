@@ -9,10 +9,6 @@ namespace Snakey.Snacks
     // new package to transfer type and location in rebuild the list it at the other end
     public abstract class Snack
     {
-        public Snack()
-        {
-
-        }
         public Vector2D Location { get; set; }
         public bool WasConsumed { get; set; } = false;
         public abstract void TriggerEffect();

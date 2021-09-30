@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -79,19 +80,16 @@ namespace Snakey
 
             MultiplayerManager.Connection.On<string>("RecieveSnackPositions", (snacks) =>
             {
-                var s = JsonSerializer.Deserialize<List<Snack>>(snacks); 
-                GameState.Snacks = s;
+                // XD
+                //GameState.Snacks = snacks;
             });
         }
         public void SendSnackPositions()
         {
             if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
             {
-                var json = JsonSerializer.Serialize(GameState.Snacks);
-
-                MultiplayerManager.Connection.SendAsync("SendSnackPositions", json).Wait();
+                MultiplayerManager.Connection.SendAsync("SendSnackPositions", GameState.Snacks[0]).Wait();
             }
-
         }
         public void SendPositions()
         {

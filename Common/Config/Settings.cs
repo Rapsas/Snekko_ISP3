@@ -10,6 +10,6 @@ namespace Snakey.Config
     {
         public static int CellSize { get; } = 40;
         public static int UpdateTimer { get; } = 100;
-        public static int MaximumSnackCount { get; } = 50;
+        public static int MaximumSnackCount { get; } = 3;
     }
 }
