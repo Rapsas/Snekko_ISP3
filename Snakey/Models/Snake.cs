@@ -8,12 +8,14 @@ namespace Snakey.Models
     public class Snake
     {
         public Vector2D HeadLocation { get; set; }
+        public Vector2D TailLocation { get; set; }
         public Queue<Vector2D> BodyParts { get; set; }
         public MovementDirection CurrentMovementDirection { get; set; }
         public bool IsDead { get; set; }
         public Snake()
         {
             HeadLocation = new Vector2D(0, 0);
+            TailLocation = new Vector2D(-50, -50);
             BodyParts = new();
             CurrentMovementDirection = MovementDirection.Right;
             IsDead = false;
@@ -46,8 +48,8 @@ namespace Snakey.Models
                     HeadLocation += (Settings.CellSize, 0);
                     break;
             }
-            _ = BodyParts.Dequeue();
-
+            var lastPart = BodyParts.Dequeue();
+            TailLocation = lastPart;
         }
         public void Expand()
         {

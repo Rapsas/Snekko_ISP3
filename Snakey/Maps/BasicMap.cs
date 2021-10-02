@@ -35,6 +35,11 @@ namespace Snakey.Maps
                     return;
                 }
             }
+            if (player.HeadLocation.IsOverlaping(player.TailLocation))
+            {
+                player.IsDead = true;
+                return;
+            }
         }
     }
 }

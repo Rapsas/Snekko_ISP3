@@ -190,11 +190,12 @@ namespace Snakey
         public void DrawSnake()
         {
             var player = GameState.Player;
-            DrawSquare(player.HeadLocation);
+            DrawSquare(player.HeadLocation, Brushes.Green);
             foreach (var partLocation in player.BodyParts)
             {
-                DrawSquare(partLocation);
+                DrawSquare(partLocation, Brushes.GreenYellow);
             }
+            DrawSquare(player.TailLocation, Brushes.Blue);
         }
         public void ClearScreen()
         {
@@ -241,13 +242,13 @@ namespace Snakey
                 GameState.GameMap.GridLines.Add(line2);
             }
         }
-        private void DrawSquare(Vector2D location)
+        private void DrawSquare(Vector2D location, Brush color)
         {
             // Since only snake uses this we could store it 
             // and avoid unnecessery object creations
             Rectangle r = new()
             {
-                Fill = Brushes.Black,
+                Fill = color,
                 Width = Settings.CellSize - 8,
                 Height = Settings.CellSize - 8
             };
