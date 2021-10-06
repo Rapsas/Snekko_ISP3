@@ -12,6 +12,7 @@ namespace Snakey.Models
         public Queue<Vector2D> BodyParts { get; set; }
         public MovementDirection CurrentMovementDirection { get; set; }
         public bool IsDead { get; set; }
+        public bool IsMovementLocked { get; set; }
         public Snake()
         {
             HeadLocation = new Vector2D(0, 0);
@@ -19,6 +20,7 @@ namespace Snakey.Models
             BodyParts = new();
             CurrentMovementDirection = MovementDirection.Right;
             IsDead = false;
+            IsMovementLocked = false;
         }
 
         public PlayerPackage MakeServerPackage()
@@ -50,6 +52,7 @@ namespace Snakey.Models
             }
             var lastPart = BodyParts.Dequeue();
             TailLocation = lastPart;
+            IsMovementLocked = false;
         }
         public void Expand()
         {

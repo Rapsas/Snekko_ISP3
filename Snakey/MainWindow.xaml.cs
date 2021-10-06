@@ -267,6 +267,9 @@ namespace Snakey
         }
         private void Keyboard_pressed(object sender, KeyEventArgs e)
         {
+            if (GameState.Player.IsMovementLocked)
+                return;
+
             switch (e.Key)
             {
                 case Key.A:
@@ -289,6 +292,7 @@ namespace Snakey
                 default:
                     break;
             }
+            GameState.Player.IsMovementLocked = true;
         }
     }
 }
