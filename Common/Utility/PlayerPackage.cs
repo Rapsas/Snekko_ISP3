@@ -8,6 +8,7 @@ namespace Common.Utility
     public struct PlayerPackage
     {
         public Vector2D SnakeHeadLocation{ get; set; }
+        public Vector2D SnakeTailLocation{ get; set; }
         public MovementDirection SnakeMovementDirection { get; set; }
         public Queue<Vector2D> SnakeBodyLocation{ get; set; }
     }

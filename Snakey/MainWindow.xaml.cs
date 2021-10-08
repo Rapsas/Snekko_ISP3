@@ -74,8 +74,8 @@ namespace Snakey
             GameState.GameMap.PlayerCollisionCheck();
             if (GameState.Player.IsDead)
             {
-                MessageBox.Show($"Skill issue :/. Ur final score: {GameState.Score}");
-                Close();
+                //MessageBox.Show($"Skill issue :/. Ur final score: {GameState.Score}");
+                //Close();
             }
         }
 
@@ -87,6 +87,7 @@ namespace Snakey
                  GameState.Player.HeadLocation = package.SnakeHeadLocation;
                  GameState.Player.BodyParts = package.SnakeBodyLocation;
                  GameState.Player.CurrentMovementDirection = package.SnakeMovementDirection;
+                 GameState.Player.TailLocation = package.SnakeTailLocation;
               });
 
             MultiplayerManager.Connection.On<string>("RecieveSnackPositions", (snacks) =>

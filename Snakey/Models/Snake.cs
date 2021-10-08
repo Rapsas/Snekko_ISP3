@@ -29,7 +29,8 @@ namespace Snakey.Models
             {
                 SnakeHeadLocation = HeadLocation,
                 SnakeBodyLocation = BodyParts,
-                SnakeMovementDirection = CurrentMovementDirection
+                SnakeMovementDirection = CurrentMovementDirection,
+                SnakeTailLocation = TailLocation
             };
         }
         public void Move()
