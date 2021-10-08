@@ -5,7 +5,7 @@ namespace Snakey.Maps
     class BasicMap : Map
     {
         GameState _gameState = GameState.Instance;
-        public override void PlayerCollisionCheck()
+        public override void MapCollisionCheck()
         {
             var player = _gameState.Player;
             
@@ -27,19 +27,7 @@ namespace Snakey.Maps
                     player.HeadLocation.Y % (int)_gameState.GameArea.ActualHeight);
             }
 
-            foreach (var bodyPart in player.BodyParts)
-            {
-                if (player.HeadLocation.IsOverlaping(bodyPart))
-                {
-                    player.IsDead = true;
-                    return;
-                }
-            }
-            if (player.HeadLocation.IsOverlaping(player.TailLocation))
-            {
-                player.IsDead = true;
-                return;
-            }
+            
         }
     }
 }

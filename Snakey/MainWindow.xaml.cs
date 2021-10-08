@@ -8,11 +8,6 @@ using Snakey.Maps;
 using Snakey.Models;
 using Snakey.Snacks;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -73,11 +68,58 @@ namespace Snakey
 
         private void CheckPlayerCollision()
         {
-            GameState.GameMap.PlayerCollisionCheck();
+            // This whole collision checking could probably be handeled much nicer
+            // but i can't be fucked to do anything about it :^)
+            // plz someone make it nice <3
+
+            GameState.GameMap.MapCollisionCheck();
+            
+            var player = GameState.Player;
+            var secondPlayer = GameState.SecondPlayer;
+
+            foreach (var bodyPart in player.BodyParts)
+            {
+                if (player.HeadLocation.IsOverlaping(bodyPart))
+                {
+                    player.IsDead = true;
+                    break;
+                }
+            }
+            if (player.HeadLocation.IsOverlaping(player.TailLocation))
+            {
+                player.IsDead = true;
+            }
+
+            // Check if the retard hit another player
+            if(secondPlayer != null)
+            {
+                foreach (var bodyPart in secondPlayer.BodyParts)
+                {
+                    if (player.HeadLocation.IsOverlaping(bodyPart))
+                    {
+                        player.IsDead = true;
+                        break;
+                    }
+                }
+
+                if (player.HeadLocation.IsOverlaping(secondPlayer.TailLocation))
+                {
+                    player.IsDead = true;
+                }
+
+                if (player.HeadLocation.IsOverlaping(secondPlayer.HeadLocation))
+                {
+                    player.IsDead = true;
+                }
+            }
+
+
+
+
             if (GameState.Player.IsDead)
             {
-                //MessageBox.Show($"Skill issue :/. Ur final score: {GameState.Score}");
-                //Close();
+                MessageBox.Show($"Skill issue :/. Ur final score: {GameState.Score}");
+                Close();
             }
         }
 
@@ -85,7 +127,6 @@ namespace Snakey
         {
             MultiplayerManager.Connection.On<PlayerPackage>("RecievePositions", (package) =>
               {
-                 // FIXME: we could just have 2 player classes in gamestate and just update GameState.Player2
                  GameState.SecondPlayer.HeadLocation = package.SnakeHeadLocation;
                  GameState.SecondPlayer.BodyParts = package.SnakeBodyLocation;
                  GameState.SecondPlayer.CurrentMovementDirection = package.SnakeMovementDirection;

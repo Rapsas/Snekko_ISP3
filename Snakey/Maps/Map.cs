@@ -8,6 +8,6 @@ namespace Snakey.Maps
     {
         public List<Line> GridLines { get; set; } = new();
         public List<Vector2D> Obsticles { get; set; } // Only initialize when needed
-        public abstract void PlayerCollisionCheck();
+        public abstract void MapCollisionCheck();
     }
 }
