@@ -13,6 +13,7 @@ namespace Snakey.Managers
         private int _gameScore = 0;
 
         public Snake Player { get; set; }
+        public Snake SecondPlayer { get; set; }
         public List<Snack> Snacks { get; set; }
         public DispatcherTimer GameTimer { get; set; }
         public Canvas GameArea { get; set; }

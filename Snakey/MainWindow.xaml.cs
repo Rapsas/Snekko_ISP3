@@ -5,6 +5,7 @@ using Snakey.Config;
 using Snakey.Factories;
 using Snakey.Managers;
 using Snakey.Maps;
+using Snakey.Models;
 using Snakey.Snacks;
 using System;
 using System.Collections.Generic;
@@ -65,7 +66,8 @@ namespace Snakey
             CheckPlayerCollision();
             CheckSnackCollision();
             DrawSnacks();
-            DrawSnake();
+            DrawSnake(GameState.Player);
+            DrawSnake(GameState.SecondPlayer);
             GameState.Player.Move();
         }
 
@@ -84,10 +86,10 @@ namespace Snakey
             MultiplayerManager.Connection.On<PlayerPackage>("RecievePositions", (package) =>
               {
                  // FIXME: we could just have 2 player classes in gamestate and just update GameState.Player2
-                 GameState.Player.HeadLocation = package.SnakeHeadLocation;
-                 GameState.Player.BodyParts = package.SnakeBodyLocation;
-                 GameState.Player.CurrentMovementDirection = package.SnakeMovementDirection;
-                 GameState.Player.TailLocation = package.SnakeTailLocation;
+                 GameState.SecondPlayer.HeadLocation = package.SnakeHeadLocation;
+                 GameState.SecondPlayer.BodyParts = package.SnakeBodyLocation;
+                 GameState.SecondPlayer.CurrentMovementDirection = package.SnakeMovementDirection;
+                 GameState.SecondPlayer.TailLocation = package.SnakeTailLocation;
               });
 
             MultiplayerManager.Connection.On<string>("RecieveSnackPositions", (snacks) =>
@@ -105,7 +107,6 @@ namespace Snakey
         }
         public void SendPositions()
         {
-
             if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
                 MultiplayerManager.Connection.SendAsync("SendPositions", GameState.Player.MakeServerPackage()).Wait();
         }
@@ -188,9 +189,10 @@ namespace Snakey
             }
         }
 
-        public void DrawSnake()
+        public void DrawSnake(Snake player)
         {
-            var player = GameState.Player;
+            if (player is null)
+                return;
             DrawSquare(player.HeadLocation, Brushes.Green);
             foreach (var partLocation in player.BodyParts)
             {
@@ -265,6 +267,8 @@ namespace Snakey
             await MultiplayerManager.ConnectToServer();
             BindMethods();
             ConnectButton.IsEnabled = false;
+            GameState.SecondPlayer = new();
+            GameState.SecondPlayer.HeadLocation = new(-100, -100);
         }
         private void Keyboard_pressed(object sender, KeyEventArgs e)
         {
