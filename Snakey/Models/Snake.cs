@@ -63,7 +63,6 @@ namespace Snakey.Models
         {
             if (BodyParts.Count > 0)
                 BodyParts.Dequeue();
-            else IsDead = true;
         }
         public void Die()
         {
