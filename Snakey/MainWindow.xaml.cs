@@ -33,11 +33,12 @@ namespace Snakey
         public void InitializeGameComponents()
         {
             GameState = GameState.Instance;
+            var mapFactory = new MapFactory();
 
             // Setup snek player
             GameState.Player = new();
             GameState.Snacks = new();
-            GameState.GameMap = new BasicMap();
+            GameState.GameMap = mapFactory.CreateMap(MapTypes.Basic);
             // Setup gameloop
             GameState.GameTimer = new();
             GameState.GameTimer.Tick += GameLoop; ;
