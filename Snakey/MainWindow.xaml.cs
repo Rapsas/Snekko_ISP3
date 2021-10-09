@@ -160,7 +160,6 @@ namespace Snakey
                 {
                     snack.TriggerEffect();
                     snack.WasConsumed = true;
-                    GameState.Player.Expand();
                     tmpCounter--;
                     ateSnack = true;
                 }

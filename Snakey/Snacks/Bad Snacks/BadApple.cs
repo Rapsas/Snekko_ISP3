@@ -9,7 +9,8 @@ namespace Snakey.Snacks
     {
         public override void TriggerEffect()
         {
-            GameState.Instance.Score++;
+            GameState.Instance.Score--;
+            GameState.Instance.Player.Shrink();
         }
         public BadApple() : base()
         {
