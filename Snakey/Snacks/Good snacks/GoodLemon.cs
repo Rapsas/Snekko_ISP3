@@ -10,6 +10,7 @@ namespace Snakey.Snacks
         public override void TriggerEffect()
         {
             GameState.Instance.Score++;
+            GameState.Instance.Player.Expand();
         }
         public GoodLemon() : base()
         {

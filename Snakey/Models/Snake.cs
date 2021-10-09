@@ -59,6 +59,12 @@ namespace Snakey.Models
         {
             BodyParts.Enqueue(HeadLocation);
         }
+        public void Shrink()
+        {
+            if (BodyParts.Count > 0)
+                BodyParts.Dequeue();
+            else IsDead = true;
+        }
         public void Die()
         {
         }
