@@ -187,6 +187,18 @@ namespace Snakey
                 return;
 
             Random rnd = new();
+
+            int factoryDecider = rnd.Next(2);
+            ISnackFactory factory;
+            if (factoryDecider > 0)
+            {
+                factory = new AppleFactory();
+            }
+            else
+            {
+                factory = new LemonFactory();
+            }
+
             for (int i = 0; i < 100; i++) // 100 tries to place a snack randomly
             {
                 if (tmpCounter >= Settings.MaximumSnackCount)
@@ -212,17 +224,18 @@ namespace Snakey
                 if (overlapped)
                     continue; // Try again
 
-                ISnackFactory factory = new SnackFactory();
+               
+
                 Snack snack;
                 int c = rnd.Next(0, 11);
                 if (c <= 3)
                     snack = factory.CreateGoodSnack();
                 else if (c > 3 && c <= 7)
                 {
-                    snack = factory.CreateGoodSnack();
+                    snack = factory.CreateBadSnack();
                 }
                 else
-                    snack = factory.CreateGoodSnack();
+                    snack = factory.CreateMysterySnack();
 
                 snack.Location = snackLocation;
                 GameState.Snacks.Add(snack);

@@ -1,21 +1,31 @@
-﻿using System;
+﻿using Snakey.Managers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Snakey.Snacks
 {
     class BadSnack : Snack
     {
-        public override void Draw()
+        protected Canvas _gameArea = GameState.Instance.GameArea;
+        protected SolidColorBrush Stroke = Brushes.Red;
+        protected double StrokeThickness = 5;
+        public BadSnack()
         {
-            throw new NotImplementedException();
+            WasConsumed = false;
         }
-
         public override void TriggerEffect()
         {
-            throw new NotImplementedException();
+
+        }
+
+        public override void Draw()
+        {
+
         }
     }
 }

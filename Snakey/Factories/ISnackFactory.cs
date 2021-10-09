@@ -4,8 +4,8 @@ namespace Snakey.Factories
 {
     interface ISnackFactory
     {
-        Snack CreateGoodSnack();
-        Snack CreateBadSnack();
-        Snack CreateMysterySnack();
+        GoodSnack CreateGoodSnack();
+        BadSnack CreateBadSnack();
+        MysterySnack CreateMysterySnack();
     }
 }
