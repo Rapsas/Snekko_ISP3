@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Shapes;
 
-namespace Snakey.Maps
+namespace Snakey.Models
 {
     public abstract class Map
     {

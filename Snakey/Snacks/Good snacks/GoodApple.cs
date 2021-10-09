@@ -1,33 +1,19 @@
 ﻿using Snakey.Config;
 using Snakey.Managers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace Snakey.Snacks
 {
-    class BadApple: BadSnack
+    class GoodApple : GoodSnack
     {
-        protected Rectangle _body { get; set; }
         public override void TriggerEffect()
         {
             GameState.Instance.Score++;
         }
-
-        public override void Draw()
+        public GoodApple() : base()
         {
-            _gameArea.Children.Add(_body);
-            Canvas.SetLeft(_body, Location.X);
-            Canvas.SetTop(_body, Location.Y);
-        }
-        public BadApple() : base()
-        {
-            _body = new()
+            _body = new Rectangle()
             {
                 Stroke = this.Stroke,
                 StrokeThickness = this.StrokeThickness,

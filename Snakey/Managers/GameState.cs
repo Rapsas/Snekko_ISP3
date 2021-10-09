@@ -1,5 +1,4 @@
 ﻿using Snakey.Maps;
-using Snakey.Snacks;
 using Snakey.Models;
 using System.Collections.Generic;
 using System.Windows.Controls;

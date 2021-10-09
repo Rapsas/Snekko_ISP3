@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Enums;
-using Snakey.Maps;
+﻿using Common.Enums;
+using Snakey.Models;
 
 namespace Snakey.Factories
 {

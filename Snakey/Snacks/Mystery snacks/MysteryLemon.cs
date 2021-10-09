@@ -1,33 +1,19 @@
 ﻿using Snakey.Config;
 using Snakey.Managers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace Snakey.Snacks
 {
-    class BadLemon : BadSnack
+    class MysteryLemon : MysterySnack
     {
-        protected Ellipse _body { get; set; }
         public override void TriggerEffect()
         {
             GameState.Instance.Score++;
         }
-
-        public override void Draw()
+        public MysteryLemon() : base()
         {
-            _gameArea.Children.Add(_body);
-            Canvas.SetLeft(_body, Location.X);
-            Canvas.SetTop(_body, Location.Y);
-        }
-        public BadLemon() : base()
-        {
-            _body = new()
+            _body = new Ellipse()
             {
                 Stroke = this.Stroke,
                 StrokeThickness = this.StrokeThickness,
