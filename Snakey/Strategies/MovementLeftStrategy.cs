@@ -12,8 +12,8 @@ namespace Snakey.Strategies
     {
         public void ChangeMovementDirection(Snake player)
         {
-            if (player.CurrentMovementDirection != MovementDirection.Right || player.BodyParts.Count == 0)
-                        player.CurrentMovementDirection = MovementDirection.Left;
+            if (player.CurrentMovementDirection != MovementDirection.Right)
+                player.CurrentMovementDirection = MovementDirection.Left;
         }
     }
 }
