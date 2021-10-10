@@ -15,7 +15,7 @@ namespace Snakey.Models
         public bool IsMovementLocked { get; set; }
         public Snake()
         {
-            HeadLocation = new Vector2D(0, 0);
+            HeadLocation = new Vector2D(80, 80);
             TailLocation = new Vector2D(-50, -50);
             BodyParts = new();
             CurrentMovementDirection = MovementDirection.Right;
