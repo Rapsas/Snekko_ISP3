@@ -27,8 +27,6 @@ namespace Snakey.Maps
                     player.HeadLocation.X % (int)_gameState.GameArea.ActualWidth,
                     player.HeadLocation.Y % (int)_gameState.GameArea.ActualHeight);
             }
-
-            
         }
     }
 }

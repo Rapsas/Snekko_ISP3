@@ -7,7 +7,6 @@ namespace Snakey.Maps
     {
         public override void MapCollisionCheck()
         {
-            throw new NotImplementedException();
         }
     }
 }

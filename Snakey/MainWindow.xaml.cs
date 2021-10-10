@@ -22,6 +22,7 @@ namespace Snakey
 
         public MultiplayerManager MultiplayerManager { get; set; }
         public GameState GameState { get; set; }
+        public Map GameMap { get; set; }
 
         public MainWindow()
         {
@@ -36,7 +37,6 @@ namespace Snakey
             // Setup snek player
             GameState.Player = new();
             GameState.Snacks = new();
-            GameState.GameMap = mapFactory.CreateMap(MapTypes.Basic);
             // Setup gameloop
             GameState.GameTimer = new();
             GameState.GameTimer.Tick += GameLoop; ;
@@ -45,6 +45,8 @@ namespace Snakey
 
             GameState.GameArea = GameArea;
             GameState.ScoreLabel = ScoreLabel; 
+
+            GameMap = mapFactory.CreateMap(MapTypes.Advance);
 
             MultiplayerManager = new("http://localhost:5000/gameHub");
         }
@@ -71,7 +73,7 @@ namespace Snakey
             // but i can't be fucked to do anything about it :^)
             // plz someone make it nice <3
 
-            GameState.GameMap.MapCollisionCheck();
+            GameMap.MapCollisionCheck();
             
             var player = GameState.Player;
             var secondPlayer = GameState.SecondPlayer;
@@ -222,6 +224,18 @@ namespace Snakey
                 if (overlapped)
                     continue; // Try again
 
+                foreach (var (location, _) in GameMap.Obsticles)
+                {
+                    if (snackLocation.IsOverlaping(location))
+                    {
+                        overlapped = true;
+                        break;
+                    }
+                }
+
+                if (overlapped)
+                    continue; // Try again
+
                
 
                 Snack snack;
@@ -258,44 +272,18 @@ namespace Snakey
         }
         private void DrawGameGrid()
         {
-            if (GameState.GameMap.GridLines.Count == 0)
-                InitializeGrid();
-
-            foreach (var line in GameState.GameMap.GridLines)
+            foreach (var line in GameMap.GridLines)
             {
                 GameState.GameArea.Children.Add(line);
             }
-        }
-        private void InitializeGrid()
-        {
-            // Draw horizontal lines
-            for (int row = 0; row < GameState.GameArea.ActualHeight; row += Settings.CellSize)
+
+            foreach (var (location, body) in GameMap.Obsticles)
             {
-                Line line = new()
-                {
-                    X1 = 0,
-                    Y1 = row,
-                    X2 = GameArea.ActualWidth,
-                    Y2 = row,
-                    StrokeThickness = 1,
-                    Stroke = Brushes.Black
-                };
-                GameState.GameMap.GridLines.Add(line);
+                GameState.GameArea.Children.Add(body);
+                Canvas.SetLeft(body, location.X);
+                Canvas.SetTop(body, location.Y);
             }
-            // Draw vertical lines
-            for (int column = 0; column < GameState.GameArea.ActualWidth; column += Settings.CellSize)
-            {
-                Line line2 = new()
-                {
-                    X1 = column,
-                    Y1 = 0,
-                    X2 = column,
-                    Y2 = GameArea.ActualHeight,
-                    StrokeThickness = 1,
-                    Stroke = Brushes.Black
-                };
-                GameState.GameMap.GridLines.Add(line2);
-            }
+
         }
         private void DrawSquare(Vector2D location, Brush color)
         {

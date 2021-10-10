@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Snakey"
         mc:Ignorable="d"
-        Title="Snakey snakey" SizeToContent="WidthAndHeight" Keyboard.KeyDown="Keyboard_pressed">
+        Title="Snakey snakey" SizeToContent="WidthAndHeight" Keyboard.KeyDown="Keyboard_pressed" ResizeMode="CanMinimize">
     <StackPanel >
         
         <StackPanel.Background>
