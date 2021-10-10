@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.SignalR.Client;
 using Snakey.Config;
 using Snakey.Factories;
 using Snakey.Managers;
+using Snakey.Maps;
 using Snakey.Models;
 using Snakey.Strategies;
 using System;
@@ -47,7 +48,7 @@ namespace Snakey
             GameState.GameArea = GameArea;
             GameState.ScoreLabel = ScoreLabel; 
 
-            GameMap = mapFactory.CreateMap(MapTypes.Advance);
+            GameMap = mapFactory.CreateMap(MapTypes.Basic);
 
             MultiplayerManager = new("http://localhost:5000/gameHub");
         }
@@ -335,6 +336,34 @@ namespace Snakey
             }
             context.ExecuteStrategy(GameState.Player);
             GameState.Player.IsMovementLocked = true;
+        }
+
+        private void Switch_to_level_1(object sender, EventArgs e)
+        {
+            if (GameMap is BasicMap)
+                return;
+            var mapFactory = new MapFactory();
+
+            GameMap = mapFactory.CreateMap(MapTypes.Basic);
+            GameState.Player.Reset();
+        }
+        private void Switch_to_level_2(object sender, EventArgs e)
+        {
+            if (GameMap is AdvanceMap)
+                return;
+            var mapFactory = new MapFactory();
+
+            GameMap = mapFactory.CreateMap(MapTypes.Advance);
+            GameState.Player.Reset();
+        }
+        private void Switch_to_level_3(object sender, EventArgs e)
+        {
+            if (GameMap is ExpertMap)
+                return;
+            var mapFactory = new MapFactory();
+
+            GameMap = mapFactory.CreateMap(MapTypes.Expert);
+            GameState.Player.Reset();
         }
     }
 }

@@ -64,6 +64,15 @@ namespace Snakey.Models
             if (BodyParts.Count > 0)
                 BodyParts.Dequeue();
         }
+        public void Reset()
+        {
+            HeadLocation = new Vector2D(80, 80);
+            TailLocation = new Vector2D(-50, -50);
+            BodyParts = new();
+            CurrentMovementDirection = MovementDirection.Right;
+            IsDead = false;
+            IsMovementLocked = false;
+        }
         public void Die()
         {
         }

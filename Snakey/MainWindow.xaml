@@ -20,6 +20,9 @@
         <StackPanel Orientation="Horizontal" Background="Beige">
             <Label Name="ScoreLabel" Content="Score: 0"></Label>
             <Button Name="ConnectButton"  Content="Connect to server" Click="Sign_to_server"></Button>
+            <Button Name="Level1"  Content="Level 1" Click="Switch_to_level_1"></Button>
+            <Button Name="Level2"  Content="Level 2" Click="Switch_to_level_2"></Button>
+            <Button Name="Level3"  Content="Level 2" Click="Switch_to_level_3"></Button>
         </StackPanel>
         
         <Border BorderBrush="Green" BorderThickness="5">
