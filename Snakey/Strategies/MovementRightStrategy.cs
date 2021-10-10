@@ -1,0 +1,19 @@
+﻿using Common.Enums;
+using Snakey.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Snakey.Strategies
+{
+    class MovementRightStrategy : IMovementStrategy
+    {
+        public void ChangeMovementDirection(Snake player)
+        {
+            if (player.CurrentMovementDirection != MovementDirection.Left || player.BodyParts.Count == 0)
+                player.CurrentMovementDirection = MovementDirection.Right;
+        }
+    }
+}

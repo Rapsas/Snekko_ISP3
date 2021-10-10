@@ -5,6 +5,7 @@ using Snakey.Config;
 using Snakey.Factories;
 using Snakey.Managers;
 using Snakey.Models;
+using Snakey.Strategies;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -326,29 +327,25 @@ namespace Snakey
         {
             if (GameState.Player.IsMovementLocked)
                 return;
-
+            MovementContext context = new MovementContext();
             switch (e.Key)
             {
                 case Key.A:
-                    // Dont let snake go into itself
-                    if (GameState.Player.CurrentMovementDirection != MovementDirection.Right || GameState.Player.BodyParts.Count == 0)
-                        GameState.Player.CurrentMovementDirection = MovementDirection.Left;
+                    context.SetStrategy(new MovementLeftStrategy());
                     break;
                 case Key.W:
-                    if (GameState.Player.CurrentMovementDirection != MovementDirection.Down || GameState.Player.BodyParts.Count == 0)
-                        GameState.Player.CurrentMovementDirection = MovementDirection.Up;
+                    context.SetStrategy(new MovementUpStrategy());
                     break;
                 case Key.S:
-                    if (GameState.Player.CurrentMovementDirection != MovementDirection.Up || GameState.Player.BodyParts.Count == 0)
-                        GameState.Player.CurrentMovementDirection = MovementDirection.Down;
+                    context.SetStrategy(new MovementDownStrategy());
                     break;
                 case Key.D:
-                    if (GameState.Player.CurrentMovementDirection != MovementDirection.Left || GameState.Player.BodyParts.Count == 0)
-                        GameState.Player.CurrentMovementDirection = MovementDirection.Right;
+                    context.SetStrategy(new MovementRightStrategy());
                     break;
                 default:
                     break;
             }
+            context.ExecuteStrategy(GameState.Player);
             GameState.Player.IsMovementLocked = true;
         }
     }
