@@ -50,7 +50,7 @@ namespace Snakey
 
             GameMap = mapFactory.CreateMap(MapTypes.Basic);
 
-            MultiplayerManager = new("http://localhost:5000/gameHub");
+            MultiplayerManager = new("http://localhost:5000/gameHub"); // new("http://158.129.23.210:5003/gameHub");
         }
 
         private void GameLoop(object sender, EventArgs e)
