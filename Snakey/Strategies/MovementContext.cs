@@ -25,6 +25,7 @@ namespace Snakey.Strategies
         }
         public void ExecuteStrategy(Snake player)
         {
+            if (_movementStrategy != null)
             _movementStrategy.ChangeMovementDirection(player);
         }
     }
