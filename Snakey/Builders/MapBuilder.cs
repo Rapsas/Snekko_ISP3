@@ -12,11 +12,7 @@ namespace Snakey.Builders
         {
             return _map;
         }
-        public MapBuilder StartNew(Map map)
-        {
-            _map = map;
-            return this;
-        }
+        public abstract MapBuilder StartNew();
         public MapBuilder AddGridLines()
         {
             for (int row = 0; row < Settings.WindowHeight; row += Settings.CellSize)

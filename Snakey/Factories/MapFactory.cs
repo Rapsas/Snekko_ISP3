@@ -1,6 +1,5 @@
 ﻿using Common.Enums;
 using Snakey.Builders;
-using Snakey.Maps;
 using Snakey.Models;
 
 namespace Snakey.Factories
@@ -9,14 +8,14 @@ namespace Snakey.Factories
     {
         public Map CreateMap(MapTypes map)
         {
-            MapBuilder builder = new MapConfiguration();
-            return map switch
+            MapBuilder builder = map switch
             {
-                MapTypes.Basic => builder.StartNew(new BasicMap()).AddGridLines().Build(),
-                MapTypes.Advance => builder.StartNew(new AdvanceMap()).AddGridLines().AddObstacles().Build(),
-                MapTypes.Expert => builder.StartNew(new ExpertMap()).AddGridLines().AddWalls().AddObstacles().Build(),
+                MapTypes.Basic => new BasicMapConfiguration(),
+                MapTypes.Advance => new AdvanceMapConfiguration(),
+                MapTypes.Expert => new ExpertMapConfiguration(),
                 _ => null,
             };
+            return builder.StartNew().AddGridLines().AddObstacles().AddWalls().Build();
         }
     }
 }

@@ -1,13 +1,17 @@
-﻿
+﻿using Common.Utility;
 using Snakey.Config;
-using Common.Utility;
+using Snakey.Maps;
 using System;
-using System.Windows.Shapes;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace Snakey.Builders
 {
-    class MapConfiguration : MapBuilder
+    class ExpertMapConfiguration : MapBuilder
     {
         public override MapBuilder AddObstacles()
         {
@@ -40,7 +44,8 @@ namespace Snakey.Builders
 
                 _map.Obsticles.Add((
                     obstacleLocation,
-                    new Rectangle() {
+                    new Rectangle()
+                    {
                         Width = Settings.CellSize,
                         Height = Settings.CellSize,
                         Fill = Brushes.Black
@@ -85,6 +90,12 @@ namespace Snakey.Builders
                     Fill = Brushes.Black
                 }));
             }
+            return this;
+        }
+
+        public override MapBuilder StartNew()
+        {
+            _map = new ExpertMap();
             return this;
         }
     }
