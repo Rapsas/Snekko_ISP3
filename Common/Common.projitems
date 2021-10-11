@@ -12,6 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Config\Settings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums\MapTypes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums\MovementDiretion.cs" />
+    <Compile Include="..\Common\Utility\Colors.cs" />
     <Compile Include="..\Common\Utility\PlayerPackage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utility\Vector2D.cs" />
   </ItemGroup>

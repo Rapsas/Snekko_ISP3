@@ -22,7 +22,10 @@
             <Button Name="ConnectButton"  Content="Connect to server" Click="Sign_to_server"></Button>
             <Button Name="Level1"  Content="Level 1" Click="Switch_to_level_1"></Button>
             <Button Name="Level2"  Content="Level 2" Click="Switch_to_level_2"></Button>
-            <Button Name="Level3"  Content="Level 2" Click="Switch_to_level_3"></Button>
+            <Button Name="Level3"  Content="Level 3" Click="Switch_to_level_3"></Button>
+            <Button Name="HeadColor"  Content="Change Head" Click="Change_head_color"></Button>
+            <Button Name="BodyColor"  Content="Change Body" Click="Change_body_color"></Button>
+            <Button Name="tailColor"  Content="Change Tail" Click="Change_tail_color"></Button>
         </StackPanel>
         
         <Border BorderBrush="Green" BorderThickness="5">

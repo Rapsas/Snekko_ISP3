@@ -130,10 +130,15 @@ namespace Snakey
         {
             MultiplayerManager.Connection.On<PlayerPackage>("RecievePositions", (package) =>
               {
-                 GameState.SecondPlayer.HeadLocation = package.SnakeHeadLocation;
-                 GameState.SecondPlayer.BodyParts = package.SnakeBodyLocation;
-                 GameState.SecondPlayer.CurrentMovementDirection = package.SnakeMovementDirection;
-                 GameState.SecondPlayer.TailLocation = package.SnakeTailLocation;
+                  GameState.SecondPlayer.HeadLocation = package.SnakeHeadLocation;
+                  GameState.SecondPlayer.BodyParts = package.SnakeBodyLocation;
+                  GameState.SecondPlayer.CurrentMovementDirection = package.SnakeMovementDirection;
+                  GameState.SecondPlayer.TailLocation = package.SnakeTailLocation;
+                  GameState.SecondPlayer.TailLocation = package.SnakeTailLocation;
+                  GameState.SecondPlayer.TailLocation = package.SnakeTailLocation;
+                  GameState.SecondPlayer.HeadColor.Color = Color.FromRgb(package.HeadColor.R, package.HeadColor.G, package.HeadColor.B);
+                  GameState.SecondPlayer.BodyColor.Color = Color.FromRgb(package.BodyColor.R, package.BodyColor.G, package.BodyColor.B);
+                  GameState.SecondPlayer.TailColor.Color = Color.FromRgb(package.TailColor.R, package.TailColor.G, package.TailColor.B);
               });
 
             MultiplayerManager.Connection.On<string>("RecieveSnackPositions", (snacks) =>
@@ -261,12 +266,12 @@ namespace Snakey
         {
             if (player is null)
                 return;
-            DrawSquare(player.HeadLocation, Brushes.Green);
+            DrawSquare(player.HeadLocation, player.HeadColor);
             foreach (var partLocation in player.BodyParts)
             {
-                DrawSquare(partLocation, Brushes.GreenYellow);
+                DrawSquare(partLocation, player.BodyColor);
             }
-            DrawSquare(player.TailLocation, Brushes.Blue);
+            DrawSquare(player.TailLocation, player.TailColor);
         }
         public void ClearScreen()
         {
@@ -364,6 +369,39 @@ namespace Snakey
 
             GameMap = mapFactory.CreateMap(MapTypes.Expert);
             GameState.Player.Reset();
+        }
+
+        private void Change_head_color(object sender, RoutedEventArgs e)
+        {
+            var rnd = new Random();
+
+            byte R = (byte)rnd.Next(256);
+            byte G = (byte)rnd.Next(256);
+            byte B = (byte)rnd.Next(256);
+
+            GameState.Player.HeadColor.Color = Color.FromRgb(R, G, B);
+        }
+
+        private void Change_body_color(object sender, RoutedEventArgs e)
+        {
+            var rnd = new Random();
+
+            byte R = (byte)rnd.Next(256);
+            byte G = (byte)rnd.Next(256);
+            byte B = (byte)rnd.Next(256);
+
+            GameState.Player.BodyColor.Color = Color.FromRgb(R, G, B);
+        }
+
+        private void Change_tail_color(object sender, RoutedEventArgs e)
+        {
+            var rnd = new Random();
+
+            byte R = (byte)rnd.Next(256);
+            byte G = (byte)rnd.Next(256);
+            byte B = (byte)rnd.Next(256);
+
+            GameState.Player.TailColor.Color = Color.FromRgb(R, G, B);
         }
     }
 }

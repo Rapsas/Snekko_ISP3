@@ -11,5 +11,8 @@ namespace Common.Utility
         public Vector2D SnakeTailLocation{ get; set; }
         public MovementDirection SnakeMovementDirection { get; set; }
         public Queue<Vector2D> SnakeBodyLocation{ get; set; }
+        public Colors HeadColor { get; set; }
+        public Colors BodyColor { get; set; }
+        public Colors TailColor { get; set; }
     }
 }
