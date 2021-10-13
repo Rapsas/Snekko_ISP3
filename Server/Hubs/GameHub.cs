@@ -43,14 +43,15 @@ namespace Server.Hubs
         {
             Storage.Players.Add(Context.ConnectionId);
             Storage.UserCount++;
+            Console.WriteLine($"Player connected with ID {Context.ConnectionId}");
+            await base.OnConnectedAsync();
             if (Storage.UserCount == 2)
             {
                 Console.WriteLine("Second player connected. Sending list");
                 // Ask first player for a snack list
                 await Clients.Client(Storage.Players[0]).SendAsync("AskForSnackList");
             }
-            Console.WriteLine($"Player connected with ID {Context.ConnectionId}");
-            await base.OnConnectedAsync();
+
         }
 
         public async override Task OnDisconnectedAsync(Exception exception)
