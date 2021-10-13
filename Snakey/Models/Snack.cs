@@ -13,11 +13,16 @@ namespace Snakey.Models
         public Vector2D Location { get; set; }
         public bool WasConsumed { get; set; } = false;
 
-        protected EffectType _effectType;
-        protected FoodType _foodType;
+        private EffectType _effectType;
+        private FoodType _foodType;
         protected Canvas _gameArea = GameState.Instance.GameArea;
         protected Shape _body;
 
+        public void SetTypesForServer(EffectType effectType, FoodType foodType)
+        {
+            _effectType = effectType;
+            _foodType = foodType;
+        }
         public void Draw()
         {
             _gameArea.Children.Add(_body);

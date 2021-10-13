@@ -11,7 +11,6 @@ namespace Snakey.Snacks
         public MysterySnack()
         {
             WasConsumed = false;
-            _effectType = EffectType.Mystery;
         }
         public override void TriggerEffect()
         {

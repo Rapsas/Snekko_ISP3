@@ -1,4 +1,5 @@
-﻿using Snakey.Snacks;
+﻿using Common.Enums;
+using Snakey.Snacks;
 
 namespace Snakey.Factories
 {
@@ -6,17 +7,23 @@ namespace Snakey.Factories
     {
         public BadSnack CreateBadSnack()
         {
-            return new BadApple();
+            var snack = new BadApple();
+            snack.SetTypesForServer(EffectType.Bad, FoodType.Apple);
+            return snack;
         }
 
         public GoodSnack CreateGoodSnack()
         {
-            return new GoodApple();
+            var snack = new GoodApple();
+            snack.SetTypesForServer(EffectType.Good, FoodType.Apple);
+            return snack;
         }
 
         public MysterySnack CreateMysterySnack()
         {
-            return new MysteryApple();
+            var snack = new MysteryApple();
+            snack.SetTypesForServer(EffectType.Mystery, FoodType.Apple);
+            return snack;
         }
     }
 }

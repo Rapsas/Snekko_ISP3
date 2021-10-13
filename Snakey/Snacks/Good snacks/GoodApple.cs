@@ -15,7 +15,6 @@ namespace Snakey.Snacks
         }
         public GoodApple() : base()
         {
-            _foodType = FoodType.Apple;
             _body = new Rectangle()
             {
                 Stroke = this.Stroke,

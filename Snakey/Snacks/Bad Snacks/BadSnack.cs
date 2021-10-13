@@ -11,7 +11,6 @@ namespace Snakey.Snacks
         public BadSnack()
         {
             WasConsumed = false;
-            _effectType = EffectType.Bad;
         }
         public override void TriggerEffect()
         {

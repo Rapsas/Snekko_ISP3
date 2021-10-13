@@ -15,7 +15,6 @@ namespace Snakey.Snacks
         }
         public GoodLemon() : base()
         {
-            _foodType = FoodType.Lemon;
             _body = new Ellipse()
             {
                 Stroke = this.Stroke,

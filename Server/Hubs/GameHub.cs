@@ -47,7 +47,7 @@ namespace Server.Hubs
             {
                 Console.WriteLine("Second player connected. Sending list");
                 // Ask first player for a snack list
-                Clients.Client(Storage.Players[0]).SendAsync("AskForSnackList");
+                await Clients.Client(Storage.Players[0]).SendAsync("AskForSnackList");
             }
             Console.WriteLine($"Player connected with ID {Context.ConnectionId}");
             await base.OnConnectedAsync();
@@ -56,6 +56,7 @@ namespace Server.Hubs
         public async override Task OnDisconnectedAsync(Exception exception)
         {
             Storage.UserCount--;
+            Storage.Players.Remove(Context.ConnectionId);
             Console.WriteLine($"Player disconnected with ID {Context.ConnectionId}");
             await base.OnDisconnectedAsync(new Exception("Disconnected player"));
         }
