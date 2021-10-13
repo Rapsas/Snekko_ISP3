@@ -1,4 +1,5 @@
-﻿using Snakey.Config;
+﻿using Common.Enums;
+using Snakey.Config;
 using Snakey.Managers;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -14,6 +15,7 @@ namespace Snakey.Snacks
         }
         public BadApple() : base()
         {
+            _foodType = FoodType.Apple;
             _body = new Rectangle()
             {
                 Stroke = this.Stroke,

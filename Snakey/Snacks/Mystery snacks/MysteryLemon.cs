@@ -1,4 +1,5 @@
-﻿using Snakey.Config;
+﻿using Common.Enums;
+using Snakey.Config;
 using Snakey.Managers;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -13,6 +14,7 @@ namespace Snakey.Snacks
         }
         public MysteryLemon() : base()
         {
+            _foodType = FoodType.Lemon;
             _body = new Ellipse()
             {
                 Stroke = this.Stroke,

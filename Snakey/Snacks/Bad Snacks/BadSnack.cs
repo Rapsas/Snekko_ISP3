@@ -1,4 +1,5 @@
-﻿using Snakey.Models;
+﻿using Common.Enums;
+using Snakey.Models;
 using System.Windows.Media;
 
 namespace Snakey.Snacks
@@ -10,6 +11,7 @@ namespace Snakey.Snacks
         public BadSnack()
         {
             WasConsumed = false;
+            _effectType = EffectType.Bad;
         }
         public override void TriggerEffect()
         {

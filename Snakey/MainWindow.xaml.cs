@@ -8,6 +8,8 @@ using Snakey.Maps;
 using Snakey.Models;
 using Snakey.Strategies;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -140,19 +142,60 @@ namespace Snakey
                   GameState.SecondPlayer.BodyColor.Color = Color.FromRgb(package.BodyColor.R, package.BodyColor.G, package.BodyColor.B);
                   GameState.SecondPlayer.TailColor.Color = Color.FromRgb(package.TailColor.R, package.TailColor.G, package.TailColor.B);
               });
-
-            MultiplayerManager.Connection.On<string>("RecieveSnackPositions", (snacks) =>
+            MultiplayerManager.Connection.On<SnackPackage>("RecieveEatenSnackPosition", (snack) =>
             {
-                // XD
-                //GameState.Snacks = snacks;
+                GameState.Snacks.RemoveAll((s) => s.Location.IsOverlaping(snack.Location));
             });
-        }
-        public void SendSnackPositions()
-        {
-            if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
+            MultiplayerManager.Connection.On<List<SnackPackage>>("RecieveSnackList", (snacks) =>
             {
-                MultiplayerManager.Connection.SendAsync("SendSnackPositions", GameState.Snacks[0]).Wait();
-            }
+                GameState.Snacks.Clear(); // Clear current snacks
+
+                // Build Snacks
+                foreach (var item in snacks)
+                {
+                    ISnackFactory factory = item.FoodType switch
+                    {
+                        FoodType.Apple => new AppleFactory(),
+                        FoodType.Lemon => new LemonFactory(),
+                        _ => null
+                    };
+
+                    Snack snack = item.EffectType switch
+                    {
+                        EffectType.Good => factory.CreateGoodSnack(),
+                        EffectType.Bad => factory.CreateBadSnack(),
+                        EffectType.Mystery => factory.CreateMysterySnack(),
+                        _ => null
+                    };
+
+                    snack.Location = item.Location;
+                    GameState.Snacks.Add(snack);
+                }
+            });
+            MultiplayerManager.Connection.On("AskForSnackList", () =>
+            {
+                SendSnackList();
+            });
+            MultiplayerManager.Connection.On<SnackPackage>("AddSnack", (s) =>
+            {
+                ISnackFactory factory = s.FoodType switch
+                {
+                    FoodType.Apple => new AppleFactory(),
+                    FoodType.Lemon => new LemonFactory(),
+                    _ => null
+                };
+
+                Snack snack = s.EffectType switch
+                {
+                    EffectType.Good => factory.CreateGoodSnack(),
+                    EffectType.Bad => factory.CreateBadSnack(),
+                    EffectType.Mystery => factory.CreateMysterySnack(),
+                    _ => null
+                };
+
+                snack.Location = s.Location;
+                GameState.Snacks.Add(snack);
+            });
         }
         public void SendPositions()
         {
@@ -160,9 +203,17 @@ namespace Snakey
                 MultiplayerManager.Connection.SendAsync("SendPositions", GameState.Player.MakeServerPackage()).Wait();
         }
 
+        public void SendSnackList()
+        {
+            if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
+            {
+                var snacks = GameState.Snacks.Select((snack) => snack.SnackPackage()).ToList();
+                MultiplayerManager.Connection.SendAsync("SendSnackList", snacks).Wait();
+            }
+        }
+
         private void CheckSnackCollision()
         {
-            bool ateSnack = false;
             foreach (var snack in GameState.Snacks)
             {
                 if (snack.Location.IsOverlaping(GameState.Player.HeadLocation))
@@ -170,12 +221,19 @@ namespace Snakey
                     snack.TriggerEffect();
                     snack.WasConsumed = true;
                     tmpCounter--;
-                    ateSnack = true;
                 }
             }
-            GameState.Snacks.RemoveAll(x => x.WasConsumed /*&& x.EffectTimer <= 0*/);
-            if (ateSnack)
-                SendSnackPositions();
+
+            if(MultiplayerManager.Connection.State == HubConnectionState.Connected)
+                GameState.Snacks.ForEach(snack =>
+                {
+                    if (snack.WasConsumed)
+                    {
+                        MultiplayerManager.Connection.SendAsync("SendEatenSnackPosition", snack.SnackPackage()).Wait();
+                    }
+                });
+
+            GameState.Snacks.RemoveAll(x => x.WasConsumed);
         }
         private void DrawSnacks()
         {
@@ -258,6 +316,10 @@ namespace Snakey
 
                 snack.Location = snackLocation;
                 GameState.Snacks.Add(snack);
+
+                if(MultiplayerManager.Connection.State == HubConnectionState.Connected)
+                    MultiplayerManager.Connection.SendAsync("AddNewSnack", snack.SnackPackage()).Wait();
+
                 tmpCounter++;
             }
         }

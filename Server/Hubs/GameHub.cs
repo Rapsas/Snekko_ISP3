@@ -6,28 +6,56 @@ using System.Threading.Tasks;
 
 namespace Server.Hubs
 {
+    public class Storage
+    {
+        public static int UserCount = 0;
+        public static List<string> Players = new();
+    }
+
     public class GameHub : Hub
     {
         public async Task SendPositions(PlayerPackage package)
         {
-            Console.WriteLine($"Got player data from ID {Context.ConnectionId} with data {package.SnakeHeadLocation}");
+            //Console.WriteLine($"Got player data from ID {Context.ConnectionId} with data {package.SnakeHeadLocation}");
             await Clients.Others.SendAsync("RecievePositions", package);
         }
 
-        public async Task SendSnackPositions(string snacks)
+        public async Task SendEatenSnackPosition(SnackPackage snack)
         {
-            //Console.WriteLine($"Got snack data from ID {Context.ConnectionId} with location {snacks.Location}");
-            await Clients.Caller.SendAsync("RecieveSnackPositions", snacks);
+            //Console.WriteLine($"Got snack data from ID {Context.ConnectionId} with location {snack.Location}");
+            await Clients.Others.SendAsync("RecieveEatenSnackPosition", snack);
         }
+
+        public async Task SendSnackList(List<SnackPackage> snack)
+        {
+            //Console.WriteLine($"Got snack list");
+            await Clients.Others.SendAsync("RecieveSnackList", snack);
+        }
+
+        public async Task AddNewSnack(SnackPackage snack)
+        {
+            //Console.WriteLine($"Got newly made snack ");
+            await Clients.Others.SendAsync("AddSnack", snack);
+        }
+
 
         public override async Task OnConnectedAsync()
         {
+            Storage.Players.Add(Context.ConnectionId);
+            Storage.UserCount++;
+            if (Storage.UserCount == 2)
+            {
+                Console.WriteLine("Second player connected. Sending list");
+                // Ask first player for a snack list
+                Clients.Client(Storage.Players[0]).SendAsync("AskForSnackList");
+            }
             Console.WriteLine($"Player connected with ID {Context.ConnectionId}");
             await base.OnConnectedAsync();
         }
 
         public async override Task OnDisconnectedAsync(Exception exception)
         {
+            Storage.UserCount--;
             Console.WriteLine($"Player disconnected with ID {Context.ConnectionId}");
             await base.OnDisconnectedAsync(new Exception("Disconnected player"));
         }
