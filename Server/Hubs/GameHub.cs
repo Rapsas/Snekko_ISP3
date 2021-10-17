@@ -1,4 +1,5 @@
-﻿using Common.Utility;
+﻿using Common.Enums;
+using Common.Utility;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,12 @@ namespace Server.Hubs
         {
             //Console.WriteLine($"Got newly made snack ");
             await Clients.Others.SendAsync("AddSnack", snack);
+        }
+
+        public async Task ChangeMap(MapTypes mapType)
+        {
+            //Console.WriteLine($"Got newly made snack ");
+            await Clients.Others.SendAsync("ChangeMap", mapType);
         }
 
 

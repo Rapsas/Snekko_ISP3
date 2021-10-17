@@ -196,6 +196,13 @@ namespace Snakey
                 snack.Location = s.Location;
                 GameState.Snacks.Add(snack);
             });
+            MultiplayerManager.Connection.On<MapTypes>("ChangeMap", (map) =>
+            {
+                var mapFactory = new MapFactory();
+
+                GameMap = mapFactory.CreateMap(map);
+                GameState.Player.Reset();
+            });
         }
         public void SendPositions()
         {
@@ -317,8 +324,7 @@ namespace Snakey
                 snack.Location = snackLocation;
                 GameState.Snacks.Add(snack);
 
-                if(MultiplayerManager.Connection.State == HubConnectionState.Connected)
-                    MultiplayerManager.Connection.SendAsync("AddNewSnack", snack.SnackPackage()).Wait();
+                MultiplayerManager.Connection?.SendAsync("AddNewSnack", snack.SnackPackage()).Wait();
 
                 tmpCounter++;
             }
@@ -413,6 +419,8 @@ namespace Snakey
 
             GameMap = mapFactory.CreateMap(MapTypes.Basic);
             GameState.Player.Reset();
+
+            MultiplayerManager.Connection?.SendAsync("ChangeMap", MapTypes.Basic);
         }
         private void Switch_to_level_2(object sender, EventArgs e)
         {
@@ -422,6 +430,8 @@ namespace Snakey
 
             GameMap = mapFactory.CreateMap(MapTypes.Advance);
             GameState.Player.Reset();
+
+            MultiplayerManager.Connection?.SendAsync("ChangeMap", MapTypes.Advance);
         }
         private void Switch_to_level_3(object sender, EventArgs e)
         {
@@ -431,6 +441,8 @@ namespace Snakey
 
             GameMap = mapFactory.CreateMap(MapTypes.Expert);
             GameState.Player.Reset();
+
+            MultiplayerManager.Connection?.SendAsync("ChangeMap", MapTypes.Expert);
         }
 
         private void Change_head_color(object sender, RoutedEventArgs e)
