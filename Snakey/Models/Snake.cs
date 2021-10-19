@@ -17,6 +17,8 @@ namespace Snakey.Models
         public SolidColorBrush TailColor { get; set; }
         public bool IsDead { get; set; }
         public bool IsMovementLocked { get; set; }
+        public bool IgnoreBodyCollisionWithHead { get; set; }
+
         public Snake()
         {
             HeadColor = new();
@@ -28,6 +30,7 @@ namespace Snakey.Models
             CurrentMovementDirection = MovementDirection.Right;
             IsDead = false;
             IsMovementLocked = false;
+            IgnoreBodyCollisionWithHead = false;
             HeadColor.Color = Color.FromRgb(152, 100, 0);
             BodyColor.Color = Color.FromRgb(152, 200, 255);
             TailColor.Color = Color.FromRgb(50, 100, 120);
@@ -67,6 +70,7 @@ namespace Snakey.Models
             var lastPart = BodyParts.Dequeue();
             TailLocation = lastPart;
             IsMovementLocked = false;
+            IgnoreBodyCollisionWithHead = false;
         }
         public void Expand()
         {

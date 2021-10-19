@@ -52,7 +52,8 @@ namespace Snakey
 
             GameMap = mapFactory.CreateMap(MapTypes.Basic);
 
-            MultiplayerManager = new("http://localhost:5000/gameHub"); // new("http://158.129.23.210:5003/gameHub");
+            MultiplayerManager = /*new("http://localhost:5000/gameHub");*/  new("http://158.129.23.210:5003/gameHub");
+            GameState.MultiplayerManager = MultiplayerManager;
         }
 
         private void GameLoop(object sender, EventArgs e)
@@ -82,14 +83,16 @@ namespace Snakey
             var player = GameState.Player;
             var secondPlayer = GameState.SecondPlayer;
 
-            foreach (var bodyPart in player.BodyParts)
-            {
-                if (player.HeadLocation.IsOverlaping(bodyPart))
+            if(!player.IgnoreBodyCollisionWithHead)
+                foreach (var bodyPart in player.BodyParts)
                 {
-                    player.IsDead = true;
-                    break;
+                    if (player.HeadLocation.IsOverlaping(bodyPart))
+                    {
+                        player.IsDead = true;
+                        break;
+                    }
                 }
-            }
+
             if (player.HeadLocation.IsOverlaping(player.TailLocation))
             {
                 player.IsDead = true;
@@ -202,6 +205,21 @@ namespace Snakey
 
                 GameMap = mapFactory.CreateMap(map);
                 GameState.Player.Reset();
+            });
+            MultiplayerManager.Connection.On<int>("ShortenSecondPlayer", (n) =>
+            {
+                if(n < 0)
+                {
+                    n *= -1;
+                    for (int i = 0; i < n; i++)
+                        GameState.Player.Shrink();
+                } 
+                else
+                {
+                    for (int i = 0; i < n; i++)
+                        GameState.Player.Expand();
+                }
+                GameState.Player.IgnoreBodyCollisionWithHead = true;
             });
         }
         public void SendPositions()
@@ -324,7 +342,8 @@ namespace Snakey
                 snack.Location = snackLocation;
                 GameState.Snacks.Add(snack);
 
-                MultiplayerManager.Connection?.SendAsync("AddNewSnack", snack.SnackPackage()).Wait();
+                if(MultiplayerManager.Connection.State == HubConnectionState.Connected)
+                    MultiplayerManager.Connection?.SendAsync("AddNewSnack", snack.SnackPackage()).Wait();
 
                 tmpCounter++;
             }
@@ -420,7 +439,8 @@ namespace Snakey
             GameMap = mapFactory.CreateMap(MapTypes.Basic);
             GameState.Player.Reset();
 
-            MultiplayerManager.Connection?.SendAsync("ChangeMap", MapTypes.Basic);
+            if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
+                MultiplayerManager.Connection?.SendAsync("ChangeMap", MapTypes.Basic);
         }
         private void Switch_to_level_2(object sender, EventArgs e)
         {
@@ -431,7 +451,8 @@ namespace Snakey
             GameMap = mapFactory.CreateMap(MapTypes.Advance);
             GameState.Player.Reset();
 
-            MultiplayerManager.Connection?.SendAsync("ChangeMap", MapTypes.Advance);
+            if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
+                MultiplayerManager.Connection?.SendAsync("ChangeMap", MapTypes.Advance);
         }
         private void Switch_to_level_3(object sender, EventArgs e)
         {
@@ -442,7 +463,8 @@ namespace Snakey
             GameMap = mapFactory.CreateMap(MapTypes.Expert);
             GameState.Player.Reset();
 
-            MultiplayerManager.Connection?.SendAsync("ChangeMap", MapTypes.Expert);
+            if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
+                MultiplayerManager.Connection?.SendAsync("ChangeMap", MapTypes.Expert);
         }
 
         private void Change_head_color(object sender, RoutedEventArgs e)

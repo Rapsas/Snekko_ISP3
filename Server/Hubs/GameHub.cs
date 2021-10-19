@@ -45,6 +45,12 @@ namespace Server.Hubs
             await Clients.Others.SendAsync("ChangeMap", mapType);
         }
 
+        public async Task ChangePlayerSize(int timesToShorten)
+        {
+            Console.WriteLine($"Expand other players by {timesToShorten}");
+            await Clients.Others.SendAsync("ShortenSecondPlayer", timesToShorten);
+        }
+
 
         public override async Task OnConnectedAsync()
         {

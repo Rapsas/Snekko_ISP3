@@ -17,6 +17,7 @@ namespace Snakey.Managers
         public DispatcherTimer GameTimer { get; set; }
         public Canvas GameArea { get; set; }
         public Label ScoreLabel { get; set; }
+        public MultiplayerManager MultiplayerManager { get; set; }
         public int Score
         {
             get => _gameScore;

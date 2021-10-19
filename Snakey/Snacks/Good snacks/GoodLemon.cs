@@ -1,4 +1,5 @@
 ﻿using Common.Enums;
+using Microsoft.AspNetCore.SignalR.Client;
 using Snakey.Config;
 using Snakey.Managers;
 using System.Windows.Media;
@@ -11,7 +12,8 @@ namespace Snakey.Snacks
         public override void TriggerEffect()
         {
             GameState.Instance.Score++;
-            GameState.Instance.Player.Expand();
+            if (GameState.Instance.MultiplayerManager.Connection.State == HubConnectionState.Connected)
+                GameState.Instance.MultiplayerManager.Connection?.SendAsync("ChangePlayerSize", -1).Wait();
         }
         public GoodLemon() : base()
         {
