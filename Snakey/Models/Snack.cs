@@ -1,6 +1,7 @@
 ﻿using Common.Enums;
 using Common.Utility;
 using Snakey.Managers;
+using Snakey.Observer;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 
@@ -8,7 +9,7 @@ namespace Snakey.Models
 {
     // NOTE: this shit wont send through SignalR so we will need some sort of 
     // new package to transfer type and location in rebuild the list it at the other end
-    public abstract class Snack
+    public abstract class Snack : IObserver
     {
         public Vector2D Location { get; set; }
         public bool WasConsumed { get; set; } = false;
@@ -40,5 +41,11 @@ namespace Snakey.Models
             };
         }
         public abstract void TriggerEffect();
+
+        public void Update(Snack snack)
+        {
+            snack.TriggerEffect();
+            snack.WasConsumed = true;
+        }
     }
 }

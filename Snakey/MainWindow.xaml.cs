@@ -6,6 +6,8 @@ using Snakey.Factories;
 using Snakey.Managers;
 using Snakey.Maps;
 using Snakey.Models;
+using Snakey.Observer;
+using Snakey.Snacks;
 using Snakey.Strategies;
 using System;
 using System.Collections.Generic;
@@ -27,11 +29,13 @@ namespace Snakey
         public MultiplayerManager MultiplayerManager { get; set; }
         public GameState GameState { get; set; }
         public Map GameMap { get; set; }
+        Publisher Publisher;
 
         public MainWindow()
         {
             InitializeComponent();
             InitializeGameComponents();
+            RegisterObservers();
         }
         public void InitializeGameComponents()
         {
@@ -70,6 +74,13 @@ namespace Snakey
             DrawSnake(GameState.Player);
             DrawSnake(GameState.SecondPlayer);
             GameState.Player.Move();
+        }
+
+        private void RegisterObservers()
+        {
+            Publisher = new();
+            BadSnack snack = new();
+            Publisher.RegisterObserver(snack);
         }
 
         private void CheckPlayerCollision()
@@ -244,8 +255,10 @@ namespace Snakey
             {
                 if (snack.Location.IsOverlaping(GameState.Player.HeadLocation))
                 {
-                    snack.TriggerEffect();
-                    snack.WasConsumed = true;
+                    //snack.TriggerEffect();
+                    //snack.WasConsumed = true;
+
+                    Publisher.NotifyObservers(snack);
                 }
             }
 
