@@ -245,7 +245,6 @@ namespace Snakey
                 {
                     snack.TriggerEffect();
                     snack.WasConsumed = true;
-                    tmpCounter--;
                 }
             }
 
@@ -270,10 +269,9 @@ namespace Snakey
                 item.Draw();
             }
         }
-        int tmpCounter = 0;
         private void PlaceSnackIfNeeded()
         {
-            if (tmpCounter >= Settings.MaximumSnackCount)
+            if (GameState.Snacks.Count >= Settings.MaximumSnackCount)
                 return;
 
             Random rnd = new();
@@ -291,7 +289,7 @@ namespace Snakey
 
             for (int i = 0; i < 100; i++) // 100 tries to place a snack randomly
             {
-                if (tmpCounter >= Settings.MaximumSnackCount)
+                if (GameState.Snacks.Count >= Settings.MaximumSnackCount)
                     return;
                 int rndX = rnd.Next(0, (int)GameArea.ActualWidth / Settings.CellSize) * Settings.CellSize;
                 int rndY = rnd.Next(0, (int)GameArea.ActualHeight / Settings.CellSize) * Settings.CellSize;
@@ -344,7 +342,6 @@ namespace Snakey
 
                 if(MultiplayerManager.Connection.State == HubConnectionState.Connected)
                     MultiplayerManager.Connection?.SendAsync("AddNewSnack", snack.SnackPackage()).Wait();
-
                 tmpCounter++;
             }
         }
