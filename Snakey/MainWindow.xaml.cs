@@ -205,6 +205,7 @@ namespace Snakey
 
                 GameMap = mapFactory.CreateMap(map);
                 GameState.Player.Reset();
+                GameState.Player.HeadLocation += (0, Settings.CellSize);
             });
             MultiplayerManager.Connection.On<int>("ShortenSecondPlayer", (n) =>
             {
@@ -342,7 +343,6 @@ namespace Snakey
 
                 if(MultiplayerManager.Connection.State == HubConnectionState.Connected)
                     MultiplayerManager.Connection?.SendAsync("AddNewSnack", snack.SnackPackage()).Wait();
-                tmpCounter++;
             }
         }
 
@@ -435,9 +435,14 @@ namespace Snakey
 
             GameMap = mapFactory.CreateMap(MapTypes.Basic);
             GameState.Player.Reset();
+            GameState.Snacks.Clear(); // Clear all snacks
+            PlaceSnackIfNeeded(); // Replace all snacks
 
             if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
+            {
                 MultiplayerManager.Connection?.SendAsync("ChangeMap", MapTypes.Basic);
+                SendSnackList();
+            }
         }
         private void Switch_to_level_2(object sender, EventArgs e)
         {
@@ -447,9 +452,14 @@ namespace Snakey
 
             GameMap = mapFactory.CreateMap(MapTypes.Advance);
             GameState.Player.Reset();
+            GameState.Snacks.Clear(); // Clear all snacks
+            PlaceSnackIfNeeded(); // Replace all snacks
 
             if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
+            {
                 MultiplayerManager.Connection?.SendAsync("ChangeMap", MapTypes.Advance);
+                SendSnackList();
+            }
         }
         private void Switch_to_level_3(object sender, EventArgs e)
         {
@@ -459,9 +469,14 @@ namespace Snakey
 
             GameMap = mapFactory.CreateMap(MapTypes.Expert);
             GameState.Player.Reset();
+            GameState.Snacks.Clear(); // Clear all snacks
+            PlaceSnackIfNeeded(); // Replace all snacks
 
             if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
+            {
                 MultiplayerManager.Connection?.SendAsync("ChangeMap", MapTypes.Expert);
+                SendSnackList();
+            }
         }
 
         private void Change_head_color(object sender, RoutedEventArgs e)
