@@ -80,7 +80,10 @@ namespace Snakey
         {
             Publisher = new();
             SnackObserver snackObserver = new();
+            AudioPlayer audioOBserver = new();
+
             Publisher.RegisterObserver(snackObserver);
+            Publisher.RegisterObserver(audioOBserver);
         }
 
         private void CheckPlayerCollision()

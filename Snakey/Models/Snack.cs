@@ -42,5 +42,6 @@ namespace Snakey.Models
         }
         public abstract void TriggerEffect();
 
+
     }
 }
