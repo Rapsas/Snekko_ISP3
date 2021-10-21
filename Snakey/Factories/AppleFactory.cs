@@ -7,7 +7,8 @@ namespace Snakey.Factories
 {
     class AppleFactory : ISnackFactory
     {
-        public Snack CreateBadSnack()
+        private MysteryApple _mysteryApple;
+        public BadSnack CreateBadSnack()
         {
             var snack = new BadApple();
             var snackScoreDecorator = new DecreaseScoreTriggerEffectDecorator(snack);
@@ -27,10 +28,18 @@ namespace Snakey.Factories
 
         public Snack CreateMysterySnack()
         {
-            var snack = new MysteryApple();
-            var snackScoreDecorator = new IncreaseScoreTriggerEffectDecorator(snack);
-            snack.SetTypesForServer(EffectType.Mystery, FoodType.Apple);
+            var clonedApple = _mysteryApple.DeepClone();
+            //var deepClonedApple = _mysteryApple.DeepClone();
+            //var a = clonedApple.ToString();
+            //var b = _mysteryApple.ToString();
+            //var c = deepClonedApple.ToString();
+            var snackScoreDecorator = new IncreaseScoreTriggerEffectDecorator(clonedApple);
             return snackScoreDecorator;
+        }
+        public AppleFactory()
+        {
+            _mysteryApple = new MysteryApple();
+            _mysteryApple.SetTypesForServer(EffectType.Mystery, FoodType.Apple);
         }
     }
 }

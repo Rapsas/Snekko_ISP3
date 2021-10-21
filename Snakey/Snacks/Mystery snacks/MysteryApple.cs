@@ -12,8 +12,8 @@ namespace Snakey.Snacks
     {
         public override void TriggerEffect()
         {
-            //GameState.Instance.Score++;
-            var choice = new Random().Next(11);
+            var choice = rnd.Next(11);
+
             if (choice > 5)
             {
                 if (GameState.Instance.MultiplayerManager.Connection.State == HubConnectionState.Connected)
@@ -26,6 +26,20 @@ namespace Snakey.Snacks
             }
         }
 
+        public override MysterySnack Clone()
+        {
+            var cloned = (MysteryApple)this.MemberwiseClone();
+            cloned._body = new Rectangle() //it needs a different body otherwise gonna go crash cause 2 objects cant have same body
+            {
+                Stroke = this.Stroke,
+                StrokeThickness = this.StrokeThickness,
+                Width = Settings.CellSize,
+                Height = Settings.CellSize,
+                Fill = Brushes.IndianRed
+            };
+            return cloned;
+        }
+
         public MysteryApple() : base()
         {
             _body = new Rectangle()
@@ -36,6 +50,17 @@ namespace Snakey.Snacks
                 Height = Settings.CellSize,
                 Fill = Brushes.IndianRed
             };
+        }
+        public override string ToString()
+        {
+            return this.rnd.GetHashCode().ToString();
+        }
+
+        public override MysterySnack DeepClone()
+        {
+            MysteryApple other = (MysteryApple)this.Clone(); //same as shallow clone, setting new random
+            other.rnd = new Random();
+            return other;
         }
     }
 }
