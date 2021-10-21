@@ -1,5 +1,6 @@
 ﻿using Common.Enums;
 using Common.Utility;
+using Snakey.Command;
 using Snakey.Managers;
 using Snakey.Models;
 using System;
@@ -14,12 +15,16 @@ namespace Snakey.Decorators
 {
     class ShrinkSnakeTriggerEffectDecorator : TriggerEffectDecorator
     {
+        private CommandInvoker shrinker;
         public ShrinkSnakeTriggerEffectDecorator(Snack snack) 
-            : base(snack) {}
+            : base(snack) {
+            shrinker = new CommandInvoker();
+            shrinker.SetCommand(new SnakeShrinkCommand(GameState.Instance.Player));
+        }
 
         public override void TriggerEffect()
         {
-            GameState.Instance.Player.Shrink();
+            shrinker.ExecuteCommand();
             base.TriggerEffect();
         }
     }
