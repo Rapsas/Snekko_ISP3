@@ -9,7 +9,7 @@ namespace Snakey.Factories
     {
 
         private MysteryLemon _mysteryLemon;
-        public BadSnack CreateBadSnack()
+        public Snack CreateBadSnack()
         {
             var snack = new BadLemon();
             var snackScoreDecorator = new DecreaseScoreTriggerEffectDecorator(snack);
@@ -29,9 +29,7 @@ namespace Snakey.Factories
 
         public Snack CreateMysterySnack()
         {
-
             var clonedLemon = _mysteryLemon.DeepClone();
-            return clonedLemon;
             var snackScoreDecorator = new IncreaseScoreTriggerEffectDecorator(clonedLemon);
             return snackScoreDecorator;
         }

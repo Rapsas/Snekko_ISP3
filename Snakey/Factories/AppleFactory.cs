@@ -8,7 +8,7 @@ namespace Snakey.Factories
     class AppleFactory : ISnackFactory
     {
         private MysteryApple _mysteryApple;
-        public BadSnack CreateBadSnack()
+        public Snack CreateBadSnack()
         {
             var snack = new BadApple();
             var snackScoreDecorator = new DecreaseScoreTriggerEffectDecorator(snack);
