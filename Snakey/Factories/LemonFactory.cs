@@ -22,7 +22,8 @@ namespace Snakey.Factories
 
         public MysterySnack CreateMysterySnack()
         {
-            return _mysteryLemon;
+            var clonedLemon = _mysteryLemon.Clone();
+            return clonedLemon;
         }
         public LemonFactory()
         {

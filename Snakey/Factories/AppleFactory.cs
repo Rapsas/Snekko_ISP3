@@ -23,9 +23,9 @@ namespace Snakey.Factories
         public MysterySnack CreateMysterySnack()
         {
             var clonedApple = _mysteryApple.Clone();
-            var a = clonedApple.ToString();
-            var b = _mysteryApple.ToString();
-            return _mysteryApple;
+            //var a = clonedApple.ToString();
+            //var b = _mysteryApple.ToString();
+            return clonedApple;
         }
         public AppleFactory()
         {
