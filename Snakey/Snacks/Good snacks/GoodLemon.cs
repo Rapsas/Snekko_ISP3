@@ -11,7 +11,7 @@ namespace Snakey.Snacks
     {
         public override void TriggerEffect()
         {
-            GameState.Instance.Score++;
+            //GameState.Instance.Score++;
             if (GameState.Instance.MultiplayerManager.Connection.State == HubConnectionState.Connected)
                 GameState.Instance.MultiplayerManager.Connection?.SendAsync("ChangePlayerSize", -1).Wait();
         }

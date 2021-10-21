@@ -1,5 +1,7 @@
 ﻿using Common.Enums;
 using Snakey.Snacks;
+using Snakey.Decorators;
+using Snakey.Models;
 
 namespace Snakey.Factories
 {
@@ -9,25 +11,30 @@ namespace Snakey.Factories
         public BadSnack CreateBadSnack()
         {
             var snack = new BadApple();
+            var snackScoreDecorator = new DecreaseScoreTriggerEffectDecorator(snack);
+            var snackSizeDecorator = new ShrinkSnakeTriggerEffectDecorator(snackScoreDecorator);
             snack.SetTypesForServer(EffectType.Bad, FoodType.Apple);
-            return snack;
+            
+            return snackSizeDecorator;
         }
 
-        public GoodSnack CreateGoodSnack()
+        public Snack CreateGoodSnack()
         {
             var snack = new GoodApple();
+            var snackScoreDecorator = new IncreaseScoreTriggerEffectDecorator(snack);
             snack.SetTypesForServer(EffectType.Good, FoodType.Apple);
-            return snack;
+            return snackScoreDecorator;
         }
 
-        public MysterySnack CreateMysterySnack()
+        public Snack CreateMysterySnack()
         {
-            var clonedApple = _mysteryApple.Clone();
+            var clonedApple = _mysteryApple.DeepClone();
             //var deepClonedApple = _mysteryApple.DeepClone();
             //var a = clonedApple.ToString();
             //var b = _mysteryApple.ToString();
             //var c = deepClonedApple.ToString();
-            return clonedApple;
+            var snackScoreDecorator = new IncreaseScoreTriggerEffectDecorator(clonedApple);
+            return snackScoreDecorator;
         }
         public AppleFactory()
         {

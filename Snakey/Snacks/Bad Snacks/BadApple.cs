@@ -1,6 +1,7 @@
 ﻿using Common.Enums;
 using Snakey.Config;
 using Snakey.Managers;
+using System;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -10,8 +11,16 @@ namespace Snakey.Snacks
     {
         public override void TriggerEffect()
         {
-            GameState.Instance.Score--;
-            GameState.Instance.Player.Shrink();
+            // GameState.Instance.Score--;
+            // GameState.Instance.Player.Shrink();
+
+            var rnd = new Random();
+
+            byte R = (byte)rnd.Next(256);
+            byte G = (byte)rnd.Next(256);
+            byte B = (byte)rnd.Next(256);
+
+            GameState.Instance.Player.HeadColor.Color = Color.FromRgb(R, G, B);
         }
         public BadApple() : base()
         {
