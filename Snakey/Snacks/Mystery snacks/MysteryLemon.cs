@@ -12,7 +12,7 @@ namespace Snakey.Snacks
         public override void TriggerEffect()
         {
             GameState.Instance.Score++;
-            var choice = new Random().Next(11);
+            var choice = rnd.Next(11);
             if (choice > 5)
             {
                 if (GameState.Instance.MultiplayerManager.Connection.State == HubConnectionState.Connected)
@@ -24,6 +24,12 @@ namespace Snakey.Snacks
                 GameState.Instance.Player.Shrink();
             }
         }
+
+        public override MysterySnack Clone()
+        {
+            return (MysterySnack)this.MemberwiseClone();
+        }
+
         public MysteryLemon() : base()
         {
             _body = new Ellipse()

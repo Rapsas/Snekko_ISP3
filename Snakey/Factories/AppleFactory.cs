@@ -5,6 +5,7 @@ namespace Snakey.Factories
 {
     class AppleFactory : ISnackFactory
     {
+        private MysteryApple _mysteryApple;
         public BadSnack CreateBadSnack()
         {
             var snack = new BadApple();
@@ -21,9 +22,15 @@ namespace Snakey.Factories
 
         public MysterySnack CreateMysterySnack()
         {
-            var snack = new MysteryApple();
-            snack.SetTypesForServer(EffectType.Mystery, FoodType.Apple);
-            return snack;
+            var clonedApple = _mysteryApple.Clone();
+            var a = clonedApple.ToString();
+            var b = _mysteryApple.ToString();
+            return _mysteryApple;
+        }
+        public AppleFactory()
+        {
+            _mysteryApple = new MysteryApple();
+            _mysteryApple.SetTypesForServer(EffectType.Mystery, FoodType.Apple);
         }
     }
 }
