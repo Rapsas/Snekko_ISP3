@@ -27,7 +27,23 @@ namespace Snakey.Snacks
 
         public override MysterySnack Clone()
         {
-            return (MysterySnack)this.MemberwiseClone();
+            var cloned = (MysteryLemon)this.MemberwiseClone();
+            cloned._body = new Ellipse()
+            {
+                Stroke = this.Stroke,
+                StrokeThickness = this.StrokeThickness,
+                Width = Settings.CellSize,
+                Height = Settings.CellSize,
+                Fill = Brushes.Yellow
+            };
+            return cloned;
+        }
+
+        public override MysterySnack DeepClone()
+        {
+            MysteryLemon other = (MysteryLemon)this.Clone();
+            other.rnd = new Random();
+            return other;
         }
 
         public MysteryLemon() : base()

@@ -20,5 +20,6 @@ namespace Snakey.Snacks
 
         }
         public abstract MysterySnack Clone();
+        public abstract MysterySnack DeepClone();
     }
 }

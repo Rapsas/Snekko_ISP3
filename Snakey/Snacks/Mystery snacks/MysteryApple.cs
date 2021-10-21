@@ -28,7 +28,16 @@ namespace Snakey.Snacks
 
         public override MysterySnack Clone()
         {
-            return (MysterySnack)this.MemberwiseClone();
+            var cloned = (MysteryApple)this.MemberwiseClone();
+            cloned._body = new Rectangle() //it needs a different body otherwise gonna go crash cause 2 objects cant have same body
+            {
+                Stroke = this.Stroke,
+                StrokeThickness = this.StrokeThickness,
+                Width = Settings.CellSize,
+                Height = Settings.CellSize,
+                Fill = Brushes.IndianRed
+            };
+            return cloned;
         }
 
         public MysteryApple() : base()
@@ -45,6 +54,13 @@ namespace Snakey.Snacks
         public override string ToString()
         {
             return this.rnd.GetHashCode().ToString();
+        }
+
+        public override MysterySnack DeepClone()
+        {
+            MysteryApple other = (MysteryApple)this.Clone(); //same as shallow clone, setting new random
+            other.rnd = new Random();
+            return other;
         }
     }
 }
