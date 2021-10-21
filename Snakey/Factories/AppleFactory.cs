@@ -1,29 +1,36 @@
 ﻿using Common.Enums;
 using Snakey.Snacks;
+using Snakey.Decorators;
+using Snakey.Models;
 
 namespace Snakey.Factories
 {
     class AppleFactory : ISnackFactory
     {
-        public BadSnack CreateBadSnack()
+        public Snack CreateBadSnack()
         {
             var snack = new BadApple();
+            var snackScoreDecorator = new DecreaseScoreTriggerEffectDecorator(snack);
+            var snackSizeDecorator = new ShrinkSnakeTriggerEffectDecorator(snackScoreDecorator);
             snack.SetTypesForServer(EffectType.Bad, FoodType.Apple);
-            return snack;
+            
+            return snackSizeDecorator;
         }
 
-        public GoodSnack CreateGoodSnack()
+        public Snack CreateGoodSnack()
         {
             var snack = new GoodApple();
+            var snackScoreDecorator = new IncreaseScoreTriggerEffectDecorator(snack);
             snack.SetTypesForServer(EffectType.Good, FoodType.Apple);
-            return snack;
+            return snackScoreDecorator;
         }
 
-        public MysterySnack CreateMysterySnack()
+        public Snack CreateMysterySnack()
         {
             var snack = new MysteryApple();
+            var snackScoreDecorator = new IncreaseScoreTriggerEffectDecorator(snack);
             snack.SetTypesForServer(EffectType.Mystery, FoodType.Apple);
-            return snack;
+            return snackScoreDecorator;
         }
     }
 }

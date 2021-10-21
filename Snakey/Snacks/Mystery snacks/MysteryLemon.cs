@@ -11,7 +11,7 @@ namespace Snakey.Snacks
     {
         public override void TriggerEffect()
         {
-            GameState.Instance.Score++;
+            //GameState.Instance.Score++;
             var choice = new Random().Next(11);
             if (choice > 5)
             {

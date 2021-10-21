@@ -11,26 +11,26 @@ namespace Snakey.Models
     // new package to transfer type and location in rebuild the list it at the other end
     public abstract class Snack
     {
-        public Vector2D Location { get; set; }
-        public bool WasConsumed { get; set; } = false;
+        public virtual Vector2D Location { get; set; }
+        public virtual bool WasConsumed { get; set; } = false;
 
         private EffectType _effectType;
         private FoodType _foodType;
         protected Canvas _gameArea = GameState.Instance.GameArea;
         protected Shape _body;
 
-        public void SetTypesForServer(EffectType effectType, FoodType foodType)
+        public virtual void SetTypesForServer(EffectType effectType, FoodType foodType)
         {
             _effectType = effectType;
             _foodType = foodType;
         }
-        public void Draw()
+        public virtual void Draw()
         {
             _gameArea.Children.Add(_body);
             Canvas.SetLeft(_body, Location.X);
             Canvas.SetTop(_body, Location.Y);
         }
-        public SnackPackage SnackPackage()
+        public virtual SnackPackage SnackPackage()
         {
             return new SnackPackage()
             {
