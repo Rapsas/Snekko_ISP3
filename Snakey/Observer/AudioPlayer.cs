@@ -12,18 +12,28 @@ namespace Snakey.Observer
 {
     class AudioPlayer : IObserver
     {
+        private SoundPlayer GoodSound;
+        private SoundPlayer BadSound;
+        private SoundPlayer MysterySound;
+        public AudioPlayer()
+        {
+            GoodSound = new("soundGood.wav");
+            BadSound = new("soundBad.wav");
+            MysterySound = new("soundMystery.wav");
+        }
+
         public void Update(Snack snack)
         {
             switch (snack)
             {
                 case BadSnack:
-                    SystemSounds.Beep.Play();
+                    BadSound.Play();
                     break;
                 case GoodSnack:
-                    SystemSounds.Asterisk.Play();
+                    GoodSound.Play();
                     break;
                 case MysterySnack:
-                    SystemSounds.Question.Play();
+                    MysterySound.Play();
                     break;
                 default:
                     break;
