@@ -79,8 +79,8 @@ namespace Snakey
         private void RegisterObservers()
         {
             Publisher = new();
-            BadSnack snack = new();
-            Publisher.RegisterObserver(snack);
+            SnackObserver snackObserver = new();
+            Publisher.RegisterObserver(snackObserver);
         }
 
         private void CheckPlayerCollision()
@@ -255,9 +255,6 @@ namespace Snakey
             {
                 if (snack.Location.IsOverlaping(GameState.Player.HeadLocation))
                 {
-                    //snack.TriggerEffect();
-                    //snack.WasConsumed = true;
-
                     Publisher.NotifyObservers(snack);
                 }
             }
