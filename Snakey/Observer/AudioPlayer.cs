@@ -12,14 +12,15 @@ namespace Snakey.Observer
 {
     class AudioPlayer : IObserver
     {
-        private SoundPlayer GoodSound;
-        private SoundPlayer BadSound;
-        private SoundPlayer MysterySound;
+        readonly SoundPlayer GoodSound;
+        readonly SoundPlayer BadSound;
+        readonly SoundPlayer MysterySound;
+
         public AudioPlayer()
         {
-            GoodSound = new("soundGood.wav");
-            BadSound = new("soundBad.wav");
-            MysterySound = new("soundMystery.wav");
+            GoodSound = new("../../../assets/soundGood.wav");
+            BadSound = new("../../../assets/soundBad.wav");
+            MysterySound = new("../../../assets/soundMystery.wav");
         }
 
         public void Update(Snack snack)
