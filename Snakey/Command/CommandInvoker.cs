@@ -17,5 +17,10 @@ namespace Snakey.Command
         {
             _command.Execute();
         }
+
+        public void UndoCommand()
+        {
+            _command.Undo();
+        }
     }
 }
