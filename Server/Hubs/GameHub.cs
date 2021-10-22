@@ -51,6 +51,10 @@ namespace Server.Hubs
             await Clients.Others.SendAsync("ShortenSecondPlayer", timesToShorten);
         }
 
+        public async Task SendScore(int score)
+        {
+            await Clients.Others.SendAsync("RecieveScore", score);
+        }
 
         public override async Task OnConnectedAsync()
         {
@@ -63,6 +67,8 @@ namespace Server.Hubs
                 Console.WriteLine("Second player connected. Sending list");
                 // Ask first player for a snack list
                 await Clients.Client(Storage.Players[0]).SendAsync("AskForSnackList");
+                Console.WriteLine("Clearing scores");
+                await Clients.All.SendAsync("ClearScore"); // clear both player scores
             }
 
         }

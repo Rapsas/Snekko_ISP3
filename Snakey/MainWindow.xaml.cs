@@ -236,6 +236,14 @@ namespace Snakey
                 }
                 GameState.Player.IgnoreBodyCollisionWithHead = true;
             });
+            MultiplayerManager.Connection.On<int>("RecieveScore", (n) =>
+            {
+                GameState.EnemyScore = n;
+            });
+            MultiplayerManager.Connection.On("ClearScore",() =>
+            {
+                GameState.Score = 0;
+            });
         }
         public void SendPositions()
         {

@@ -1,4 +1,5 @@
-﻿using Snakey.Maps;
+﻿using Microsoft.AspNetCore.SignalR.Client;
+using Snakey.Maps;
 using Snakey.Models;
 using System.Collections.Generic;
 using System.Windows.Controls;
@@ -10,6 +11,7 @@ namespace Snakey.Managers
     {
         private static readonly GameState _instance = new();
         private int _gameScore = 0;
+        private int _gameScoreEnemy = 0;
 
         public Snake Player { get; set; }
         public Snake SecondPlayer { get; set; }
@@ -24,10 +26,20 @@ namespace Snakey.Managers
             set
             {
                 _gameScore = value;
-                ScoreLabel.Content = $"Score: {_gameScore}";
+                ScoreLabel.Content = $"Score: {_gameScore} - {_gameScoreEnemy}";
+                if (MultiplayerManager.Connection.State == HubConnectionState.Connected) // Update second player 
+                    MultiplayerManager.Connection.SendAsync("SendScore", _gameScore).Wait();
             }
         }
-
+        public int EnemyScore
+        {
+            get => _gameScoreEnemy;
+            set
+            {
+                _gameScoreEnemy = value;
+                ScoreLabel.Content = $"Score: {_gameScore} - {_gameScoreEnemy}";
+            }
+        }
 
         static GameState() { }
         private GameState() { }
