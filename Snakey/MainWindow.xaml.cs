@@ -318,35 +318,8 @@ namespace Snakey
 
                 var snackLocation = new Vector2D(rndX, rndY);
 
-                if (GameState.Player.HeadLocation.IsOverlaping(snackLocation))
+                if (IsNewSnackColliding(snackLocation))
                     continue; // Try again
-
-                bool overlapped = false;
-                foreach (var bodySegment in GameState.Player.BodyParts)
-                {
-                    if (bodySegment.IsOverlaping(snackLocation))
-                    {
-                        overlapped = true;
-                        break;
-                    }
-                }
-
-                if (overlapped)
-                    continue; // Try again
-
-                foreach (var (location, _) in GameMap.Obsticles)
-                {
-                    if (snackLocation.IsOverlaping(location))
-                    {
-                        overlapped = true;
-                        break;
-                    }
-                }
-
-                if (overlapped)
-                    continue; // Try again
-
-               
 
                 Snack snack;
                 int c = rnd.Next(0, 11);
@@ -366,7 +339,43 @@ namespace Snakey
                     MultiplayerManager.Connection?.SendAsync("AddNewSnack", snack.SnackPackage()).Wait();
             }
         }
+        private bool IsNewSnackColliding(Vector2D newSnack)
+        {
+            // Dont't place on player 1
+            if (GameState.Player.HeadLocation.IsOverlaping(newSnack))
+                return true; // Try again
+            foreach (var bodySegment in GameState.Player.BodyParts)
+            {
+                if (bodySegment.IsOverlaping(newSnack))
+                    return true;
+            }
+            // Check if overlaps player 2
+            if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
+            {
+                if (GameState.SecondPlayer.HeadLocation.IsOverlaping(newSnack))
+                    return true;
 
+                foreach (var bodySegment in GameState.SecondPlayer.BodyParts)
+                {
+                    if (bodySegment.IsOverlaping(newSnack))
+                        return true;
+                }
+            }
+            // Check if overlaps map obstacles
+            foreach (var (location, _) in GameMap.Obsticles)
+            {
+                if (newSnack.IsOverlaping(location))
+                    return true;
+            }
+            // Check if overlaps other snacks
+            foreach (var snacks in GameState.Snacks)
+            {
+                if (snacks.Location.IsOverlaping(newSnack))
+                    return true;
+            }
+
+            return false;
+        }
         public void DrawSnake(Snake player)
         {
             if (player is null)
