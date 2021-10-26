@@ -47,13 +47,19 @@ namespace Server.Hubs
 
         public async Task ChangePlayerSize(int timesToShorten)
         {
-            Console.WriteLine($"Expand other players by {timesToShorten}");
+            Console.WriteLine($"Expand other player by {timesToShorten}");
             await Clients.Others.SendAsync("ShortenSecondPlayer", timesToShorten);
         }
 
         public async Task SendScore(int score)
         {
             await Clients.Others.SendAsync("RecieveScore", score);
+        }
+
+        public async Task PlayerDied()
+        {
+            Console.WriteLine("Player has died");
+            await Clients.Others.SendAsync("PlayerDied");
         }
 
         public override async Task OnConnectedAsync()

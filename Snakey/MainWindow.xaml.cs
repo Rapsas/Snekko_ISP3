@@ -140,6 +140,9 @@ namespace Snakey
 
             if (GameState.Player.IsDead)
             {
+                if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
+                    MultiplayerManager.Connection.SendAsync("PlayerDied").Wait();
+                GameState.GameTimer.Stop();
                 MessageBox.Show($"Skill issue :/. Ur final score: {GameState.Score}");
                 Close();
             }
@@ -243,6 +246,12 @@ namespace Snakey
             MultiplayerManager.Connection.On("ClearScore",() =>
             {
                 GameState.Score = 0;
+            });
+            MultiplayerManager.Connection.On("PlayerDied", () => 
+            {
+                GameState.GameTimer.Stop();
+                MessageBox.Show("You win (⌐■_■)");
+                Close();
             });
         }
         public void SendPositions()
