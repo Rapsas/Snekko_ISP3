@@ -4,6 +4,7 @@ using Snakey.Models;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using Snakey.Adapter;
 
 namespace Snakey.Managers
 {
@@ -15,7 +16,7 @@ namespace Snakey.Managers
 
         public Snake Player { get; set; }
         public Snake SecondPlayer { get; set; }
-        public List<Snack> Snacks { get; set; }
+        public List<SnackAdapter> Snacks { get; set; }
         public DispatcherTimer GameTimer { get; set; }
         public Canvas GameArea { get; set; }
         public Label ScoreLabel { get; set; }

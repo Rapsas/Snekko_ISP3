@@ -7,6 +7,7 @@ using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using Snakey.Adapter;
 
 namespace Snakey.Observer
 {
@@ -23,22 +24,16 @@ namespace Snakey.Observer
             MysterySound = new("../../../assets/soundMystery.wav");
         }
 
-        public void Update(Snack snack)
+        public void Update(SnackAdapter snack)
         {
-            switch (snack)
-            {
-                case BadSnack:
-                    BadSound.Play();
-                    break;
-                case GoodSnack:
-                    GoodSound.Play();
-                    break;
-                case MysterySnack:
-                    MysterySound.Play();
-                    break;
-                default:
-                    break;
-            }
+            Type type = snack.GetSnackType();
+
+            if (type == typeof(BadSnack))
+                BadSound.Play();
+            else if (type == typeof(GoodSnack))
+                GoodSound.Play();
+            else if (type == typeof(MysterySnack))
+                MysterySound.Play();
         }
     }
 }

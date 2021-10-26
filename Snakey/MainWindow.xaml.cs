@@ -7,7 +7,6 @@ using Snakey.Managers;
 using Snakey.Maps;
 using Snakey.Models;
 using Snakey.Observer;
-using Snakey.Snacks;
 using Snakey.Strategies;
 using System;
 using System.Collections.Generic;
@@ -17,6 +16,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using Snakey.Adapter;
 
 namespace Snakey
 {
@@ -189,7 +189,8 @@ namespace Snakey
                     };
 
                     snack.Location = item.Location;
-                    GameState.Snacks.Add(snack);
+                    SnackAdapter snackAdapter = new(snack);
+                    GameState.Snacks.Add(snackAdapter);
                 }
             });
             MultiplayerManager.Connection.On("AskForSnackList", () =>
@@ -214,7 +215,8 @@ namespace Snakey
                 };
 
                 snack.Location = s.Location;
-                GameState.Snacks.Add(snack);
+                SnackAdapter snackAdapter = new(snack);
+                GameState.Snacks.Add(snackAdapter);
             });
             MultiplayerManager.Connection.On<MapTypes>("ChangeMap", (map) =>
             {
@@ -342,7 +344,8 @@ namespace Snakey
                     snack = factory.CreateMysterySnack();
 
                 snack.Location = snackLocation;
-                GameState.Snacks.Add(snack);
+                SnackAdapter snackAdapter = new(snack);
+                GameState.Snacks.Add(snackAdapter);
 
                 if(MultiplayerManager.Connection.State == HubConnectionState.Connected)
                     MultiplayerManager.Connection?.SendAsync("AddNewSnack", snack.SnackPackage()).Wait();

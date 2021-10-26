@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Snakey.Adapter;
 
 namespace Snakey.Observer
 {
@@ -16,7 +17,7 @@ namespace Snakey.Observer
             this.Observers = new();
         }
 
-        public void NotifyObservers(Snack snack)
+        public void NotifyObservers(SnackAdapter snack)
         {
             Observers.ForEach(observers => observers.Update(snack));
         }
