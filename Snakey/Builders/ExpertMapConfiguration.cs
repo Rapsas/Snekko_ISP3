@@ -1,4 +1,5 @@
 ﻿using Common.Utility;
+using Snakey.Bridge;
 using Snakey.Config;
 using Snakey.Maps;
 using System;
@@ -91,7 +92,7 @@ namespace Snakey.Builders
 
         public override MapBuilder StartNew()
         {
-            _map = new ExpertMap();
+            _map = new ExpertMap(new ExpertCollision());
             return this;
         }
     }

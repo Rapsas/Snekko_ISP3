@@ -1,4 +1,5 @@
 ﻿using Common.Utility;
+using Snakey.Bridge;
 using Snakey.Config;
 using Snakey.Maps;
 using System;
@@ -59,7 +60,7 @@ namespace Snakey.Builders
 
         public override MapBuilder StartNew()
         {
-            _map = new AdvanceMap();
+            _map = new AdvanceMap(new AdvancedCollision());
             return this;
         }
     }
