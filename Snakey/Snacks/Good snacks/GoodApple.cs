@@ -1,5 +1,4 @@
-﻿using Common.Enums;
-using Snakey.Config;
+﻿using Snakey.Config;
 using Snakey.Managers;
 using System.Windows.Media;
 using System.Windows.Shapes;

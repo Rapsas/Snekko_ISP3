@@ -1,5 +1,4 @@
-﻿using Common.Enums;
-using Snakey.Config;
+﻿using Snakey.Config;
 using Snakey.Managers;
 using System;
 using System.Windows.Media;
@@ -7,7 +6,7 @@ using System.Windows.Shapes;
 
 namespace Snakey.Snacks
 {
-    class BadApple: BadSnack
+    class BadApple : BadSnack
     {
         public override void TriggerEffect()
         {

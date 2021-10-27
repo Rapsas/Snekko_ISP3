@@ -1,7 +1,7 @@
 ﻿using Common.Enums;
-using Snakey.Snacks;
 using Snakey.Decorators;
 using Snakey.Models;
+using Snakey.Snacks;
 
 namespace Snakey.Factories
 {

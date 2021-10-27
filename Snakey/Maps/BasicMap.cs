@@ -9,7 +9,7 @@ namespace Snakey.Maps
         public override void MapCollisionCheck()
         {
             var player = _gameState.Player;
-            
+
             if (_gameState.Player.HeadLocation.X < 0)
             {
                 player.HeadLocation = new((int)_gameState.GameArea.ActualWidth, player.HeadLocation.Y);
@@ -18,7 +18,7 @@ namespace Snakey.Maps
             {
                 player.HeadLocation = new(player.HeadLocation.X, (int)_gameState.GameArea.ActualHeight);
             }
-            else if (player.HeadLocation.X >= _gameState.GameArea.ActualWidth 
+            else if (player.HeadLocation.X >= _gameState.GameArea.ActualWidth
                 || player.HeadLocation.Y >= _gameState.GameArea.ActualHeight)
             {
 

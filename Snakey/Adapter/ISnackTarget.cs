@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Utility;
-using Snakey.Models;
+﻿using Common.Utility;
+using System;
 
 namespace Snakey.Adapter
 {

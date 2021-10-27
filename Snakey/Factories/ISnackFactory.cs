@@ -1,5 +1,4 @@
 ﻿using Snakey.Models;
-using Snakey.Snacks;
 
 namespace Snakey.Factories
 {

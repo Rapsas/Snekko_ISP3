@@ -1,6 +1,7 @@
 ﻿using Common.Enums;
 using Common.Utility;
 using Microsoft.AspNetCore.SignalR.Client;
+using Snakey.Adapter;
 using Snakey.Config;
 using Snakey.Factories;
 using Snakey.Managers;
@@ -16,7 +17,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using Snakey.Adapter;
 
 namespace Snakey
 {
@@ -47,12 +47,12 @@ namespace Snakey
             GameState.Snacks = new();
             // Setup gameloop
             GameState.GameTimer = new();
-            GameState.GameTimer.Tick += GameLoop; ;
+            GameState.GameTimer.Tick += GameLoop;
             GameState.GameTimer.Interval = TimeSpan.FromMilliseconds(Settings.UpdateTimer);
             GameState.GameTimer.Start();
 
             GameState.GameArea = GameArea;
-            GameState.ScoreLabel = ScoreLabel; 
+            GameState.ScoreLabel = ScoreLabel;
 
             GameMap = mapFactory.CreateMap(MapTypes.Basic);
 
@@ -93,11 +93,11 @@ namespace Snakey
             // plz someone make it nice <3
 
             GameMap.MapCollisionCheck();
-            
+
             var player = GameState.Player;
             var secondPlayer = GameState.SecondPlayer;
 
-            if(!player.IgnoreBodyCollisionWithHead)
+            if (!player.IgnoreBodyCollisionWithHead)
                 foreach (var bodyPart in player.BodyParts)
                 {
                     if (player.HeadLocation.IsOverlaping(bodyPart))
@@ -113,7 +113,7 @@ namespace Snakey
             }
 
             // Check if the retard hit another player
-            if(secondPlayer != null)
+            if (secondPlayer != null)
             {
                 foreach (var bodyPart in secondPlayer.BodyParts)
                 {
@@ -228,12 +228,12 @@ namespace Snakey
             });
             MultiplayerManager.Connection.On<int>("ShortenSecondPlayer", (n) =>
             {
-                if(n < 0)
+                if (n < 0)
                 {
                     n *= -1;
                     for (int i = 0; i < n; i++)
                         GameState.Player.Shrink();
-                } 
+                }
                 else
                 {
                     for (int i = 0; i < n; i++)
@@ -245,11 +245,11 @@ namespace Snakey
             {
                 GameState.EnemyScore = n;
             });
-            MultiplayerManager.Connection.On("ClearScore",() =>
-            {
-                GameState.Score = 0;
-            });
-            MultiplayerManager.Connection.On("PlayerDied", () => 
+            MultiplayerManager.Connection.On("ClearScore", () =>
+             {
+                 GameState.Score = 0;
+             });
+            MultiplayerManager.Connection.On("PlayerDied", () =>
             {
                 GameState.GameTimer.Stop();
                 MessageBox.Show("You win (⌐■_■)");
@@ -281,7 +281,7 @@ namespace Snakey
                 }
             }
 
-            if(MultiplayerManager.Connection.State == HubConnectionState.Connected)
+            if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
                 GameState.Snacks.ForEach(snack =>
                 {
                     if (snack.WasConsumed)
@@ -347,7 +347,7 @@ namespace Snakey
                 SnackAdapter snackAdapter = new(snack);
                 GameState.Snacks.Add(snackAdapter);
 
-                if(MultiplayerManager.Connection.State == HubConnectionState.Connected)
+                if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
                     MultiplayerManager.Connection?.SendAsync("AddNewSnack", snack.SnackPackage()).Wait();
             }
         }
@@ -429,7 +429,7 @@ namespace Snakey
                 Height = Settings.CellSize - 8
             };
 
-            GameState.Instance.GameArea.Children.Add(r);
+            GameState.GameArea.Children.Add(r);
             Canvas.SetLeft(r, location.X + 4);
             Canvas.SetTop(r, location.Y + 4);
 

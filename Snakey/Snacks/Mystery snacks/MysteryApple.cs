@@ -1,5 +1,4 @@
-﻿using Common.Enums;
-using Microsoft.AspNetCore.SignalR.Client;
+﻿using Microsoft.AspNetCore.SignalR.Client;
 using Snakey.Config;
 using Snakey.Managers;
 using System;
@@ -8,7 +7,7 @@ using System.Windows.Shapes;
 
 namespace Snakey.Snacks
 {
-    class MysteryApple: MysterySnack
+    class MysteryApple : MysterySnack
     {
         public override void TriggerEffect()
         {
