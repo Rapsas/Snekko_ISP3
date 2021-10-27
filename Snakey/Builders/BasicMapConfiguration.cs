@@ -1,4 +1,5 @@
 ﻿using Snakey.Maps;
+using Snakey.Bridge;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace Snakey.Builders
 
         public override MapBuilder StartNew()
         {
-            _map = new BasicMap();
+            _map = new BasicMap(new BasicCollision());
             return this;
         }
     }
