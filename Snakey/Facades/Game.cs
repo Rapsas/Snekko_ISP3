@@ -1,9 +1,7 @@
 ﻿using Common.Enums;
 using Common.Utility;
-using Microsoft.AspNetCore.SignalR.Client;
 using Snakey.Adapter;
 using Snakey.Config;
-using Snakey.Facades;
 using Snakey.Factories;
 using Snakey.Managers;
 using Snakey.Maps;
@@ -11,8 +9,6 @@ using Snakey.Models;
 using Snakey.Observer;
 using Snakey.Strategies;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -23,16 +19,16 @@ namespace Snakey.Facades
 {
     public class Game
     {
-        private MultiplayerManager MultiplayerManager { get; set; }
-        private GameState GameState { get; set; }
-        private Map GameMap { get; set; }
-        private MainWindow Window { get; set; }
+        private GameState GameState;
+        private MainWindow Window;
         private Publisher Publisher;
+        private ServerFacade Server;
 
         public void Init(MainWindow window)
         {
             InitializeGameComponents(window);
             RegisterObservers();
+            Server.Setup(window);
         }
 
         public void Run()
@@ -79,10 +75,9 @@ namespace Snakey.Facades
             context.ExecuteStrategy(GameState.Player);
             GameState.Player.IsMovementLocked = true;
         }
-        public async void ConnectToServer()
+        public void ConnectToServer()
         {
-            await MultiplayerManager.ConnectToServer();
-            BindMethods();
+            Server.ConnectToServer();
             Window.ConnectButton.IsEnabled = false;
             GameState.SecondPlayer = new();
             GameState.SecondPlayer.HeadLocation = new(-100, -100);
@@ -91,54 +86,42 @@ namespace Snakey.Facades
 
         private void SwitchToLevelOne()
         {
-            if (GameMap is BasicMap)
+            if (GameState.GameMap is BasicMap)
                 return;
             var mapFactory = new MapFactory();
 
-            GameMap = mapFactory.CreateMap(MapTypes.Basic);
+            GameState.GameMap = mapFactory.CreateMap(MapTypes.Basic);
             GameState.Player.Reset();
             GameState.Snacks.Clear(); // Clear all snacks
             PlaceSnackIfNeeded(); // Replace all snacks
+            Server.ChangeMap(MapTypes.Basic);
 
-            if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
-            {
-                MultiplayerManager.Connection?.SendAsync("ChangeMap", MapTypes.Basic);
-                SendSnackList();
-            }
         }
         private void SwitchToLevelTwo()
         {
-            if (GameMap is AdvanceMap)
+            if (GameState.GameMap is AdvanceMap)
                 return;
             var mapFactory = new MapFactory();
 
-            GameMap = mapFactory.CreateMap(MapTypes.Advance);
+            GameState.GameMap = mapFactory.CreateMap(MapTypes.Advance);
             GameState.Player.Reset();
             GameState.Snacks.Clear(); // Clear all snacks
             PlaceSnackIfNeeded(); // Replace all snacks
 
-            if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
-            {
-                MultiplayerManager.Connection?.SendAsync("ChangeMap", MapTypes.Advance);
-                SendSnackList();
-            }
+            Server.ChangeMap(MapTypes.Advance);
         }
         private void SwitchToLevelThree()
         {
-            if (GameMap is ExpertMap)
+            if (GameState.GameMap is ExpertMap)
                 return;
             var mapFactory = new MapFactory();
 
-            GameMap = mapFactory.CreateMap(MapTypes.Expert);
+            GameState.GameMap = mapFactory.CreateMap(MapTypes.Expert);
             GameState.Player.Reset();
             GameState.Snacks.Clear(); // Clear all snacks
             PlaceSnackIfNeeded(); // Replace all snacks
 
-            if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
-            {
-                MultiplayerManager.Connection?.SendAsync("ChangeMap", MapTypes.Expert);
-                SendSnackList();
-            }
+            Server.ChangeMap(MapTypes.Expert);
         }
 
         private void InitializeGameComponents(MainWindow window)
@@ -147,6 +130,7 @@ namespace Snakey.Facades
             GameState = GameState.Instance;
             var mapFactory = new MapFactory();
 
+            Server = new();
             // Setup snek player
             GameState.Player = new();
             GameState.Snacks = new();
@@ -158,10 +142,7 @@ namespace Snakey.Facades
             GameState.GameArea = window.GameArea;
             GameState.ScoreLabel = Window.ScoreLabel;
 
-            GameMap = mapFactory.CreateMap(MapTypes.Basic);
-
-            MultiplayerManager = /*new("http://localhost:5000/gameHub");*/  new("http://158.129.23.210:5003/gameHub");
-            GameState.MultiplayerManager = MultiplayerManager;
+            GameState.GameMap = mapFactory.CreateMap(MapTypes.Basic);
         }
 
         private void RegisterObservers()
@@ -177,7 +158,7 @@ namespace Snakey.Facades
         private void GameLoop(object sender, EventArgs e)
         {
             // Update with the server 
-            SendPositions();
+            Server.SendPlayerPositions();
 
             // Gaming
             ClearScreen();
@@ -196,7 +177,7 @@ namespace Snakey.Facades
             // but i can't be fucked to do anything about it :^)
             // plz someone make it nice <3
 
-            GameMap.MapCollisionCheck();
+            GameState.GameMap.MapCollisionCheck();
 
             var player = GameState.Player;
             var secondPlayer = GameState.SecondPlayer;
@@ -244,134 +225,10 @@ namespace Snakey.Facades
 
             if (GameState.Player.IsDead)
             {
-                if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
-                    MultiplayerManager.Connection.SendAsync("PlayerDied").Wait();
+                Server.SendMessage("PlayerDied");
                 GameState.GameTimer.Stop();
                 MessageBox.Show($"Skill issue :/. Ur final score: {GameState.Score}");
                 Window.Close();
-            }
-        }
-
-        private void BindMethods()
-        {
-            MultiplayerManager.Connection.On<PlayerPackage>("RecievePositions", (package) =>
-            {
-                GameState.SecondPlayer.HeadLocation = package.SnakeHeadLocation;
-                GameState.SecondPlayer.BodyParts = package.SnakeBodyLocation;
-                GameState.SecondPlayer.CurrentMovementDirection = package.SnakeMovementDirection;
-                GameState.SecondPlayer.TailLocation = package.SnakeTailLocation;
-                GameState.SecondPlayer.TailLocation = package.SnakeTailLocation;
-                GameState.SecondPlayer.TailLocation = package.SnakeTailLocation;
-                GameState.SecondPlayer.HeadColor.Color = Color.FromRgb(package.HeadColor.R, package.HeadColor.G, package.HeadColor.B);
-                GameState.SecondPlayer.BodyColor.Color = Color.FromRgb(package.BodyColor.R, package.BodyColor.G, package.BodyColor.B);
-                GameState.SecondPlayer.TailColor.Color = Color.FromRgb(package.TailColor.R, package.TailColor.G, package.TailColor.B);
-            });
-            MultiplayerManager.Connection.On<SnackPackage>("RecieveEatenSnackPosition", (snack) =>
-            {
-                GameState.Snacks.RemoveAll((s) => s.Location.IsOverlaping(snack.Location));
-            });
-            MultiplayerManager.Connection.On<List<SnackPackage>>("RecieveSnackList", (snacks) =>
-            {
-                GameState.Snacks.Clear(); // Clear current snacks
-
-                // Build Snacks
-                foreach (var item in snacks)
-                {
-                    ISnackFactory factory = item.FoodType switch
-                    {
-                        FoodType.Apple => new AppleFactory(),
-                        FoodType.Lemon => new LemonFactory(),
-                        _ => null
-                    };
-
-                    Snack snack = item.EffectType switch
-                    {
-                        EffectType.Good => factory.CreateGoodSnack(),
-                        EffectType.Bad => factory.CreateBadSnack(),
-                        EffectType.Mystery => factory.CreateMysterySnack(),
-                        _ => null
-                    };
-
-                    snack.Location = item.Location;
-                    SnackAdapter snackAdapter = new(snack);
-                    GameState.Snacks.Add(snackAdapter);
-                }
-            });
-            MultiplayerManager.Connection.On("AskForSnackList", () =>
-            {
-                SendSnackList();
-            });
-            MultiplayerManager.Connection.On<SnackPackage>("AddSnack", (s) =>
-            {
-                ISnackFactory factory = s.FoodType switch
-                {
-                    FoodType.Apple => new AppleFactory(),
-                    FoodType.Lemon => new LemonFactory(),
-                    _ => null
-                };
-
-                Snack snack = s.EffectType switch
-                {
-                    EffectType.Good => factory.CreateGoodSnack(),
-                    EffectType.Bad => factory.CreateBadSnack(),
-                    EffectType.Mystery => factory.CreateMysterySnack(),
-                    _ => null
-                };
-
-                snack.Location = s.Location;
-                SnackAdapter snackAdapter = new(snack);
-                GameState.Snacks.Add(snackAdapter);
-            });
-            MultiplayerManager.Connection.On<MapTypes>("ChangeMap", (map) =>
-            {
-                var mapFactory = new MapFactory();
-
-                GameMap = mapFactory.CreateMap(map);
-                GameState.Player.Reset();
-                GameState.Player.HeadLocation += (0, Settings.CellSize);
-            });
-            MultiplayerManager.Connection.On<int>("ShortenSecondPlayer", (n) =>
-            {
-                if (n < 0)
-                {
-                    n *= -1;
-                    for (int i = 0; i < n; i++)
-                        GameState.Player.Shrink();
-                }
-                else
-                {
-                    for (int i = 0; i < n; i++)
-                        GameState.Player.Expand();
-                }
-                GameState.Player.IgnoreBodyCollisionWithHead = true;
-            });
-            MultiplayerManager.Connection.On<int>("RecieveScore", (n) =>
-            {
-                GameState.EnemyScore = n;
-            });
-            MultiplayerManager.Connection.On("ClearScore", () =>
-            {
-                GameState.Score = 0;
-            });
-            MultiplayerManager.Connection.On("PlayerDied", () =>
-            {
-                GameState.GameTimer.Stop();
-                MessageBox.Show("You win (⌐■_■)");
-                Window.Close();
-            });
-        }
-        private void SendPositions()
-        {
-            if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
-                MultiplayerManager.Connection.SendAsync("SendPositions", GameState.Player.MakeServerPackage()).Wait();
-        }
-
-        private void SendSnackList()
-        {
-            if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
-            {
-                var snacks = GameState.Snacks.Select((snack) => snack.SnackPackage()).ToList();
-                MultiplayerManager.Connection.SendAsync("SendSnackList", snacks).Wait();
             }
         }
 
@@ -385,15 +242,7 @@ namespace Snakey.Facades
                 }
             }
 
-            if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
-                GameState.Snacks.ForEach(snack =>
-                {
-                    if (snack.WasConsumed)
-                    {
-                        MultiplayerManager.Connection.SendAsync("SendEatenSnackPosition", snack.SnackPackage()).Wait();
-                    }
-                });
-
+            Server.SendEatenSnacks(GameState.Snacks);
             GameState.Snacks.RemoveAll(x => x.WasConsumed);
         }
         private void DrawSnacks()
@@ -451,8 +300,8 @@ namespace Snakey.Facades
                 SnackAdapter snackAdapter = new(snack);
                 GameState.Snacks.Add(snackAdapter);
 
-                if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
-                    MultiplayerManager.Connection?.SendAsync("AddNewSnack", snack.SnackPackage()).Wait();
+                Server.SendSnackPosition(snack);
+
             }
         }
         private bool IsNewSnackColliding(Vector2D newSnack)
@@ -466,7 +315,7 @@ namespace Snakey.Facades
                     return true;
             }
             // Check if overlaps player 2
-            if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
+            if (Server.IsConnected())
             {
                 if (GameState.SecondPlayer.HeadLocation.IsOverlaping(newSnack))
                     return true;
@@ -478,7 +327,7 @@ namespace Snakey.Facades
                 }
             }
             // Check if overlaps map obstacles
-            foreach (var (location, _) in GameMap.Obsticles)
+            foreach (var (location, _) in GameState.GameMap.Obsticles)
             {
                 if (newSnack.IsOverlaping(location))
                     return true;
@@ -509,12 +358,12 @@ namespace Snakey.Facades
         }
         private void DrawGameGrid()
         {
-            foreach (var line in GameMap.GridLines)
+            foreach (var line in GameState.GameMap.GridLines)
             {
                 GameState.GameArea.Children.Add(line);
             }
 
-            foreach (var (location, body) in GameMap.Obsticles)
+            foreach (var (location, body) in GameState.GameMap.Obsticles)
             {
                 GameState.GameArea.Children.Add(body);
                 Canvas.SetLeft(body, location.X);

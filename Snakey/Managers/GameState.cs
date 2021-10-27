@@ -20,6 +20,7 @@ namespace Snakey.Managers
         public Canvas GameArea { get; set; }
         public Label ScoreLabel { get; set; }
         public MultiplayerManager MultiplayerManager { get; set; }
+        public Map GameMap { get; set; }
         public int Score
         {
             get => _gameScore;
