@@ -26,10 +26,6 @@
             <Button Name="Level2" Margin="2,1,2,1" Content="Level 2" Click="Switch_to_level_2"></Button>
             <Button Name="Level3" Margin="2,1,2,1" Content="Level 3" Click="Switch_to_level_3"></Button>
             <GridSplitter Width="3" Background="Black"></GridSplitter>
-            <Button Name="HeadColor" Margin="0,1,2,1" Content="Change Head" Click="Change_head_color"></Button>
-            <Button Name="BodyColor" Margin="2,1,2,1" Content="Change Body" Click="Change_body_color"></Button>
-            <Button Name="tailColor" Margin="2,1,0,1" Content="Change Tail" Click="Change_tail_color"></Button>
-            <GridSplitter Width="3" Background="Black"></GridSplitter>
 
         </StackPanel>                                 
         
