@@ -1,7 +1,6 @@
 ﻿using Common.Enums;
 using Common.Utility;
 using Snakey.Managers;
-using Snakey.Observer;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 

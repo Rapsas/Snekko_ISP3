@@ -1,13 +1,7 @@
-﻿using Snakey.Models;
+﻿using Snakey.Adapter;
 using Snakey.Snacks;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Media;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
-using Snakey.Adapter;
 
 namespace Snakey.Observer
 {

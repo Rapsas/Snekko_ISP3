@@ -1,7 +1,7 @@
 ﻿using Common.Enums;
-using Snakey.Snacks;
 using Snakey.Decorators;
 using Snakey.Models;
+using Snakey.Snacks;
 
 namespace Snakey.Factories
 {
@@ -14,7 +14,7 @@ namespace Snakey.Factories
             var snackScoreDecorator = new DecreaseScoreTriggerEffectDecorator(snack);
             var snackSizeDecorator = new ShrinkSnakeTriggerEffectDecorator(snackScoreDecorator);
             snack.SetTypesForServer(EffectType.Bad, FoodType.Apple);
-            
+
             return snackSizeDecorator;
         }
 

@@ -1,5 +1,4 @@
-﻿using Common.Enums;
-using Snakey.Models;
+﻿using Snakey.Models;
 using System.Windows.Media;
 
 namespace Snakey.Snacks

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Common.Utility
+﻿namespace Common.Utility
 {
     public struct Vector2D
     {
