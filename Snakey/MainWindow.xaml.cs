@@ -1,23 +1,8 @@
 ﻿using Common.Enums;
-using Common.Utility;
-using Microsoft.AspNetCore.SignalR.Client;
-using Snakey.Adapter;
-using Snakey.Config;
 using Snakey.Facades;
-using Snakey.Factories;
-using Snakey.Managers;
-using Snakey.Maps;
-using Snakey.Models;
-using Snakey.Observer;
-using Snakey.Strategies;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace Snakey
 {

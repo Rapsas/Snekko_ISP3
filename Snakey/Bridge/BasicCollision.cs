@@ -1,11 +1,7 @@
 ﻿using Common.Utility;
 using Snakey.Managers;
-using System;
 using System.Collections.Generic;
 using System.Windows.Shapes;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Snakey.Bridge
 {
