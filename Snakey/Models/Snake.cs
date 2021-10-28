@@ -2,6 +2,8 @@
 using Common.Utility;
 using Snakey.Config;
 using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace Snakey.Models
@@ -15,10 +17,10 @@ namespace Snakey.Models
         public SolidColorBrush HeadColor { get; set; }
         public SolidColorBrush BodyColor { get; set; }
         public SolidColorBrush TailColor { get; set; }
+        public Label SnakeText { get; }
         public bool IsDead { get; set; }
         public bool IsMovementLocked { get; set; }
         public bool IgnoreBodyCollisionWithHead { get; set; }
-
         public Snake()
         {
             HeadColor = new();
@@ -34,6 +36,9 @@ namespace Snakey.Models
             HeadColor.Color = Color.FromRgb(152, 100, 0);
             BodyColor.Color = Color.FromRgb(152, 200, 255);
             TailColor.Color = Color.FromRgb(50, 100, 120);
+            SnakeText = new();
+            SnakeText.FontSize = 24;
+            SnakeText.FontWeight = FontWeights.Bold;
         }
 
         public PlayerPackage MakeServerPackage()
@@ -90,8 +95,13 @@ namespace Snakey.Models
             IsDead = false;
             IsMovementLocked = false;
         }
-        public void Die()
+        public void Speak(string text)
         {
+            SnakeText.Content = text;
+        }
+        public void Shutup()
+        {
+            SnakeText.Content = string.Empty;
         }
     }
 }

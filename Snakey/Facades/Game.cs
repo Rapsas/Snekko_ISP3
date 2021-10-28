@@ -345,12 +345,23 @@ namespace Snakey.Facades
         {
             if (player is null)
                 return;
+
             DrawSquare(player.HeadLocation, player.HeadColor);
+
+
             foreach (var partLocation in player.BodyParts)
             {
                 DrawSquare(partLocation, player.BodyColor);
             }
             DrawSquare(player.TailLocation, player.TailColor);
+
+            // Draw text as the last layer
+            if (!string.IsNullOrEmpty(player.SnakeText.Content as string))
+            {
+                GameState.GameArea.Children.Add(player.SnakeText);
+                Canvas.SetLeft(player.SnakeText, player.HeadLocation.X);
+                Canvas.SetTop(player.SnakeText, player.HeadLocation.Y - Settings.CellSize);
+            }
         }
         public void ClearScreen()
         {
@@ -387,6 +398,5 @@ namespace Snakey.Facades
             Canvas.SetTop(r, location.Y + 4);
 
         }
-
     }
 }
