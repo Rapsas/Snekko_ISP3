@@ -6,6 +6,6 @@ namespace Snakey.Observer
     {
         void RegisterObserver(IObserver observer);
         void RemoveObserver(IObserver observer);
-        void NotifyObservers(SnackAdapter snack);
+        void NotifyObservers(ISnackTarget snack);
     }
 }

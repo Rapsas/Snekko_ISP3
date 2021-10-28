@@ -4,6 +4,6 @@ namespace Snakey.Observer
 {
     interface IObserver
     {
-        void Update(SnackAdapter snack);
+        void Update(ISnackTarget snack);
     }
 }

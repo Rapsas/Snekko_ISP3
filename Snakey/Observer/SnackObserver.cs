@@ -4,7 +4,7 @@ namespace Snakey.Observer
 {
     class SnackObserver : IObserver
     {
-        public void Update(SnackAdapter snack)
+        public void Update(ISnackTarget snack)
         {
             snack.TriggerEffect();
             snack.WasConsumed = true;

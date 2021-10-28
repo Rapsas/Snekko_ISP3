@@ -15,7 +15,7 @@ namespace Snakey.Managers
 
         public Snake Player { get; set; }
         public Snake SecondPlayer { get; set; }
-        public List<SnackAdapter> Snacks { get; set; }
+        public List<ISnackTarget> Snacks { get; set; }
         public DispatcherTimer GameTimer { get; set; }
         public Canvas GameArea { get; set; }
         public Label ScoreLabel { get; set; }

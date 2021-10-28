@@ -18,7 +18,7 @@ namespace Snakey.Observer
             MysterySound = new("../../../assets/soundMystery.wav");
         }
 
-        public void Update(SnackAdapter snack)
+        public void Update(ISnackTarget snack)
         {
             Type type = snack.GetSnackType();
 

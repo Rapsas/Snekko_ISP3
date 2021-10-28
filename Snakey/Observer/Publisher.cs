@@ -12,7 +12,7 @@ namespace Snakey.Observer
             this.Observers = new();
         }
 
-        public void NotifyObservers(SnackAdapter snack)
+        public void NotifyObservers(ISnackTarget snack)
         {
             Observers.ForEach(observers => observers.Update(snack));
         }
