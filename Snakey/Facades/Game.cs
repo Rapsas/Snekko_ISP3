@@ -262,21 +262,22 @@ namespace Snakey.Facades
 
             Random rnd = new();
 
-            int factoryDecider = rnd.Next(2);
-            ISnackFactory factory;
-            if (factoryDecider > 0)
-            {
-                factory = new AppleFactory();
-            }
-            else
-            {
-                factory = new LemonFactory();
-            }
-
             for (int i = 0; i < 100; i++) // 100 tries to place a snack randomly
             {
                 if (GameState.Snacks.Count >= Settings.MaximumSnackCount)
                     return;
+
+                int factoryDecider = rnd.Next(2);
+                ISnackFactory factory;
+                if (factoryDecider > 0)
+                {
+                    factory = new AppleFactory();
+                }
+                else
+                {
+                    factory = new LemonFactory();
+                }
+
                 int rndX = rnd.Next(0, (int)Window.GameArea.ActualWidth / Settings.CellSize) * Settings.CellSize;
                 int rndY = rnd.Next(0, (int)Window.GameArea.ActualHeight / Settings.CellSize) * Settings.CellSize;
 
