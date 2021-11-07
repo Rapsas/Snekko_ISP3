@@ -2,10 +2,10 @@
 
 namespace Snakey.Observer
 {
-    interface ISubject
+    public interface ISubject
     {
-        void RegisterObserver(IObserver observer);
-        void RemoveObserver(IObserver observer);
-        void NotifyObservers(ISnackTarget snack);
+        IObserver RegisterObserver(IObserver observer);
+        IObserver RemoveObserver(IObserver observer);
+        int NotifyObservers(ISnackTarget snack);
     }
 }

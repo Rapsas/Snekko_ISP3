@@ -5,7 +5,7 @@ using System.Media;
 
 namespace Snakey.Observer
 {
-    class AudioPlayer : IObserver
+    public class AudioPlayer : IObserver
     {
         readonly SoundPlayer GoodSound;
         readonly SoundPlayer BadSound;

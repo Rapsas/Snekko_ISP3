@@ -12,19 +12,22 @@ namespace Snakey.Observer
             this.Observers = new();
         }
 
-        public void NotifyObservers(ISnackTarget snack)
+        public int NotifyObservers(ISnackTarget snack)
         {
             Observers.ForEach(observers => observers.Update(snack));
+            return Observers.Count;
         }
 
-        public void RegisterObserver(IObserver observer)
+        public IObserver RegisterObserver(IObserver observer)
         {
             Observers.Add(observer);
+            return observer;
         }
 
-        public void RemoveObserver(IObserver observer)
+        public IObserver RemoveObserver(IObserver observer)
         {
             Observers.Remove(observer);
+            return observer;
         }
     }
 }

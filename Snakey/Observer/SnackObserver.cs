@@ -2,7 +2,7 @@
 
 namespace Snakey.Observer
 {
-    class SnackObserver : IObserver
+    public class SnackObserver : IObserver
     {
         public void Update(ISnackTarget snack)
         {
