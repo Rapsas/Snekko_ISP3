@@ -4,7 +4,7 @@ using Snakey.Models;
 
 namespace Snakey.Decorators
 {
-    public class TriggerEffectDecorator : Snack
+    public abstract class TriggerEffectDecorator : Snack
     {
         public override Vector2D Location { get => Snack.Location; set => Snack.Location = value; }
         public override bool WasConsumed { get => Snack.WasConsumed; set => Snack.WasConsumed = value; }
