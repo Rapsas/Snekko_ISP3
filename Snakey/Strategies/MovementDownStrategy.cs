@@ -3,7 +3,7 @@ using Snakey.Models;
 
 namespace Snakey.Strategies
 {
-    class MovementDownStrategy : IMovementStrategy
+    public class MovementDownStrategy : IMovementStrategy
     {
         public void ChangeMovementDirection(Snake player)
         {

@@ -2,7 +2,7 @@
 
 namespace Snakey.Strategies
 {
-    interface IMovementStrategy
+    public interface IMovementStrategy
     {
         public void ChangeMovementDirection(Snake player);
     }

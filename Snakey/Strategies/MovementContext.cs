@@ -2,7 +2,7 @@
 
 namespace Snakey.Strategies
 {
-    class MovementContext
+    public class MovementContext
     {
         private IMovementStrategy _movementStrategy;
 
@@ -22,6 +22,10 @@ namespace Snakey.Strategies
         {
             if (_movementStrategy != null)
                 _movementStrategy.ChangeMovementDirection(player);
+        }
+        public IMovementStrategy GetStrategy()
+        {
+            return _movementStrategy;
         }
     }
 }
