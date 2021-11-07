@@ -73,5 +73,30 @@ namespace Snakey.Decorators.Tests
                 Mocks.ReleaseGameState();
             }
         }
+
+        [StaFact]
+        public void TriggerEffectMysteryLemonTest()
+        {
+            GameState gameState = null;
+            while (gameState == null)
+                gameState = Mocks.GetGameState();
+
+            Mocks.ResetGameState();
+            var expected = gameState.Score + 1;
+            var snack = new MysteryLemon();
+            var increaseScoreTriggerEffectDecorator = new IncreaseScoreTriggerEffectDecorator(snack);
+
+            increaseScoreTriggerEffectDecorator.TriggerEffect();
+            var actual = gameState.Score;
+
+            try
+            {
+                Assert.Equal(expected, actual);
+            }
+            finally
+            {
+                Mocks.ReleaseGameState();
+            }
+        }
     }
 }
