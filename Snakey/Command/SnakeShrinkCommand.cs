@@ -2,7 +2,7 @@
 
 namespace Snakey.Command
 {
-    class SnakeShrinkCommand : ICommand
+    public class SnakeShrinkCommand : ICommand
     {
         private Snake _receiver;
         public void Execute()

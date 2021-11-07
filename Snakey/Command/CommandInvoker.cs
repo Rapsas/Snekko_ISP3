@@ -1,11 +1,12 @@
 ﻿namespace Snakey.Command
 {
-    class CommandInvoker
+    public class CommandInvoker
     {
         private ICommand _command;
-        public void SetCommand(ICommand command)
+        public ICommand SetCommand(ICommand command)
         {
             _command = command;
+            return _command;
         }
         public void ExecuteCommand()
         {

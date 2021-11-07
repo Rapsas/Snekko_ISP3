@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Snakey.Command
 {
-    class SnakeSpeakCommand : ICommand
+    public class SnakeSpeakCommand : ICommand
     {
         private Snake _receiver;
         private string _parameters;
