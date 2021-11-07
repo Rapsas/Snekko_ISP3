@@ -31,7 +31,6 @@ namespace Snakey.Decorators.Tests
             while (gameState == null)
                 gameState = Mocks.GetGameState();
 
-            Mocks.ResetGameState();
             var expected = gameState.Score - 1;
             var snack = new BadApple();
             var decreaseScoreTriggerEffectDecorator = new DecreaseScoreTriggerEffectDecorator(snack);
@@ -56,7 +55,6 @@ namespace Snakey.Decorators.Tests
             while (gameState == null)
                 gameState = Mocks.GetGameState();
 
-            Mocks.ResetGameState();
             var expected = gameState.Score - 1;
             var snack = new BadLemon();
             var decreaseScoreTriggerEffectDecorator = new DecreaseScoreTriggerEffectDecorator(snack);

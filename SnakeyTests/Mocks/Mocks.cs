@@ -60,18 +60,5 @@ namespace SnakeyTests.Mocks
         {
             return new MultiplayerManager("http://158.129.23.210:5003/gameHub");
         }
-
-        static public void ResetGameState()
-        {
-            gameState.MultiplayerManager = GetMultiplayerManager();
-            gameState.ScoreLabel = SetScoreLabel();
-            gameState.GameArea = SetCanvas();
-            gameState.GameArea.Width = Settings.WindowWidth;
-            gameState.GameArea.Height = Settings.WindowHeight;
-
-            // Setup snek player
-            gameState.Player = new();
-            gameState.Snacks = new();
-        }
     }
 }
