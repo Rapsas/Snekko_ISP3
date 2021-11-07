@@ -13,13 +13,12 @@ using Snakey.Managers;
 
 namespace Snakey.Bridge.Tests
 {
-    [Collection("Bridge collection")]
     public class ExpertCollisionTests
     {
         [StaTheory]
         [InlineData(80, 80, 80, 80)]
         [InlineData(40, 80, 40, 80)]
-        [InlineData(0, 80, 40, 0)]
+        [InlineData(120, 80, 120, 80)]
         public void MapCollisionTest(int playerX, int playerY, int objX, int objY)
         {
             GameState gameState = null;
@@ -33,8 +32,14 @@ namespace Snakey.Bridge.Tests
 
             ExpertCollision collision = new();
             collision.MapCollision(obsticles);
-            Assert.True(gameState.Player.IsDead);
-            Mocks.ReleaseGameState();
+            try
+            {
+                Assert.False(gameState.Player.IsDead);
+            }
+            finally
+            {
+                Mocks.ReleaseGameState();
+            }
         }
     }
 }
