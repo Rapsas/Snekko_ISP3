@@ -9,51 +9,65 @@ using System.Threading;
 using SnakeyTests.Mocks;
 using Common.Utility;
 using System.Windows.Shapes;
+using Snakey.Managers;
 
 namespace Snakey.Bridge.Tests
 {
     public class BasicCollisionTests
     {
-        [StaFact]
-        public void MapCollisionTestUpper()
+        [StaTheory]
+        [InlineData(-40, 0, 0, 0)]
+        [InlineData(0, -40, 0, 0)]
+        [InlineData(int.MaxValue, 0, 0, 0)]
+        public void MapCollisionTestUpper(int playerX, int playerY, int objX, int objY)
         {
-            var gameState = Mocks.GetGameState();
-
+            GameState gameState = null;
+            while (gameState == null)
+            {
+                gameState = Mocks.GetGameState();
+            }
             gameState.Player.HeadLocation = new(-40, 0);
             List<(Vector2D, Rectangle)> obsticles = new();
             obsticles.Add((new Vector2D(0, 0), new Rectangle()));
 
             BasicCollision collision = new();
             collision.MapCollision(obsticles);
-            Assert.False(gameState.Player.IsDead);
+            try
+            {
+                Assert.False(gameState.Player.IsDead);
+            }
+            finally
+            {
+                Mocks.ReleaseGameState();
+            }
         }
 
-        [StaFact]
-        public void MapCollisionTestLeft()
-        {
-            var gameState = Mocks.GetGameState();
+        //[StaFact]
+        //public void MapCollisionTestLeft()
+        //{
+        //    var gameState = Mocks.GetGameState();
 
-            gameState.Player.HeadLocation = new(0, -40);
-            List<(Vector2D, Rectangle)> obsticles = new();
-            obsticles.Add((new Vector2D(0, 0), new Rectangle()));
+        //    gameState.Player.HeadLocation = new(0, -40);
+        //    List<(Vector2D, Rectangle)> obsticles = new();
+        //    obsticles.Add((new Vector2D(0, 0), new Rectangle()));
 
-            BasicCollision collision = new();
-            collision.MapCollision(obsticles);
-            Assert.False(gameState.Player.IsDead);
-        }
+        //    BasicCollision collision = new();
+        //    collision.MapCollision(obsticles);
+        //    Assert.False(gameState.Player.IsDead);
+        //}
 
-        [StaFact]
-        public void MapCollisionTestBottomAndRight()
-        {
-            var gameState = Mocks.GetGameState();
+        //[StaFact]
+        //public void MapCollisionTestBottomAndRight()
+        //{
+        //    var gameState = Mocks.GetGameState();
 
-            gameState.Player.HeadLocation = new(int.MaxValue, 0);
-            List<(Vector2D, Rectangle)> obsticles = new();
-            obsticles.Add((new Vector2D(0, 0), new Rectangle()));
+        //    gameState.Player.HeadLocation = new(int.MaxValue, 0);
+        //    List<(Vector2D, Rectangle)> obsticles = new();
+        //    obsticles.Add((new Vector2D(0, 0), new Rectangle()));
 
-            BasicCollision collision = new();
-            collision.MapCollision(obsticles);
-            Assert.False(gameState.Player.IsDead);
-        }
+        //    BasicCollision collision = new();
+        //    collision.MapCollision(obsticles);
+        //    Assert.False(gameState.Player.IsDead);
+        //}
     }
 }
