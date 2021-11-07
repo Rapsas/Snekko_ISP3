@@ -3,7 +3,7 @@ using System.Windows.Media;
 
 namespace Snakey.Snacks
 {
-    class BadSnack : Snack
+    public class BadSnack : Snack
     {
         protected SolidColorBrush Stroke = Brushes.Red;
         protected double StrokeThickness = 5;

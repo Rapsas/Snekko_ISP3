@@ -2,7 +2,7 @@
 
 namespace Snakey.Factories
 {
-    interface ISnackFactory
+    public interface ISnackFactory
     {
         Snack CreateGoodSnack();
         Snack CreateBadSnack();
