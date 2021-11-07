@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 
 namespace Snakey.Bridge.Tests
 {
+    [Collection("Bridge collection")]
     public class BasicCollisionTests
     {
         [StaFact]

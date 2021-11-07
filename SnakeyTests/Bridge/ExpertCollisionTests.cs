@@ -13,6 +13,7 @@ using Snakey.Managers;
 
 namespace Snakey.Bridge.Tests
 {
+    [Collection("Bridge collection")]
     public class ExpertCollisionTests : IDisposable
     {
         private GameState gameState;
