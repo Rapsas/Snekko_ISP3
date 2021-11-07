@@ -13,13 +13,11 @@ namespace SnakeyTests.Mocks
 {
     static class Mocks
     {
+        static GameState gameState = GameState.Instance;
         static public GameState GetGameState()
         {
-            GameState gameState = GameState.Instance;
             gameState.MultiplayerManager = GetMultiplayerManager();
             gameState.ScoreLabel = SetScoreLabel();
-
-            var mapFactory = new MapFactory();
 
             // Setup snek player
             gameState.Player = new();
@@ -36,6 +34,16 @@ namespace SnakeyTests.Mocks
         static public MultiplayerManager GetMultiplayerManager()
         {
             return new MultiplayerManager("http://158.129.23.210:5003/gameHub");
+        }
+
+        static public void ResetGameState()
+        {
+            gameState.MultiplayerManager = GetMultiplayerManager();
+            gameState.ScoreLabel = SetScoreLabel();
+
+            // Setup snek player
+            gameState.Player = new();
+            gameState.Snacks = new();
         }
     }
 }
