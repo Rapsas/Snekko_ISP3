@@ -2,8 +2,6 @@
 using Snakey.Managers;
 using Snakey.Models;
 using System;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Threading;
 
 namespace Snakey.Decorators

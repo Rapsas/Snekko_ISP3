@@ -1,14 +1,5 @@
-﻿using Xunit;
-using Snakey.Factories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
-using Snakey.Snacks;
-using Snakey.Models;
-using Common.Enums;
+﻿using Common.Enums;
+using Xunit;
 
 namespace Snakey.Factories.Tests
 {
@@ -50,6 +41,6 @@ namespace Snakey.Factories.Tests
             Assert.True(result.SnackPackage().EffectType == EffectType.Mystery && result.SnackPackage().FoodType == FoodType.Apple);
         }
 
-        
+
     }
 }

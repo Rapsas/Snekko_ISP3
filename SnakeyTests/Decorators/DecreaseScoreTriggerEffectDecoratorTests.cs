@@ -1,14 +1,7 @@
-﻿using Xunit;
-using Snakey.Decorators;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
-using SnakeyTests.Mocks;
+﻿using Snakey.Managers;
 using Snakey.Snacks;
-using Snakey.Managers;
+using SnakeyTests.Mocks;
+using Xunit;
 
 namespace Snakey.Decorators.Tests
 {

@@ -1,17 +1,11 @@
-﻿using Xunit;
-using Snakey.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using SnakeyTests.Mocks;
-using Common.Utility;
-using System.Windows.Shapes;
-using Snakey.Maps;
+﻿using Common.Utility;
 using Snakey.Bridge;
 using Snakey.Managers;
+using Snakey.Maps;
+using SnakeyTests.Mocks;
+using System.Collections.Generic;
+using System.Windows.Shapes;
+using Xunit;
 
 namespace Snakey.Models.Tests
 {

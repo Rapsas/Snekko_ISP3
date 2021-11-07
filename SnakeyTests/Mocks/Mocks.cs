@@ -1,14 +1,7 @@
 ﻿using Snakey;
-using Snakey.Factories;
-using Snakey.Managers;
-using Snakey.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using Snakey.Config;
+using Snakey.Managers;
+using System.Windows.Controls;
 
 namespace SnakeyTests.Mocks
 {

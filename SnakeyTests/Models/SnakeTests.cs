@@ -1,13 +1,7 @@
-﻿using Xunit;
-using Snakey.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Enums;
-using Snakey.Config;
+﻿using Common.Enums;
 using Common.Utility;
+using Snakey.Config;
+using Xunit;
 
 namespace Snakey.Models.Tests
 {

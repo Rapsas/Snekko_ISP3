@@ -1,15 +1,9 @@
-﻿using Xunit;
-using Snakey.Facades;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Enums;
-using Snakey.Maps;
-using System.Windows.Input;
+﻿using Common.Enums;
 using Snakey.Managers;
+using Snakey.Maps;
 using SnakeyTests.Mocks;
+using System.Windows.Input;
+using Xunit;
 
 namespace Snakey.Facades.Tests
 {

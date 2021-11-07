@@ -19,10 +19,10 @@ namespace Snakey.Facades
 {
     public class Game
     {
-       public GameState GameState { get; private set; }
-       public MainWindow Window { get; private set; }
-       public Publisher Publisher { get; private set; }
-       public ServerFacade Server { get; private set; }
+        public GameState GameState { get; private set; }
+        public MainWindow Window { get; private set; }
+        public Publisher Publisher { get; private set; }
+        public ServerFacade Server { get; private set; }
 
         public void Init(MainWindow window)
         {

@@ -1,17 +1,10 @@
 ﻿using Xunit;
-using Snakey.Snacks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
 
 namespace Snakey.Snacks.Tests
 {
     public class MysteryLemonTests
     {
-       
+
 
         [StaFact]
         public void CloneTest()

@@ -1,16 +1,8 @@
-﻿using Xunit;
-using Snakey.Observer;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Snakey.Models;
-using Snakey.Snacks;
-using Snakey.Adapter;
-using System.Threading;
+﻿using Snakey.Adapter;
 using Snakey.Managers;
+using Snakey.Snacks;
 using SnakeyTests.Mocks;
+using Xunit;
 
 namespace Snakey.Observer.Tests
 {
@@ -48,7 +40,7 @@ namespace Snakey.Observer.Tests
             Assert.IsType<Publisher>(publisher);
         }
 
-        
+
 
         [Fact()]
         public void RegisterObserverTest()

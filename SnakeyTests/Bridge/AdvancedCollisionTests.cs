@@ -1,14 +1,9 @@
-﻿using Xunit;
-using Snakey.Bridge;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SnakeyTests.Mocks;
-using Common.Utility;
-using System.Windows.Shapes;
+﻿using Common.Utility;
 using Snakey.Managers;
+using SnakeyTests.Mocks;
+using System.Collections.Generic;
+using System.Windows.Shapes;
+using Xunit;
 
 namespace Snakey.Bridge.Tests
 {

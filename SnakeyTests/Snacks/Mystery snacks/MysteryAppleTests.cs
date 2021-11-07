@@ -1,25 +1,19 @@
-﻿using Xunit;
-using Snakey.Snacks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
+﻿using System;
+using Xunit;
 
 namespace Snakey.Snacks.Tests
 {
     public class MysteryAppleTests
     {
-        
+
         [StaFact]
         public void CloneTest()
         {
-                var apple = new MysteryApple();
-                var original = apple.ToString();
-                var clonedApple = apple.Clone();
-                var cloned = clonedApple.ToString();
-                Assert.True(original == cloned);
+            var apple = new MysteryApple();
+            var original = apple.ToString();
+            var clonedApple = apple.Clone();
+            var cloned = clonedApple.ToString();
+            Assert.True(original == cloned);
         }
 
         [StaFact]
@@ -50,6 +44,6 @@ namespace Snakey.Snacks.Tests
             Assert.False(original == cloned);
         }
 
-       
+
     }
 }

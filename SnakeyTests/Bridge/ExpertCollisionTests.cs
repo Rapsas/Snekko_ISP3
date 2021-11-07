@@ -1,15 +1,9 @@
-﻿using Xunit;
-using Snakey.Bridge;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SnakeyTests.Mocks;
-using Common.Utility;
-using System.Windows.Shapes;
-using System.Threading;
+﻿using Common.Utility;
 using Snakey.Managers;
+using SnakeyTests.Mocks;
+using System.Collections.Generic;
+using System.Windows.Shapes;
+using Xunit;
 
 namespace Snakey.Bridge.Tests
 {
@@ -22,7 +16,7 @@ namespace Snakey.Bridge.Tests
         public void MapCollisionTest(int playerX, int playerY, int objX, int objY)
         {
             GameState gameState = null;
-            while(gameState == null)
+            while (gameState == null)
             {
                 gameState = Mocks.GetGameState();
             }

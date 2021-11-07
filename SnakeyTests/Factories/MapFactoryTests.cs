@@ -1,12 +1,6 @@
-﻿using Xunit;
-using Snakey.Factories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Enums;
+﻿using Common.Enums;
 using Snakey.Maps;
+using Xunit;
 
 namespace Snakey.Factories.Tests
 {
