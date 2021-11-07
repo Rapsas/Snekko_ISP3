@@ -13,23 +13,19 @@ using Snakey.Managers;
 
 namespace Snakey.Bridge.Tests
 {
-    public class ExpertCollisionTests : IDisposable
+    public class ExpertCollisionTests
     {
-        private GameState gameState;
-        public ExpertCollisionTests()
-        {
-            gameState = Mocks.GetGameState();
-        }
-
-        public void Dispose()
-        {
-            Mocks.ResetGameState();
-        }
-
         [StaTheory]
         [InlineData(80, 80, 80, 80)]
+        [InlineData(40, 80, 40, 80)]
+        [InlineData(0, 80, 40, 0)]
         public void MapCollisionTest(int playerX, int playerY, int objX, int objY)
         {
+            GameState gameState = null;
+            while(gameState == null)
+            {
+                gameState = Mocks.GetGameState();
+            }
             gameState.Player.HeadLocation = new(playerX, playerY);
             List<(Vector2D, Rectangle)> obsticles = new();
             obsticles.Add((new Vector2D(objX, objY), new Rectangle()));
@@ -37,6 +33,7 @@ namespace Snakey.Bridge.Tests
             ExpertCollision collision = new();
             collision.MapCollision(obsticles);
             Assert.True(gameState.Player.IsDead);
+            Mocks.ReleaseGameState();
         }
     }
 }
