@@ -5,7 +5,7 @@ using Snakey.Snacks;
 
 namespace Snakey.Factories
 {
-    class AppleFactory : ISnackFactory
+    public class AppleFactory : ISnackFactory
     {
         private MysteryApple _mysteryApple;
         public Snack CreateBadSnack()
