@@ -7,7 +7,7 @@ using System.Windows.Shapes;
 
 namespace Snakey.Snacks
 {
-    class MysteryApple : MysterySnack
+    public class MysteryApple : MysterySnack
     {
         public override void TriggerEffect()
         {

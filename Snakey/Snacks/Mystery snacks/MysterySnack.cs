@@ -4,11 +4,11 @@ using System.Windows.Media;
 
 namespace Snakey.Snacks
 {
-    abstract class MysterySnack : Snack
+    public abstract class MysterySnack : Snack
     {
         protected SolidColorBrush Stroke = Brushes.Blue;
         protected double StrokeThickness = 5;
-        protected Random rnd;
+        public Random rnd;
         public MysterySnack()
         {
             WasConsumed = false;
