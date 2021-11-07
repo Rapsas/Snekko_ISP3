@@ -3,6 +3,7 @@ using Snakey.Facades;
 using Snakey.Managers;
 using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Snakey
@@ -43,5 +44,7 @@ namespace Snakey
         {
             _game.SwitchToLevel(MapTypes.Expert);
         }
+
+        public Label GetScoreLabel => ScoreLabel;
     }
 }

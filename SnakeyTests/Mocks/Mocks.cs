@@ -1,4 +1,5 @@
-﻿using Snakey.Factories;
+﻿using Snakey;
+using Snakey.Factories;
 using Snakey.Managers;
 using Snakey.Models;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace SnakeyTests.Mocks
 {
@@ -15,8 +17,8 @@ namespace SnakeyTests.Mocks
         {
             GameState gameState = GameState.Instance;
             gameState.MultiplayerManager = GetMultiplayerManager();
+            gameState.ScoreLabel = SetScoreLabel();
 
-            gameState = GameState.Instance;
             var mapFactory = new MapFactory();
 
             // Setup snek player
@@ -26,6 +28,11 @@ namespace SnakeyTests.Mocks
             return gameState;
         }
 
+        static public Label SetScoreLabel()
+        {
+            MainWindow window = new();
+            return window.GetScoreLabel;
+        }
         static public MultiplayerManager GetMultiplayerManager()
         {
             return new MultiplayerManager("http://158.129.23.210:5003/gameHub");
