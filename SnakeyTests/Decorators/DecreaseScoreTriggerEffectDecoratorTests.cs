@@ -11,6 +11,7 @@ using Snakey.Snacks;
 
 namespace Snakey.Decorators.Tests
 {
+    [Collection("Decorator collection")]
     public class DecreaseScoreTriggerEffectDecoratorTests
     {
         [StaFact]
