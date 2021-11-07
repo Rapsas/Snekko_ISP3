@@ -8,7 +8,7 @@ using System.Windows.Threading;
 
 namespace Snakey.Decorators
 {
-    class ShrinkSnakeTriggerEffectDecorator : TriggerEffectDecorator
+    public class ShrinkSnakeTriggerEffectDecorator : TriggerEffectDecorator
     {
         private CommandInvoker invoker;
         public ShrinkSnakeTriggerEffectDecorator(Snack snack)
