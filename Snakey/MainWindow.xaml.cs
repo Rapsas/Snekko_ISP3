@@ -28,7 +28,7 @@ namespace Snakey
         }
         private void Keyboard_pressed(object sender, KeyEventArgs e)
         {
-            _game.HandleKeyboard(e);
+            _game.HandleKeyboard(e.Key);
         }
 
         private void Switch_to_level_1(object sender, EventArgs e)

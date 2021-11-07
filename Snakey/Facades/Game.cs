@@ -50,12 +50,12 @@ namespace Snakey.Facades
                     break;
             }
         }
-        public void HandleKeyboard(KeyEventArgs e)
+        public void HandleKeyboard(Key e)
         {
             if (GameState.Player.IsMovementLocked)
                 return;
             MovementContext context = new MovementContext();
-            switch (e.Key)
+            switch (e)
             {
                 case Key.A:
                     context.SetStrategy(new MovementLeftStrategy());
