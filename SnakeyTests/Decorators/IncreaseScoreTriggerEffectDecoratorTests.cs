@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using SnakeyTests.Mocks;
 using Snakey.Snacks;
+using Snakey.Managers;
 
 namespace Snakey.Decorators.Tests
 {
@@ -26,8 +27,11 @@ namespace Snakey.Decorators.Tests
         [StaFact]
         public void TriggerEffectGoodAppleTest()
         {
+            GameState gameState = null;
+            while (gameState == null)
+                gameState = Mocks.GetGameState();
+
             Mocks.ResetGameState();
-            var gameState = Mocks.GetGameState();
             var expected = gameState.Score + 1;
             var snack = new GoodApple();
             var increaseScoreTriggerEffectDecorator = new IncreaseScoreTriggerEffectDecorator(snack);
@@ -35,14 +39,24 @@ namespace Snakey.Decorators.Tests
             increaseScoreTriggerEffectDecorator.TriggerEffect();
             var actual = gameState.Score;
 
-            Assert.Equal(expected, actual);
+            try
+            {
+                Assert.Equal(expected, actual);
+            }
+            finally
+            {
+                Mocks.ReleaseGameState();
+            }
         }
 
         [StaFact]
         public void TriggerEffectGoodLemonTest()
         {
+            GameState gameState = null;
+            while (gameState == null)
+                gameState = Mocks.GetGameState();
+
             Mocks.ResetGameState();
-            var gameState = Mocks.GetGameState();
             var expected = gameState.Score + 1;
             var snack = new GoodLemon();
             var increaseScoreTriggerEffectDecorator = new IncreaseScoreTriggerEffectDecorator(snack);
@@ -50,7 +64,14 @@ namespace Snakey.Decorators.Tests
             increaseScoreTriggerEffectDecorator.TriggerEffect();
             var actual = gameState.Score;
 
-            Assert.Equal(expected, actual);
+            try
+            {
+                Assert.Equal(expected, actual);
+            }
+            finally
+            {
+                Mocks.ReleaseGameState();
+            }
         }
     }
 }

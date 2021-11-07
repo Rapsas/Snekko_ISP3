@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using SnakeyTests.Mocks;
 using Snakey.Snacks;
+using Snakey.Managers;
 
 namespace Snakey.Decorators.Tests
 {
@@ -26,7 +27,10 @@ namespace Snakey.Decorators.Tests
         [StaFact]
         public void TriggerEffectBadAppleTest()
         {
-            var gameState = Mocks.GetGameState();
+            GameState gameState = null;
+            while (gameState == null)
+                gameState = Mocks.GetGameState();
+
             gameState.Player.Expand();
             var expected = gameState.Player.BodyParts.Count - 1;
             var snack = new BadApple();
@@ -35,7 +39,14 @@ namespace Snakey.Decorators.Tests
             shrinkSnakeTriggerEffectDecorator.TriggerEffect();
             var actual = gameState.Player.BodyParts.Count;
 
-            Assert.Equal(expected, actual);
+            try
+            {
+                Assert.Equal(expected, actual);
+            }
+            finally
+            {
+                Mocks.ReleaseGameState();
+            }
         }
     }
 }
