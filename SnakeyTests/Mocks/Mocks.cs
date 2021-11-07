@@ -15,23 +15,37 @@ namespace SnakeyTests.Mocks
     static class Mocks
     {
         static GameState gameState = GameState.Instance;
-
+        static object _lock = new();
+        static bool IsCurrenttlyUsed = false;
         static public GameState GetGameState()
         {
-            GameState gameState = GameState.Instance;
-            gameState.MultiplayerManager = GetMultiplayerManager();
-            gameState.ScoreLabel = SetScoreLabel();
-            gameState.GameArea = SetCanvas();
-            gameState.GameArea.Width = Settings.WindowWidth;
-            gameState.GameArea.Height = Settings.WindowHeight;
+            lock (_lock)
+            {
+                if (IsCurrenttlyUsed)
+                    return null;
 
-            // Setup snek player
-            gameState.Player = new();
-            gameState.Snacks = new();
+                gameState.MultiplayerManager = GetMultiplayerManager();
+                gameState.ScoreLabel = SetScoreLabel();
+                gameState.GameArea = SetCanvas();
+                gameState.GameArea.Width = Settings.WindowWidth;
+                gameState.GameArea.Height = Settings.WindowHeight;
 
-            return gameState;
+                // Setup snek player
+                gameState.Player = new();
+                gameState.Snacks = new();
+                IsCurrenttlyUsed = true;
+
+                return gameState;
+            }
         }
 
+        static public void ReleaseGameState()
+        {
+            lock (_lock)
+            {
+                IsCurrenttlyUsed = false;
+            }
+        }
         static public Canvas SetCanvas()
         {
             MainWindow window = new();
