@@ -18,6 +18,7 @@ namespace SnakeyTests.Mocks
 
         static public GameState GetGameState()
         {
+            GameState gameState = GameState.Instance;
             gameState.MultiplayerManager = GetMultiplayerManager();
             gameState.ScoreLabel = SetScoreLabel();
             gameState.GameArea = SetCanvas();
