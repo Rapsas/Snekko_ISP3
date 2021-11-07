@@ -34,7 +34,7 @@ namespace Snakey.Bridge.Tests
             collision.MapCollision(obsticles);
             try
             {
-                Assert.False(gameState.Player.IsDead);
+                Assert.True(gameState.Player.IsDead);
             }
             finally
             {

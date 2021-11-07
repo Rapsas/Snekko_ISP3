@@ -40,33 +40,5 @@ namespace Snakey.Bridge.Tests
                 Mocks.ReleaseGameState();
             }
         }
-
-        //[StaFact]
-        //public void MapCollisionTestLeft()
-        //{
-        //    var gameState = Mocks.GetGameState();
-
-        //    gameState.Player.HeadLocation = new(0, -40);
-        //    List<(Vector2D, Rectangle)> obsticles = new();
-        //    obsticles.Add((new Vector2D(0, 0), new Rectangle()));
-
-        //    BasicCollision collision = new();
-        //    collision.MapCollision(obsticles);
-        //    Assert.False(gameState.Player.IsDead);
-        //}
-
-        //[StaFact]
-        //public void MapCollisionTestBottomAndRight()
-        //{
-        //    var gameState = Mocks.GetGameState();
-
-        //    gameState.Player.HeadLocation = new(int.MaxValue, 0);
-        //    List<(Vector2D, Rectangle)> obsticles = new();
-        //    obsticles.Add((new Vector2D(0, 0), new Rectangle()));
-
-        //    BasicCollision collision = new();
-        //    collision.MapCollision(obsticles);
-        //    Assert.False(gameState.Player.IsDead);
-        //}
     }
 }
