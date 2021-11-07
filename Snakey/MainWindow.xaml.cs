@@ -46,5 +46,6 @@ namespace Snakey
         }
 
         public Label GetScoreLabel => ScoreLabel;
+        public Canvas GetGameArea => GameArea;
     }
 }
