@@ -1,6 +1,6 @@
 ﻿namespace Snakey.Config
 {
-    static class Settings
+    public static class Settings
     {
         public static int CellSize { get; } = 40;
         public static int WindowWidth { get; } = 800;
