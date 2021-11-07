@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snakey", "Snakey\Snakey.csp
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Common", "Common\Common.shproj", "{9A7A51B6-9941-42EE-9EAA-A98F117CAA9B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnakeyTests", "SnakeyTests\SnakeyTests.csproj", "{FFDBD872-271A-4949-8187-6EFD1048D30D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnakeyTests", "SnakeyTests\SnakeyTests.csproj", "{FFDBD872-271A-4949-8187-6EFD1048D30D}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution

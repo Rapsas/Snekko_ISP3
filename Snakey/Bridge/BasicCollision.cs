@@ -5,7 +5,7 @@ using System.Windows.Shapes;
 
 namespace Snakey.Bridge
 {
-    class BasicCollision : ICollision
+    public class BasicCollision : ICollision
     {
         GameState _gameState = GameState.Instance;
 

@@ -4,7 +4,7 @@ using Snakey.Models;
 
 namespace Snakey.Factories
 {
-    class MapFactory : IMapFactory
+    public class MapFactory : IMapFactory
     {
         public Map CreateMap(MapTypes map)
         {

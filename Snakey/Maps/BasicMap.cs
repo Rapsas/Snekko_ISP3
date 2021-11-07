@@ -3,7 +3,7 @@ using Snakey.Models;
 
 namespace Snakey.Maps
 {
-    class BasicMap : Map
+    public class BasicMap : Map
     {
         public BasicMap(ICollision collisionImp) : base(collisionImp)
         {
