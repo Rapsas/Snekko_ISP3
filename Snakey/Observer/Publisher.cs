@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Snakey.Observer
 {
-    class Publisher : ISubject
+    public class Publisher : ISubject
     {
         private List<IObserver> Observers;
 

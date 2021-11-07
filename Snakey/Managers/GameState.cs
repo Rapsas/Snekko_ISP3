@@ -7,7 +7,7 @@ using System.Windows.Threading;
 
 namespace Snakey.Managers
 {
-    public sealed class GameState
+    public class GameState
     {
         private static readonly GameState _instance = new();
         private int _gameScore = 0;

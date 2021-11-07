@@ -2,7 +2,7 @@
 
 namespace Snakey.Observer
 {
-    interface IObserver
+    public interface IObserver
     {
         void Update(ISnackTarget snack);
     }

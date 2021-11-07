@@ -19,10 +19,10 @@ namespace Snakey.Facades
 {
     public class Game
     {
-        private GameState GameState;
-        private MainWindow Window;
-        private Publisher Publisher;
-        private ServerFacade Server;
+       public GameState GameState { get; private set; }
+       public MainWindow Window { get; private set; }
+       public Publisher Publisher { get; private set; }
+       public ServerFacade Server { get; private set; }
 
         public void Init(MainWindow window)
         {
@@ -144,7 +144,6 @@ namespace Snakey.Facades
 
             GameState.GameMap = mapFactory.CreateMap(MapTypes.Basic);
         }
-
         private void RegisterObservers()
         {
             Publisher = new();
@@ -154,7 +153,6 @@ namespace Snakey.Facades
             Publisher.RegisterObserver(snackObserver);
             Publisher.RegisterObserver(audioOBserver);
         }
-
         private void GameLoop(object sender, EventArgs e)
         {
             // Update with the server 
@@ -170,7 +168,6 @@ namespace Snakey.Facades
             DrawSnake(GameState.SecondPlayer);
             GameState.Player.Move();
         }
-
         private void CheckPlayerCollision()
         {
             // This whole collision checking could probably be handeled much nicer
@@ -231,7 +228,6 @@ namespace Snakey.Facades
                 Window.Close();
             }
         }
-
         private void CheckSnackCollision()
         {
             foreach (var snack in GameState.Snacks)
@@ -342,7 +338,7 @@ namespace Snakey.Facades
 
             return false;
         }
-        public void DrawSnake(Snake player)
+        private void DrawSnake(Snake player)
         {
             if (player is null)
                 return;
@@ -364,7 +360,7 @@ namespace Snakey.Facades
                 Canvas.SetTop(player.SnakeText, player.HeadLocation.Y - Settings.CellSize);
             }
         }
-        public void ClearScreen()
+        private void ClearScreen()
         {
             GameState.GameArea.Children.Clear();
         }
