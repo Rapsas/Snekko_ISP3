@@ -8,7 +8,7 @@ using System.Windows.Shapes;
 
 namespace Snakey.Builders
 {
-    class ExpertMapConfiguration : MapBuilder
+    public class ExpertMapConfiguration : MapBuilder
     {
         public override MapBuilder AddObstacles()
         {

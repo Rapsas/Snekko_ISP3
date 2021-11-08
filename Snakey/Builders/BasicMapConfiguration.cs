@@ -3,7 +3,7 @@ using Snakey.Maps;
 
 namespace Snakey.Builders
 {
-    class BasicMapConfiguration : MapBuilder
+    public class BasicMapConfiguration : MapBuilder
     {
 
         public override MapBuilder AddObstacles()
