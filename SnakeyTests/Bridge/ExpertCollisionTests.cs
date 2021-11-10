@@ -1,5 +1,4 @@
 ﻿using Common.Utility;
-using Snakey.Managers;
 using SnakeyTests.Mocks;
 using System.Collections.Generic;
 using System.Windows.Shapes;
@@ -15,25 +14,16 @@ namespace Snakey.Bridge.Tests
         [InlineData(120, 80, 120, 80)]
         public void MapCollisionTest(int playerX, int playerY, int objX, int objY)
         {
-            GameState gameState = null;
-            while (gameState == null)
-            {
-                gameState = Mocks.GetGameState();
-            }
+            using var mock = new Mocks();
+            var gameState = mock.GetGameState();
+
             gameState.Player.HeadLocation = new(playerX, playerY);
             List<(Vector2D, Rectangle)> obsticles = new();
             obsticles.Add((new Vector2D(objX, objY), new Rectangle()));
 
             ExpertCollision collision = new();
             collision.MapCollision(obsticles);
-            try
-            {
-                Assert.True(gameState.Player.IsDead);
-            }
-            finally
-            {
-                Mocks.ReleaseGameState();
-            }
+            Assert.True(gameState.Player.IsDead);
         }
     }
 }

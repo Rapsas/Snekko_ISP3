@@ -1,5 +1,4 @@
 ﻿using Snakey.Adapter;
-using Snakey.Managers;
 using Snakey.Snacks;
 using SnakeyTests.Mocks;
 using Xunit;
@@ -11,25 +10,16 @@ namespace Snakey.Observer.Tests
         [StaFact]
         public void NotifyObserversTest()
         {
-            GameState gameState = null;
-            while (gameState == null)
-            {
-                gameState = Mocks.GetGameState();
-            }
+            using var mock = new Mocks();
+            var gameState = mock.GetGameState();
+
             var publisher = new Publisher();
             publisher.RegisterObserver(new SnackObserver());
             publisher.RegisterObserver(new SnackObserver());
             publisher.RegisterObserver(new AudioPlayer());
             publisher.RegisterObserver(new AudioPlayer());
             int notifiedObservers = publisher.NotifyObservers(new SnackAdapter(new MysteryApple()));
-            try
-            {
-                Assert.True(notifiedObservers == 4);
-            }
-            finally
-            {
-                Mocks.ReleaseGameState();
-            }
+            Assert.True(notifiedObservers == 4);
         }
 
         [Fact()]

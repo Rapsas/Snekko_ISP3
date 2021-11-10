@@ -1,5 +1,4 @@
-﻿using Snakey.Managers;
-using Snakey.Snacks;
+﻿using Snakey.Snacks;
 using SnakeyTests.Mocks;
 using Xunit;
 
@@ -20,9 +19,8 @@ namespace Snakey.Decorators.Tests
         [StaFact]
         public void TriggerEffectGoodAppleTest()
         {
-            GameState gameState = null;
-            while (gameState == null)
-                gameState = Mocks.GetGameState();
+            using var mock = new Mocks();
+            var gameState = mock.GetGameState();
 
             var expected = gameState.Score + 1;
             var snack = new GoodApple();
@@ -31,22 +29,14 @@ namespace Snakey.Decorators.Tests
             increaseScoreTriggerEffectDecorator.TriggerEffect();
             var actual = gameState.Score;
 
-            try
-            {
-                Assert.Equal(expected, actual);
-            }
-            finally
-            {
-                Mocks.ReleaseGameState();
-            }
+            Assert.Equal(expected, actual);
         }
 
         [StaFact]
         public void TriggerEffectGoodLemonTest()
         {
-            GameState gameState = null;
-            while (gameState == null)
-                gameState = Mocks.GetGameState();
+            using var mock = new Mocks();
+            var gameState = mock.GetGameState();
 
             var expected = gameState.Score + 1;
             var snack = new GoodLemon();
@@ -55,22 +45,14 @@ namespace Snakey.Decorators.Tests
             increaseScoreTriggerEffectDecorator.TriggerEffect();
             var actual = gameState.Score;
 
-            try
-            {
-                Assert.Equal(expected, actual);
-            }
-            finally
-            {
-                Mocks.ReleaseGameState();
-            }
+            Assert.Equal(expected, actual);
         }
 
         [StaFact]
         public void TriggerEffectMysteryLemonTest()
         {
-            GameState gameState = null;
-            while (gameState == null)
-                gameState = Mocks.GetGameState();
+            using var mock = new Mocks();
+            var gameState = mock.GetGameState();
 
             var expected = gameState.Score + 1;
             var snack = new MysteryLemon();
@@ -79,14 +61,7 @@ namespace Snakey.Decorators.Tests
             increaseScoreTriggerEffectDecorator.TriggerEffect();
             var actual = gameState.Score;
 
-            try
-            {
-                Assert.Equal(expected, actual);
-            }
-            finally
-            {
-                Mocks.ReleaseGameState();
-            }
+            Assert.Equal(expected, actual);
         }
     }
 }

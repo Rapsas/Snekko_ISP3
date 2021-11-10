@@ -1,5 +1,4 @@
-﻿using Snakey.Managers;
-using Snakey.Snacks;
+﻿using Snakey.Snacks;
 using SnakeyTests.Mocks;
 using Xunit;
 
@@ -20,9 +19,8 @@ namespace Snakey.Decorators.Tests
         [StaFact]
         public void TriggerEffectBadAppleTest()
         {
-            GameState gameState = null;
-            while (gameState == null)
-                gameState = Mocks.GetGameState();
+            using var mock = new Mocks();
+            var gameState = mock.GetGameState();
 
             var expected = gameState.Score - 1;
             var snack = new BadApple();
@@ -31,22 +29,14 @@ namespace Snakey.Decorators.Tests
             decreaseScoreTriggerEffectDecorator.TriggerEffect();
             var actual = gameState.Score;
 
-            try
-            {
-                Assert.Equal(expected, actual);
-            }
-            finally
-            {
-                Mocks.ReleaseGameState();
-            }
+            Assert.Equal(expected, actual);
         }
 
         [StaFact]
         public void TriggerEffectBadLemonTest()
         {
-            GameState gameState = null;
-            while (gameState == null)
-                gameState = Mocks.GetGameState();
+            using var mock = new Mocks();
+            var gameState = mock.GetGameState();
 
             var expected = gameState.Score - 1;
             var snack = new BadLemon();
@@ -55,14 +45,7 @@ namespace Snakey.Decorators.Tests
             decreaseScoreTriggerEffectDecorator.TriggerEffect();
             var actual = gameState.Score;
 
-            try
-            {
-                Assert.Equal(expected, actual);
-            }
-            finally
-            {
-                Mocks.ReleaseGameState();
-            }
+            Assert.Equal(expected, actual);
         }
     }
 }

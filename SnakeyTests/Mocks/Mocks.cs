@@ -1,21 +1,24 @@
 ﻿using Snakey;
 using Snakey.Config;
 using Snakey.Managers;
+using System;
 using System.Windows.Controls;
 
 namespace SnakeyTests.Mocks
 {
-    static class Mocks
+    public class Mocks : IDisposable
     {
         static GameState gameState = GameState.Instance;
         static object _lock = new();
         static bool IsCurrenttlyUsed = false;
-        static public GameState GetGameState()
+        public Mocks() { }
+        public GameState GetGameState()
         {
+            // Dont call it multiple times from the same test
+            // or it will deadlock :^)
             lock (_lock)
             {
-                if (IsCurrenttlyUsed)
-                    return null;
+                while (IsCurrenttlyUsed);
 
                 gameState.MultiplayerManager = GetMultiplayerManager();
                 gameState.ScoreLabel = SetScoreLabel();
@@ -32,12 +35,9 @@ namespace SnakeyTests.Mocks
             }
         }
 
-        static public void ReleaseGameState()
+        public void ReleaseGameState()
         {
-            lock (_lock)
-            {
-                IsCurrenttlyUsed = false;
-            }
+            IsCurrenttlyUsed = false;
         }
         static public Canvas SetCanvas()
         {
@@ -52,6 +52,11 @@ namespace SnakeyTests.Mocks
         static public MultiplayerManager GetMultiplayerManager()
         {
             return new MultiplayerManager("http://158.129.23.210:5003/gameHub");
+        }
+
+        public void Dispose()
+        {
+            ReleaseGameState();
         }
     }
 }

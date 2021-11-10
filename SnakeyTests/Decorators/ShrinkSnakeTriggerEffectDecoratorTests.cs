@@ -1,5 +1,4 @@
-﻿using Snakey.Managers;
-using Snakey.Snacks;
+﻿using Snakey.Snacks;
 using SnakeyTests.Mocks;
 using Xunit;
 
@@ -20,9 +19,8 @@ namespace Snakey.Decorators.Tests
         [StaFact]
         public void TriggerEffectBadAppleTest()
         {
-            GameState gameState = null;
-            while (gameState == null)
-                gameState = Mocks.GetGameState();
+            using var mock = new Mocks();
+            var gameState = mock.GetGameState();
 
             gameState.Player.Expand();
             var expected = gameState.Player.BodyParts.Count - 1;
@@ -32,14 +30,7 @@ namespace Snakey.Decorators.Tests
             shrinkSnakeTriggerEffectDecorator.TriggerEffect();
             var actual = gameState.Player.BodyParts.Count;
 
-            try
-            {
-                Assert.Equal(expected, actual);
-            }
-            finally
-            {
-                Mocks.ReleaseGameState();
-            }
+            Assert.Equal(expected, actual);
         }
     }
 }
