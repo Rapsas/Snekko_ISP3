@@ -1,10 +1,10 @@
-﻿using Snakey.Adapter;
+﻿using Snakey.Models;
 
 namespace Snakey.Observer
 {
     public class SnackObserver : IObserver
     {
-        public void Update(ISnackTarget snack)
+        public void Update(Snack snack)
         {
             snack.TriggerEffect();
             snack.WasConsumed = true;

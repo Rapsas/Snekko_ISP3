@@ -1,9 +1,9 @@
-﻿using Snakey.Adapter;
+﻿using Snakey.Models;
 
 namespace Snakey.Observer
 {
     public interface IObserver
     {
-        void Update(ISnackTarget snack);
+        void Update(Snack snack);
     }
 }

@@ -294,8 +294,7 @@ namespace Snakey.Facades
                     snack = factory.CreateMysterySnack();
 
                 snack.Location = snackLocation;
-                ISnackTarget snackAdapter = new SnackAdapter(snack);
-                GameState.Snacks.Add(snackAdapter);
+                GameState.Snacks.Add(snack);
 
                 Server.SendSnackPosition(snack);
 

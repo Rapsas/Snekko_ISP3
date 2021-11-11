@@ -1,4 +1,4 @@
-﻿using Snakey.Adapter;
+﻿using Snakey.Models;
 
 namespace Snakey.Observer
 {
@@ -6,6 +6,6 @@ namespace Snakey.Observer
     {
         IObserver RegisterObserver(IObserver observer);
         IObserver RemoveObserver(IObserver observer);
-        int NotifyObservers(ISnackTarget snack);
+        int NotifyObservers(Snack snack);
     }
 }

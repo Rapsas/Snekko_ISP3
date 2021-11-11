@@ -1,4 +1,4 @@
-﻿using Snakey.Adapter;
+﻿using Snakey.Models;
 using Snakey.Snacks;
 using System;
 using System.Media;
@@ -18,16 +18,20 @@ namespace Snakey.Observer
             MysterySound = new("../../../assets/soundMystery.wav");
         }
 
-        public void Update(ISnackTarget snack)
+        public void Update(Snack snack)
         {
-            Type type = snack.GetSnackType();
-
-            if (type == typeof(BadSnack))
-                BadSound.Play();
-            else if (type == typeof(GoodSnack))
-                GoodSound.Play();
-            else if (type == typeof(MysterySnack))
-                MysterySound.Play();
+            switch (snack)
+            {
+                case BadSnack:
+                    BadSound.Play();
+                    break;
+                case GoodSnack:
+                    GoodSound.Play();
+                    break;
+                case MysterySnack:
+                    MysterySound.Play();
+                    break;
+            }
         }
     }
 }
