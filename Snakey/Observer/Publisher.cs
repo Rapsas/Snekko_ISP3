@@ -1,5 +1,5 @@
-﻿using Snakey.Adapter;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Snakey.Models;
 
 namespace Snakey.Observer
 {
@@ -12,7 +12,7 @@ namespace Snakey.Observer
             this.Observers = new();
         }
 
-        public int NotifyObservers(ISnackTarget snack)
+        public int NotifyObservers(Snack snack)
         {
             Observers.ForEach(observers => observers.Update(snack));
             return Observers.Count;

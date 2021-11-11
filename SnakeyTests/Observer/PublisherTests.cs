@@ -1,4 +1,4 @@
-﻿using Snakey.Adapter;
+﻿using Snakey.Models;
 using Snakey.Snacks;
 using SnakeyTests.Mocks;
 using Xunit;
@@ -18,7 +18,7 @@ namespace Snakey.Observer.Tests
             publisher.RegisterObserver(new SnackObserver());
             publisher.RegisterObserver(new AudioPlayer());
             publisher.RegisterObserver(new AudioPlayer());
-            int notifiedObservers = publisher.NotifyObservers(new SnackAdapter(new MysteryApple()));
+            int notifiedObservers = publisher.NotifyObservers(new MysteryApple());
             Assert.True(notifiedObservers == 4);
         }
 

@@ -84,8 +84,7 @@ namespace Snakey.Facades
                     };
 
                     snack.Location = item.Location;
-                    ISnackTarget snackAdapter = new SnackAdapter(snack);
-                    GameState.Snacks.Add(snackAdapter);
+                    GameState.Snacks.Add(snack);
                 }
             });
             MultiplayerManager.Connection.On("AskForSnackList", () =>
@@ -110,8 +109,7 @@ namespace Snakey.Facades
                 };
 
                 snack.Location = s.Location;
-                ISnackTarget snackAdapter = new SnackAdapter(snack);
-                GameState.Snacks.Add(snackAdapter);
+                GameState.Snacks.Add(snack);
             });
             MultiplayerManager.Connection.On<MapTypes>("ChangeMap", (map) =>
             {
@@ -175,7 +173,7 @@ namespace Snakey.Facades
             }
         }
 
-        public void SendEatenSnacks(List<ISnackTarget> Snacks)
+        public void SendEatenSnacks(List<Snack> Snacks)
         {
             if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
                 Snacks.ForEach(snack =>
