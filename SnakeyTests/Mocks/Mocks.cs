@@ -8,36 +8,48 @@ namespace SnakeyTests.Mocks
 {
     public class Mocks : IDisposable
     {
-        static GameState gameState = GameState.Instance;
-        static object _lock = new();
-        static bool IsCurrenttlyUsed = false;
+        static readonly GameState _gameState = GameState.Instance;
+        static readonly object _lock = new();
+        static bool _isCurrenttlyUsed = false;
         public Mocks() { }
+
+        /// <summary>
+        /// <list type="bullet">
+        ///     <item>
+        ///         Sets and gets a GameState Singleton instance 
+        ///     </item>
+        ///     <item>
+        ///         DO NOT CALL IT MULTIPLE TIMES IN THE SAME TEST
+        ///     </item>
+        /// </list>
+        /// </summary>
+        /// <returns>GameState when it's not used by any other tests</returns>
         public GameState GetGameState()
         {
             // Dont call it multiple times from the same test
             // or it will deadlock :^)
             lock (_lock)
             {
-                while (IsCurrenttlyUsed);
+                while (_isCurrenttlyUsed) ;
 
-                gameState.MultiplayerManager = GetMultiplayerManager();
-                gameState.ScoreLabel = SetScoreLabel();
-                gameState.GameArea = SetCanvas();
-                gameState.GameArea.Width = Settings.WindowWidth;
-                gameState.GameArea.Height = Settings.WindowHeight;
+                _gameState.MultiplayerManager = GetMultiplayerManager();
+                _gameState.ScoreLabel = SetScoreLabel();
+                _gameState.GameArea = SetCanvas();
+                _gameState.GameArea.Width = Settings.WindowWidth;
+                _gameState.GameArea.Height = Settings.WindowHeight;
 
                 // Setup snek player
-                gameState.Player = new();
-                gameState.Snacks = new();
-                IsCurrenttlyUsed = true;
+                _gameState.Player = new();
+                _gameState.Snacks = new();
+                _isCurrenttlyUsed = true;
 
-                return gameState;
+                return _gameState;
             }
         }
 
         public void ReleaseGameState()
         {
-            IsCurrenttlyUsed = false;
+            _isCurrenttlyUsed = false;
         }
         static public Canvas SetCanvas()
         {
