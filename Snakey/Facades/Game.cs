@@ -8,6 +8,7 @@ using Snakey.Maps;
 using Snakey.Models;
 using Snakey.Observer;
 using Snakey.Strategies;
+using Snakey.Template_method;
 using System;
 using System.Windows;
 using System.Windows.Input;
@@ -21,6 +22,7 @@ namespace Snakey.Facades
         public Publisher Publisher { get; private set; }
         public ServerFacade Server { get; private set; }
         public ComponentDrawer ComponentDrawer { get; private set; }
+        public CollisionChecker CollisionChecker { get; private set; }
 
         public void Init(MainWindow window)
         {
@@ -80,6 +82,7 @@ namespace Snakey.Facades
             GameState.SecondPlayer = new();
             GameState.SecondPlayer.HeadLocation = new(-100, -100);
             ComponentDrawer.Add(GameState.SecondPlayer);
+            CollisionChecker = new MultiplayerCollision();
         }
 
         private void SwitchToLevelOne()
@@ -159,6 +162,8 @@ namespace Snakey.Facades
             ComponentDrawer = new();
             ComponentDrawer.Add(GameState.GameMap);
             ComponentDrawer.Add(GameState.Player);
+
+            CollisionChecker = new SinglePlayerCollision();
         }
         private void RegisterObservers()
         {
@@ -184,55 +189,8 @@ namespace Snakey.Facades
         }
         private void CheckPlayerCollision()
         {
-            // This whole collision checking could probably be handeled much nicer
-            // but i can't be fucked to do anything about it :^)
-            // plz someone make it nice <3
-
             GameState.GameMap.MapCollisionCheck();
-
-            var player = GameState.Player;
-            var secondPlayer = GameState.SecondPlayer;
-
-            if (!player.IgnoreBodyCollisionWithHead)
-                foreach (var bodyPart in player.BodyParts)
-                {
-                    if (player.HeadLocation.IsOverlaping(bodyPart))
-                    {
-                        player.IsDead = true;
-                        break;
-                    }
-                }
-
-            if (player.HeadLocation.IsOverlaping(player.TailLocation))
-            {
-                player.IsDead = true;
-            }
-
-            // Check if the retard hit another player
-            if (secondPlayer != null)
-            {
-                foreach (var bodyPart in secondPlayer.BodyParts)
-                {
-                    if (player.HeadLocation.IsOverlaping(bodyPart))
-                    {
-                        player.IsDead = true;
-                        break;
-                    }
-                }
-
-                if (player.HeadLocation.IsOverlaping(secondPlayer.TailLocation))
-                {
-                    player.IsDead = true;
-                }
-
-                if (player.HeadLocation.IsOverlaping(secondPlayer.HeadLocation))
-                {
-                    player.IsDead = true;
-                }
-            }
-
-
-
+            CollisionChecker.CheckCollision();
 
             if (GameState.Player.IsDead)
             {
