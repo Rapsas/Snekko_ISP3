@@ -1,7 +1,7 @@
 ﻿using Common.Enums;
 using Common.Utility;
 using Microsoft.AspNetCore.SignalR.Client;
-using Snakey.Adapter;
+using Snakey.Composite;
 using Snakey.Config;
 using Snakey.Factories;
 using Snakey.Managers;
@@ -17,14 +17,16 @@ namespace Snakey.Facades
     {
         private MultiplayerManager MultiplayerManager { get; set; }
         private GameState GameState;
+        private ComponentDrawer ComponentDrawer;
         private MainWindow Window;
-        public void Setup(MainWindow window)
+        public void Setup(MainWindow window, ComponentDrawer componentDrawer)
         {
             MultiplayerManager = /*new("http://localhost:5000/gameHub");*/  new("http://158.129.23.210:5003/gameHub");
             GameState.Instance.MultiplayerManager = MultiplayerManager;
 
             GameState = GameState.Instance;
             Window = window;
+            ComponentDrawer = componentDrawer;
         }
 
         public async void ConnectToServer()
@@ -59,7 +61,15 @@ namespace Snakey.Facades
             });
             MultiplayerManager.Connection.On<SnackPackage>("RecieveEatenSnackPosition", (snack) =>
             {
-                GameState.Snacks.RemoveAll((s) => s.Location.IsOverlaping(snack.Location));
+                GameState.Snacks.RemoveAll((s) =>
+                {
+                    if (s.Location.IsOverlaping(snack.Location))
+                    {
+                        ComponentDrawer.Remove(s);
+                        return true;
+                    }
+                    return false;
+                });
             });
             MultiplayerManager.Connection.On<List<SnackPackage>>("RecieveSnackList", (snacks) =>
             {
@@ -85,6 +95,7 @@ namespace Snakey.Facades
 
                     snack.Location = item.Location;
                     GameState.Snacks.Add(snack);
+                    ComponentDrawer.Add(snack);
                 }
             });
             MultiplayerManager.Connection.On("AskForSnackList", () =>
@@ -110,12 +121,16 @@ namespace Snakey.Facades
 
                 snack.Location = s.Location;
                 GameState.Snacks.Add(snack);
+                ComponentDrawer.Add(snack);
             });
             MultiplayerManager.Connection.On<MapTypes>("ChangeMap", (map) =>
             {
                 var mapFactory = new MapFactory();
 
+                ComponentDrawer.Remove(GameState.GameMap);
                 GameState.GameMap = mapFactory.CreateMap(map);
+                ComponentDrawer.Add(GameState.GameMap);
+
                 GameState.Player.Reset();
                 GameState.Player.HeadLocation += (0, Settings.CellSize);
             });
