@@ -1,14 +1,17 @@
 ﻿using Common.Enums;
 using Common.Utility;
+using Snakey.Composite;
 using Snakey.Config;
+using Snakey.Managers;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace Snakey.Models
 {
-    public class Snake
+    public class Snake : IDrawableComponenet
     {
         public Vector2D HeadLocation { get; set; }
         public Vector2D TailLocation { get; set; }
@@ -102,6 +105,40 @@ namespace Snakey.Models
         public void Shutup()
         {
             SnakeText.Content = string.Empty;
+        }
+
+        public void Draw()
+        {
+            DrawSquare(HeadLocation, HeadColor);
+
+
+            foreach (var partLocation in BodyParts)
+            {
+                DrawSquare(partLocation, BodyColor);
+            }
+            DrawSquare(TailLocation, TailColor);
+
+            // Draw text as the last layer
+            if (!string.IsNullOrEmpty(SnakeText.Content as string))
+            {
+                GameState.Instance.GameArea.Children.Add(SnakeText);
+                Canvas.SetLeft(SnakeText, HeadLocation.X);
+                Canvas.SetTop(SnakeText, HeadLocation.Y - Settings.CellSize);
+            }
+        }
+
+        private void DrawSquare(Vector2D location, Brush color)
+        {
+            Rectangle r = new()
+            {
+                Fill = color,
+                Width = Settings.CellSize - 8,
+                Height = Settings.CellSize - 8
+            };
+
+            GameState.Instance.GameArea.Children.Add(r);
+            Canvas.SetLeft(r, location.X + 4);
+            Canvas.SetTop(r, location.Y + 4);
         }
     }
 }

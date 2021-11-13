@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Snakey.Models;
+﻿using Snakey.Models;
+using System.Collections.Generic;
 
 namespace Snakey.Observer
 {

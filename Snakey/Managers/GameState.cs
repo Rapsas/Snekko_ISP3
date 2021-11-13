@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
-using Snakey.Adapter;
 using Snakey.Models;
 using System.Collections.Generic;
 using System.Windows.Controls;

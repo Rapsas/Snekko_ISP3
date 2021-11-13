@@ -1,6 +1,6 @@
 ﻿using Common.Enums;
 using Common.Utility;
-using Snakey.Adapter;
+using Snakey.Composite;
 using Snakey.Config;
 using Snakey.Factories;
 using Snakey.Managers;
@@ -10,10 +10,7 @@ using Snakey.Observer;
 using Snakey.Strategies;
 using System;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace Snakey.Facades
 {
@@ -23,12 +20,13 @@ namespace Snakey.Facades
         public MainWindow Window { get; private set; }
         public Publisher Publisher { get; private set; }
         public ServerFacade Server { get; private set; }
+        public ComponentDrawer ComponentDrawer { get; private set; }
 
         public void Init(MainWindow window)
         {
             InitializeGameComponents(window);
             RegisterObservers();
-            Server.Setup(window);
+            Server.Setup(window, ComponentDrawer);
         }
 
         public void Run()
@@ -81,16 +79,21 @@ namespace Snakey.Facades
             Window.ConnectButton.IsEnabled = false;
             GameState.SecondPlayer = new();
             GameState.SecondPlayer.HeadLocation = new(-100, -100);
+            ComponentDrawer.Add(GameState.SecondPlayer);
         }
-
 
         private void SwitchToLevelOne()
         {
             if (GameState.GameMap is BasicMap)
                 return;
+
+            ComponentDrawer.Remove(GameState.GameMap);
+            GameState.Snacks.ForEach(x => ComponentDrawer.Remove(x));
             var mapFactory = new MapFactory();
 
             GameState.GameMap = mapFactory.CreateMap(MapTypes.Basic);
+            ComponentDrawer.Add(GameState.GameMap);
+
             GameState.Player.Reset();
             GameState.Snacks.Clear(); // Clear all snacks
             PlaceSnackIfNeeded(); // Replace all snacks
@@ -101,9 +104,14 @@ namespace Snakey.Facades
         {
             if (GameState.GameMap is AdvanceMap)
                 return;
+
+            ComponentDrawer.Remove(GameState.GameMap);
+            GameState.Snacks.ForEach(x => ComponentDrawer.Remove(x));
             var mapFactory = new MapFactory();
 
             GameState.GameMap = mapFactory.CreateMap(MapTypes.Advance);
+            ComponentDrawer.Add(GameState.GameMap);
+
             GameState.Player.Reset();
             GameState.Snacks.Clear(); // Clear all snacks
             PlaceSnackIfNeeded(); // Replace all snacks
@@ -114,9 +122,13 @@ namespace Snakey.Facades
         {
             if (GameState.GameMap is ExpertMap)
                 return;
+            ComponentDrawer.Remove(GameState.GameMap);
+            GameState.Snacks.ForEach(x => ComponentDrawer.Remove(x));
             var mapFactory = new MapFactory();
 
             GameState.GameMap = mapFactory.CreateMap(MapTypes.Expert);
+            ComponentDrawer.Add(GameState.GameMap);
+
             GameState.Player.Reset();
             GameState.Snacks.Clear(); // Clear all snacks
             PlaceSnackIfNeeded(); // Replace all snacks
@@ -143,6 +155,10 @@ namespace Snakey.Facades
             GameState.ScoreLabel = Window.ScoreLabel;
 
             GameState.GameMap = mapFactory.CreateMap(MapTypes.Basic);
+
+            ComponentDrawer = new();
+            ComponentDrawer.Add(GameState.GameMap);
+            ComponentDrawer.Add(GameState.Player);
         }
         private void RegisterObservers()
         {
@@ -157,15 +173,13 @@ namespace Snakey.Facades
         {
             // Update with the server 
             Server.SendPlayerPositions();
-
             // Gaming
             ClearScreen();
-            DrawGameGrid();
+
             CheckPlayerCollision();
             CheckSnackCollision();
-            DrawSnacks();
-            DrawSnake(GameState.Player);
-            DrawSnake(GameState.SecondPlayer);
+            PlaceSnackIfNeeded();
+            ComponentDrawer.Draw();
             GameState.Player.Move();
         }
         private void CheckPlayerCollision()
@@ -239,17 +253,12 @@ namespace Snakey.Facades
             }
 
             Server.SendEatenSnacks(GameState.Snacks);
-            GameState.Snacks.RemoveAll(x => x.WasConsumed);
-        }
-        private void DrawSnacks()
-        {
-            PlaceSnackIfNeeded();
-            foreach (var item in GameState.Snacks)
+            GameState.Snacks.RemoveAll(x =>
             {
-                if (item.WasConsumed) // Was already eaten
-                    continue;
-                item.Draw();
-            }
+                if (x.WasConsumed)
+                    ComponentDrawer.Remove(x);
+                return x.WasConsumed;
+            });
         }
         private void PlaceSnackIfNeeded()
         {
@@ -294,7 +303,9 @@ namespace Snakey.Facades
                     snack = factory.CreateMysterySnack();
 
                 snack.Location = snackLocation;
+
                 GameState.Snacks.Add(snack);
+                ComponentDrawer.Add(snack);
 
                 Server.SendSnackPosition(snack);
 
@@ -337,62 +348,9 @@ namespace Snakey.Facades
 
             return false;
         }
-        private void DrawSnake(Snake player)
-        {
-            if (player is null)
-                return;
-
-            DrawSquare(player.HeadLocation, player.HeadColor);
-
-
-            foreach (var partLocation in player.BodyParts)
-            {
-                DrawSquare(partLocation, player.BodyColor);
-            }
-            DrawSquare(player.TailLocation, player.TailColor);
-
-            // Draw text as the last layer
-            if (!string.IsNullOrEmpty(player.SnakeText.Content as string))
-            {
-                GameState.GameArea.Children.Add(player.SnakeText);
-                Canvas.SetLeft(player.SnakeText, player.HeadLocation.X);
-                Canvas.SetTop(player.SnakeText, player.HeadLocation.Y - Settings.CellSize);
-            }
-        }
         private void ClearScreen()
         {
             GameState.GameArea.Children.Clear();
-        }
-        private void DrawGameGrid()
-        {
-            foreach (var line in GameState.GameMap.GridLines)
-            {
-                GameState.GameArea.Children.Add(line);
-            }
-
-            foreach (var (location, body) in GameState.GameMap.Obsticles)
-            {
-                GameState.GameArea.Children.Add(body);
-                Canvas.SetLeft(body, location.X);
-                Canvas.SetTop(body, location.Y);
-            }
-
-        }
-        private void DrawSquare(Vector2D location, Brush color)
-        {
-            // Since only snake uses this we could store it 
-            // and avoid unnecessery object creations
-            Rectangle r = new()
-            {
-                Fill = color,
-                Width = Settings.CellSize - 8,
-                Height = Settings.CellSize - 8
-            };
-
-            GameState.GameArea.Children.Add(r);
-            Canvas.SetLeft(r, location.X + 4);
-            Canvas.SetTop(r, location.Y + 4);
-
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Snakey.Models;
 using Snakey.Snacks;
-using System;
 using System.Media;
 
 namespace Snakey.Observer
