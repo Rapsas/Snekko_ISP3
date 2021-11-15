@@ -1,4 +1,6 @@
-﻿namespace Snakey.Config
+﻿using System.IO;
+
+namespace Snakey.Config
 {
     public static class Settings
     {
@@ -8,5 +10,6 @@
         public static int ObstacleCount { get; } = 10;
         public static int UpdateTimer { get; } = 100;
         public static int MaximumSnackCount { get; } = 3;
+        public static string AssetFolder { get; } = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName, "Snakey\\assets");
     }
 }

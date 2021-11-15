@@ -1,5 +1,7 @@
-﻿using Snakey.Models;
+﻿using Snakey.Config;
+using Snakey.Models;
 using Snakey.Snacks;
+using System.IO;
 using System.Media;
 
 namespace Snakey.Observer
@@ -12,9 +14,9 @@ namespace Snakey.Observer
 
         public AudioPlayer()
         {
-            GoodSound = new("../../../assets/soundGood.wav");
-            BadSound = new("../../../assets/soundBad.wav");
-            MysterySound = new("../../../assets/soundMystery.wav");
+            GoodSound = new(Path.Combine(Settings.AssetFolder, "soundGood.wav"));
+            BadSound = new(Path.Combine(Settings.AssetFolder, "soundBad.wav"));
+            MysterySound = new(Path.Combine(Settings.AssetFolder, "soundMystery.wav"));
         }
 
         public void Update(Snack snack)
