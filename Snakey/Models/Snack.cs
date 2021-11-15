@@ -44,6 +44,9 @@ namespace Snakey.Models
         }
         public abstract void TriggerEffect();
 
-
+        public virtual Snack GetBaseType()
+        {
+            return this;
+        }
     }
 }

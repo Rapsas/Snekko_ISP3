@@ -11,5 +11,6 @@ namespace Snakey.Config
         public static int UpdateTimer { get; } = 100;
         public static int MaximumSnackCount { get; } = 3;
         public static string AssetFolder { get; } = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName, "Snakey\\assets");
+        public static bool EnableSoundEffects { get; } = false;
     }
 }

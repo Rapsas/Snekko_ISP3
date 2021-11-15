@@ -21,18 +21,19 @@ namespace Snakey.Observer
 
         public void Update(Snack snack)
         {
-            switch (snack)
-            {
-                case BadSnack:
-                    BadSound.Play();
-                    break;
-                case GoodSnack:
-                    GoodSound.Play();
-                    break;
-                case MysterySnack:
-                    MysterySound.Play();
-                    break;
-            }
+            if(Settings.EnableSoundEffects)
+                switch (snack.GetBaseType())
+                {
+                    case BadSnack:
+                        BadSound.Play();
+                        break;
+                    case GoodSnack:
+                        GoodSound.Play();
+                        break;
+                    case MysterySnack:
+                        MysterySound.Play();
+                        break;
+                }
         }
     }
 }

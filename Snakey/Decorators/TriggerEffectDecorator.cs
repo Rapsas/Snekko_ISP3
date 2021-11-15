@@ -14,6 +14,10 @@ namespace Snakey.Decorators
         {
             Snack = snack;
         }
+        public override Snack GetBaseType()
+        {
+            return Snack.GetBaseType();
+        }
 
         public override void TriggerEffect()
         {
