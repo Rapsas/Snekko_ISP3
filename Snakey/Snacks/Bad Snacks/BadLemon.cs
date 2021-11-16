@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using Snakey.Config;
 using Snakey.Managers;
+using System;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace Snakey.Snacks
@@ -10,21 +12,16 @@ namespace Snakey.Snacks
     {
         public override void TriggerEffect()
         {
-            //GameState.Instance.Score--;
             if (GameState.Instance.MultiplayerManager.Connection.State == HubConnectionState.Connected)
                 GameState.Instance.MultiplayerManager.Connection?.SendAsync("ChangePlayerSize", 1).Wait();
         }
 
         public BadLemon() : base()
         {
-            _body = new Ellipse()
-            {
-                Stroke = this.Stroke,
-                StrokeThickness = this.StrokeThickness,
-                Width = Settings.CellSize,
-                Height = Settings.CellSize,
-                Fill = Brushes.Yellow
-            };
+            _body = new();
+            var imagePath = System.IO.Path.Combine(Settings.AssetFolder, "bad_lemon.png");
+            BitmapImage image = new(new Uri(imagePath));
+            _body.Source = image;
         }
     }
 }

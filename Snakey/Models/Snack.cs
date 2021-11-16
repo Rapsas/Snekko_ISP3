@@ -17,7 +17,7 @@ namespace Snakey.Models
         private EffectType _effectType;
         private FoodType _foodType;
         protected Canvas _gameArea = GameState.Instance.GameArea;
-        protected Shape _body;
+        protected Image _body;
 
         public virtual void SetTypesForServer(EffectType effectType, FoodType foodType)
         {

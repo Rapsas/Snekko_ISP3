@@ -1,6 +1,8 @@
 ﻿using Snakey.Config;
 using Snakey.Managers;
+using System;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace Snakey.Snacks
@@ -9,19 +11,16 @@ namespace Snakey.Snacks
     {
         public override void TriggerEffect()
         {
-            //GameState.Instance.Score++;
             GameState.Instance.Player.Expand();
         }
         public GoodApple() : base()
         {
-            _body = new Rectangle()
-            {
-                Stroke = this.Stroke,
-                StrokeThickness = this.StrokeThickness,
-                Width = Settings.CellSize,
-                Height = Settings.CellSize,
-                Fill = Brushes.IndianRed
-            };
+            _body = new();
+            var imagePath = System.IO.Path.Combine(Settings.AssetFolder, "good_apple.png");
+            BitmapImage image = new(new Uri(imagePath));
+            _body.Source = image;
+            _body.Width = 40;
+            _body.Height = 40;
         }
     }
 }
