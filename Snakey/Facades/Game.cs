@@ -241,8 +241,8 @@ namespace Snakey.Facades
                     factory = new LemonFactory();
                 }
 
-                int rndX = rnd.Next(0, (int)Window.GameArea.ActualWidth / Settings.CellSize) * Settings.CellSize;
-                int rndY = rnd.Next(0, (int)Window.GameArea.ActualHeight / Settings.CellSize) * Settings.CellSize;
+                int rndX = rnd.Next(0, Settings.WindowWidth / Settings.CellSize) * Settings.CellSize;
+                int rndY = rnd.Next(0, Settings.WindowHeight / Settings.CellSize) * Settings.CellSize;
 
                 var snackLocation = new Vector2D(rndX, rndY);
 

@@ -1,4 +1,5 @@
 ﻿using Common.Enums;
+using Snakey.Config;
 using Snakey.Facades;
 using System;
 using System.Windows;
@@ -17,8 +18,11 @@ namespace Snakey
         public MainWindow()
         {
             InitializeComponent();
+            GameArea.Width = Settings.WindowWidth;
+            GameArea.Height = Settings.WindowHeight;
             _game.Init(this);
             _game.Run();
+            
         }
 
 
