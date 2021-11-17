@@ -21,7 +21,7 @@ namespace Snakey.Observer
 
         public void Update(Snack snack)
         {
-            if(Settings.EnableSoundEffects)
+            if (Settings.EnableSoundEffects)
                 switch (snack.GetBaseType())
                 {
                     case BadSnack:

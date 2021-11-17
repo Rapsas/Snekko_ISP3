@@ -3,7 +3,6 @@ using Common.Utility;
 using Snakey.Composite;
 using Snakey.Managers;
 using System.Windows.Controls;
-using System.Windows.Shapes;
 
 namespace Snakey.Models
 {
