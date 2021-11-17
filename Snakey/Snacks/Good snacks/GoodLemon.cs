@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
+using Snakey.Config;
 using Snakey.Flyweight;
 using Snakey.Managers;
 
@@ -16,8 +17,7 @@ namespace Snakey.Snacks
             _body = new();
 
             _body.Source = ImageFactory.GetImage("good_lemon.png");
-            _body.Width = 40;
-            _body.Height = 40;
+            _body.Width = _body.Height = Settings.CellSize;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Snakey.Flyweight;
+﻿using Snakey.Config;
+using Snakey.Flyweight;
 using Snakey.Managers;
 using System;
 using System.Windows.Media;
@@ -22,8 +23,7 @@ namespace Snakey.Snacks
             _body = new();
 
             _body.Source = ImageFactory.GetImage("bad_apple.png");
-            _body.Width = 40;
-            _body.Height = 40;
+            _body.Width = _body.Height = Settings.CellSize;
 
         }
     }

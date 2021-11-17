@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
+using Snakey.Config;
 using Snakey.Flyweight;
 using Snakey.Managers;
 using System;
@@ -30,8 +31,7 @@ namespace Snakey.Snacks
             cloned._body = new();
 
             cloned._body.Source = ImageFactory.GetImage("mystery_lemon.png");
-            cloned._body.Width = 40;
-            cloned._body.Height = 40;
+            cloned._body.Width = cloned._body.Height = Settings.CellSize;
             return cloned;
         }
 
@@ -47,8 +47,7 @@ namespace Snakey.Snacks
             _body = new();
 
             _body.Source = ImageFactory.GetImage("mystery_lemon.png");
-            _body.Width = 40;
-            _body.Height = 40;
+            _body.Width = _body.Height = Settings.CellSize;
         }
     }
 }
