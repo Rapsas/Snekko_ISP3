@@ -2,6 +2,8 @@
 using Snakey.Config;
 using Snakey.Flyweight;
 using Snakey.Managers;
+using System;
+using System.Windows.Media.Imaging;
 
 namespace Snakey.Snacks
 {
@@ -17,7 +19,9 @@ namespace Snakey.Snacks
         {
             _body = new();
 
-            _body.Source = ImageFactory.GetImage("bad_lemon.png");
+            var imagePath = System.IO.Path.Combine(Settings.AssetFolder, "bad_lemon.png");
+            BitmapImage image = new(new Uri(imagePath));
+            _body.Source = image;
             _body.Width = _body.Height = Settings.CellSize;
         }
     }

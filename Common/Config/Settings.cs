@@ -4,7 +4,9 @@ namespace Snakey.Config
 {
     public static class Settings
     {
+
         public static int CellSize { get; } = 20;
+
         public static int WindowWidth { get; } = 2560;
         public static int WindowHeight { get; } = 1440;
         public static int ObstacleCount { get; } = 10;

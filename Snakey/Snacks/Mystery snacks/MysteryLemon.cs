@@ -3,6 +3,7 @@ using Snakey.Config;
 using Snakey.Flyweight;
 using Snakey.Managers;
 using System;
+using System.Windows.Media.Imaging;
 
 namespace Snakey.Snacks
 {
@@ -29,8 +30,9 @@ namespace Snakey.Snacks
             var cloned = (MysteryLemon)this.MemberwiseClone();
 
             cloned._body = new();
-
-            cloned._body.Source = ImageFactory.GetImage("mystery_lemon.png");
+            var imagePath = System.IO.Path.Combine(Settings.AssetFolder, "mystery_lemon.png");
+            BitmapImage image = new(new Uri(imagePath));
+            cloned._body.Source = image;
             cloned._body.Width = cloned._body.Height = Settings.CellSize;
             return cloned;
         }
@@ -46,7 +48,9 @@ namespace Snakey.Snacks
         {
             _body = new();
 
-            _body.Source = ImageFactory.GetImage("mystery_lemon.png");
+            var imagePath = System.IO.Path.Combine(Settings.AssetFolder, "mystery_lemon.png");
+            BitmapImage image = new(new Uri(imagePath));
+            _body.Source = image;
             _body.Width = _body.Height = Settings.CellSize;
         }
     }

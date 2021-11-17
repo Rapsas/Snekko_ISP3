@@ -3,6 +3,7 @@ using Snakey.Config;
 using Snakey.Flyweight;
 using Snakey.Managers;
 using System;
+using System.Windows.Media.Imaging;
 
 namespace Snakey.Snacks
 {
@@ -29,17 +30,19 @@ namespace Snakey.Snacks
             var cloned = (MysteryApple)this.MemberwiseClone();
             cloned._body = new();
 
-            cloned._body.Source = ImageFactory.GetImage("mystery_apple.png");
+            var imagePath = System.IO.Path.Combine(Settings.AssetFolder, "mystery_apple.png");
+            BitmapImage image = new(new Uri(imagePath));
+            cloned._body.Source = image;
             cloned._body.Width = cloned._body.Height = Settings.CellSize;
-
             return cloned;
         }
 
         public MysteryApple() : base()
         {
             _body = new();
-
-            _body.Source = ImageFactory.GetImage("mystery_apple.png"); ;
+            var imagePath = System.IO.Path.Combine(Settings.AssetFolder, "mystery_apple.png");
+            BitmapImage image = new(new Uri(imagePath));
+            _body.Source = image;
             _body.Width = _body.Height = Settings.CellSize;
         }
         public override string ToString()
