@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
-using Snakey.Config;
+using Snakey.Flyweight;
 using Snakey.Managers;
-using System;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Snakey.Snacks
 {
@@ -19,9 +15,10 @@ namespace Snakey.Snacks
         public BadLemon() : base()
         {
             _body = new();
-            var imagePath = System.IO.Path.Combine(Settings.AssetFolder, "bad_lemon.png");
-            BitmapImage image = new(new Uri(imagePath));
-            _body.Source = image;
+
+            _body.Source = ImageFactory.GetImage("bad_lemon.png");
+            _body.Width = 40;
+            _body.Height = 40;
         }
     }
 }
