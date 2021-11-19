@@ -24,6 +24,7 @@ namespace Snakey.Facades
         public ComponentDrawer ComponentDrawer { get; private set; }
         public CollisionChecker CollisionChecker { get; private set; }
 
+        private ComponentDrawer PlayerDrawer { get; set; }
         public void Init(MainWindow window)
         {
             InitializeGameComponents(window);
@@ -81,7 +82,7 @@ namespace Snakey.Facades
             Window.ConnectButton.IsEnabled = false;
             GameState.SecondPlayer = new();
             GameState.SecondPlayer.HeadLocation = new(-100, -100);
-            ComponentDrawer.Add(GameState.SecondPlayer);
+            PlayerDrawer.Add(GameState.SecondPlayer);
             CollisionChecker = new MultiplayerCollision();
         }
 
@@ -160,8 +161,10 @@ namespace Snakey.Facades
             GameState.GameMap = mapFactory.CreateMap(MapTypes.Basic);
 
             ComponentDrawer = new();
+            PlayerDrawer = new();
             ComponentDrawer.Add(GameState.GameMap);
-            ComponentDrawer.Add(GameState.Player);
+            ComponentDrawer.Add(PlayerDrawer);
+            PlayerDrawer.Add(GameState.Player);
 
             CollisionChecker = new SinglePlayerCollision();
         }
