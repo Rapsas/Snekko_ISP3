@@ -73,8 +73,8 @@ namespace Snakey.Facades
             });
             MultiplayerManager.Connection.On<List<SnackPackage>>("RecieveSnackList", (snacks) =>
             {
+                GameState.Snacks.ForEach(x => ComponentDrawer.Remove(x));
                 GameState.Snacks.Clear(); // Clear current snacks
-
                 // Build Snacks
                 foreach (var item in snacks)
                 {
