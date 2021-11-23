@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
+using Snakey.Chain_of_Responsibility;
 using Snakey.Models;
 using System.Collections.Generic;
 using System.Windows.Controls;
@@ -20,6 +21,7 @@ namespace Snakey.Managers
         public Label ScoreLabel { get; set; }
         public MultiplayerManager MultiplayerManager { get; set; }
         public Map GameMap { get; set; }
+        public Logger Logger { get; set; }
         public int Score
         {
             get => _gameScore;

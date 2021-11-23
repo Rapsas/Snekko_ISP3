@@ -1,5 +1,4 @@
-﻿using Snakey.Models;
-using Snakey.Snacks;
+﻿using Snakey.Snacks;
 using SnakeyTests.Mocks;
 using Xunit;
 

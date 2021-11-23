@@ -22,7 +22,7 @@ namespace Snakey
             GameArea.Height = Settings.WindowHeight;
             _game.Init(this);
             _game.Run();
-            
+
         }
 
 

@@ -1,6 +1,7 @@
 ﻿using Common.Enums;
 using Common.Utility;
 using Microsoft.AspNetCore.SignalR.Client;
+using Snakey.Chain_of_Responsibility;
 using Snakey.Composite;
 using Snakey.Config;
 using Snakey.Factories;
@@ -22,6 +23,7 @@ namespace Snakey.Facades
         public void Setup(MainWindow window, ComponentDrawer componentDrawer)
         {
             MultiplayerManager = /*new("http://localhost:5000/gameHub");*/  new("http://158.129.23.210:5003/gameHub");
+            MultiplayerManager = new("http://localhost:5000/gameHub"); // new("http://158.129.23.210:5003/gameHub");
             GameState.Instance.MultiplayerManager = MultiplayerManager;
 
             GameState = GameState.Instance;
@@ -31,8 +33,18 @@ namespace Snakey.Facades
 
         public async void ConnectToServer()
         {
-            await MultiplayerManager.ConnectToServer();
-            BindMethods();
+            try
+            {
+                GameState.Logger.Log(MessageType.Server, "Connecting to server");
+                await MultiplayerManager.ConnectToServer();
+                BindMethods();
+                GameState.Logger.Log(MessageType.Server, "Connected to server");
+            }
+            catch (System.Exception)
+            {
+                GameState.Logger.Log(MessageType.Error, "Encountered an error when connecting to the server");
+                Window.ConnectButton.IsEnabled = true;
+            }
         }
         public void SendPlayerPositions()
         {

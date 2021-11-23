@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
+using Snakey.Chain_of_Responsibility;
 using System;
 using System.Threading.Tasks;
 
@@ -9,6 +10,7 @@ namespace Snakey.Managers
         public HubConnection Connection { get; set; }
         public MultiplayerManager(string url)
         {
+            GameState.Instance.Logger.Log(MessageType.Server, $"Creating connection via {url}");
             Connection = new HubConnectionBuilder()
                .WithUrl(new Uri(url))
                .WithAutomaticReconnect()

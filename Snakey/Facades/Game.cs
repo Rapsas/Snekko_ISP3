@@ -1,5 +1,6 @@
 ﻿using Common.Enums;
 using Common.Utility;
+using Snakey.Chain_of_Responsibility;
 using Snakey.Composite;
 using Snakey.Config;
 using Snakey.Factories;
@@ -10,6 +11,7 @@ using Snakey.Observer;
 using Snakey.Strategies;
 using Snakey.Template_method;
 using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 
@@ -34,6 +36,7 @@ namespace Snakey.Facades
 
         public void Run()
         {
+            GameState.Logger.Log(MessageType.Default, "Gameloop started!");
             GameState.GameTimer.Start();
         }
         public void SwitchToLevel(MapTypes mapType)
@@ -41,12 +44,15 @@ namespace Snakey.Facades
             switch (mapType)
             {
                 case MapTypes.Basic:
+                    GameState.Logger.Log(MessageType.Default, "Switching map to basic");
                     SwitchToLevelOne();
                     break;
                 case MapTypes.Advance:
+                    GameState.Logger.Log(MessageType.Default, "Switching map to advanced");
                     SwitchToLevelTwo();
                     break;
                 case MapTypes.Expert:
+                    GameState.Logger.Log(MessageType.Default, "Switching map to expert");
                     SwitchToLevelThree();
                     break;
             }
@@ -160,6 +166,11 @@ namespace Snakey.Facades
 
             GameState.GameMap = mapFactory.CreateMap(MapTypes.Basic);
 
+            var logPath = Path.Combine(Settings.LogFolder, $"{DateTime.Now:D}_log.txt");
+            var logger = new StreamWriter(logPath, true);
+            GameState.Logger = new DefaultLogger(logger);
+            GameState.Logger.SetNext(new ServerLogger(logger)).SetNext(new FileLogger(logger)).SetNext(new ErrorLogger(logger));
+
             ComponentDrawer = new();
             PlayerDrawer = new();
             ComponentDrawer.Add(GameState.GameMap);
@@ -167,6 +178,7 @@ namespace Snakey.Facades
             PlayerDrawer.Add(GameState.Player);
 
             CollisionChecker = new SinglePlayerCollision();
+
         }
         private void RegisterObservers()
         {
