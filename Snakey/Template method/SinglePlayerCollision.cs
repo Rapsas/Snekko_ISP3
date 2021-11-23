@@ -2,9 +2,38 @@
 {
     public sealed class SinglePlayerCollision : CollisionChecker
     {
-        public sealed override bool CheckSecondPlayer()
+        protected override void CheckIfPlayerCollidesWithBodyParts()
         {
-            return false;
+            if (!player.IgnoreBodyCollisionWithHead)
+                foreach (var bodyPart in player.BodyParts)
+                {
+                    if (player.HeadLocation.IsOverlaping(bodyPart))
+                    {
+                        player.IsDead = true;
+                        break;
+                    }
+                }
         }
+        protected override void CheckIfPlayerCollidesWithTail()
+        {
+            if (player.HeadLocation.IsOverlaping(player.TailLocation))
+            {
+                player.IsDead = true;
+            }
+        }
+        protected override void CheckIfCollidesWithSecondPlayerBodyParts()
+        {
+            return;
+        }
+        protected override void CheckIfCollidesWithSecondPlayerHead()
+        {
+            return;
+        }
+        protected override void CheckIfCollidesWithSecondPlayerTail()
+        {
+            return;
+        }
+
+
     }
 }
