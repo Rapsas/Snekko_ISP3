@@ -14,6 +14,7 @@ using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
+using Snakey.Proxy;
 
 namespace Snakey.Facades
 {
@@ -27,11 +28,16 @@ namespace Snakey.Facades
         public CollisionChecker CollisionChecker { get; private set; }
 
         private ComponentDrawer PlayerDrawer { get; set; }
+        public IConnectionManager ConnectionManagerProxy { get; set; }
+
         public void Init(MainWindow window)
         {
             InitializeGameComponents(window);
             RegisterObservers();
-            Server.Setup(window, ComponentDrawer);
+            ConnectionManager connectionManager = new ();
+            ConnectionManagerProxy = new ConnectionManagerProxy(connectionManager, window);
+            Server.Setup(window, ComponentDrawer, connectionManager);
+            // Server.Setup(window, ComponentDrawer);
         }
 
         public void Run()
@@ -84,7 +90,9 @@ namespace Snakey.Facades
         }
         public void ConnectToServer()
         {
-            Server.ConnectToServer();
+            ConnectionManagerProxy.ConnectToServer();
+            Server.BindMethods();
+            // Server.ConnectToServer();
             Window.ConnectButton.IsEnabled = false;
             GameState.SecondPlayer = new();
             GameState.SecondPlayer.HeadLocation = new(-100, -100);
@@ -294,8 +302,10 @@ namespace Snakey.Facades
                 if (bodySegment.IsOverlaping(newSnack))
                     return true;
             }
+
             // Check if overlaps player 2
-            if (Server.IsConnected())
+            // if (Server.IsConnected())
+            if (ConnectionManagerProxy.IsConnected())
             {
                 if (GameState.SecondPlayer.HeadLocation.IsOverlaping(newSnack))
                     return true;
