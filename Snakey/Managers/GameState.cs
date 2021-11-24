@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using Snakey.Chain_of_Responsibility;
+using Snakey.Config;
 using Snakey.Models;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
@@ -21,7 +24,7 @@ namespace Snakey.Managers
         public Label ScoreLabel { get; set; }
         public MultiplayerManager MultiplayerManager { get; set; }
         public Map GameMap { get; set; }
-        public Logger Logger { get; set; }
+        public Logger Logger { get; private set; }
         public int Score
         {
             get => _gameScore;
@@ -44,7 +47,16 @@ namespace Snakey.Managers
         }
 
         static GameState() { }
-        private GameState() { }
+        private GameState() 
+        {
+            if (!Directory.Exists(Settings.LogFolder))
+                Directory.CreateDirectory(Settings.LogFolder);
+
+            var logPath = Path.Combine(Settings.LogFolder, $"{DateTime.Now:D}_log.txt");
+            var logger = new StreamWriter(logPath, true);
+            Logger = new DefaultLogger(logger);
+            Logger.SetNext(new WarningLogger(logger)).SetNext(new FileLogger(logger)).SetNext(new ErrorLogger(logger));
+        }
 
         public static GameState Instance
         {
