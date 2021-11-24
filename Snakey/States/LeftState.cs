@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Snakey.States
 {
-    class LeftState : State
+    public class LeftState : State
     {
         public LeftState(Snake player) : base(player) { }
         public override void Move()

@@ -25,7 +25,7 @@ namespace Snakey.Models
         public bool IsDead { get; set; }
         public bool IsMovementLocked { get; set; }
         public bool IgnoreBodyCollisionWithHead { get; set; }
-        private State State;
+        public State State { get; set; }
         public Snake()
         {
             HeadColor = new();
