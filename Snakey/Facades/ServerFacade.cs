@@ -22,7 +22,6 @@ namespace Snakey.Facades
         private MainWindow Window;
         public void Setup(MainWindow window, ComponentDrawer componentDrawer)
         {
-            MultiplayerManager = /*new("http://localhost:5000/gameHub");*/  new("http://158.129.23.210:5003/gameHub");
             MultiplayerManager = new("http://localhost:5000/gameHub"); // new("http://158.129.23.210:5003/gameHub");
             GameState.Instance.MultiplayerManager = MultiplayerManager;
 
@@ -35,10 +34,10 @@ namespace Snakey.Facades
         {
             try
             {
-                GameState.Logger.Log(MessageType.Server, "Connecting to server");
+                GameState.Logger.Log(MessageType.Warning, "Connecting to server");
                 await MultiplayerManager.ConnectToServer();
                 BindMethods();
-                GameState.Logger.Log(MessageType.Server, "Connected to server");
+                GameState.Logger.Log(MessageType.Warning, "Connected to server");
             }
             catch (System.Exception)
             {

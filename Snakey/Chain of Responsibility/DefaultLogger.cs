@@ -1,6 +1,5 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
+﻿using System.IO;
+using System.Runtime.CompilerServices;
 
 namespace Snakey.Chain_of_Responsibility
 {
@@ -10,13 +9,13 @@ namespace Snakey.Chain_of_Responsibility
         {
             _streamWriter = streamWriter;
         }
-        public override void Log(MessageType type, string message)
+        public override void Log(MessageType type, string message, [CallerFilePath] string file = "", [CallerMemberName] string member = "", [CallerLineNumber] int line = 0)
         {
             if (type != MessageType.Default)
-                _next?.Log(type, message);
+                _next?.Log(type, message, file, member, line);
             else
             {
-                _streamWriter.WriteLine($"[{DateTime.Now}] DEFAULT: {message}");
+                _streamWriter.WriteLine(message);
                 _streamWriter.Flush();
             }
         }

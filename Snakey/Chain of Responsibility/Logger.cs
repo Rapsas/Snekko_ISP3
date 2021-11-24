@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Runtime.CompilerServices;
 
 namespace Snakey.Chain_of_Responsibility
 {
@@ -6,7 +7,7 @@ namespace Snakey.Chain_of_Responsibility
     {
         Default,
         File,
-        Server,
+        Warning,
         Error
     }
 
@@ -20,6 +21,6 @@ namespace Snakey.Chain_of_Responsibility
             _next = nextLogger;
             return nextLogger;
         }
-        public abstract void Log(MessageType type, string message);
+        public abstract void Log(MessageType type, string message, [CallerFilePath] string file = "", [CallerMemberName] string member = "", [CallerLineNumber] int line = 0);
     }
 }

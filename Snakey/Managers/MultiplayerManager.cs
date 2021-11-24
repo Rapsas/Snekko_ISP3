@@ -10,7 +10,7 @@ namespace Snakey.Managers
         public HubConnection Connection { get; set; }
         public MultiplayerManager(string url)
         {
-            GameState.Instance.Logger.Log(MessageType.Server, $"Creating connection via {url}");
+            GameState.Instance.Logger.Log(MessageType.Warning, $"Creating connection via {url}");
             Connection = new HubConnectionBuilder()
                .WithUrl(new Uri(url))
                .WithAutomaticReconnect()

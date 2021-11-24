@@ -169,7 +169,7 @@ namespace Snakey.Facades
             var logPath = Path.Combine(Settings.LogFolder, $"{DateTime.Now:D}_log.txt");
             var logger = new StreamWriter(logPath, true);
             GameState.Logger = new DefaultLogger(logger);
-            GameState.Logger.SetNext(new ServerLogger(logger)).SetNext(new FileLogger(logger)).SetNext(new ErrorLogger(logger));
+            GameState.Logger.SetNext(new WarningLogger(logger)).SetNext(new FileLogger(logger)).SetNext(new ErrorLogger(logger));
 
             ComponentDrawer = new();
             PlayerDrawer = new();
