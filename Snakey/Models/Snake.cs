@@ -23,6 +23,7 @@ namespace Snakey.Models
         public SolidColorBrush BodyColor { get; set; }
         public SolidColorBrush TailColor { get; set; }
         private Label SnakeText { get; }
+        private Label HeadText { get; }
         public bool IsDead { get; set; }
         public bool IsMovementLocked { get; set; }
         public bool IgnoreBodyCollisionWithHead { get; set; }
@@ -45,6 +46,9 @@ namespace Snakey.Models
             SnakeText = new();
             SnakeText.FontSize = 24;
             SnakeText.FontWeight = FontWeights.Bold;
+            HeadText = new();
+            HeadText.FontSize = 24;
+            HeadText.FontWeight = FontWeights.Bold;
             State = new RightState(this);
         }
 
@@ -84,6 +88,14 @@ namespace Snakey.Models
             IsDead = false;
             IsMovementLocked = false;
         }
+        public void HeadSpeak(string text)
+        {
+            HeadText.Content = text;
+        }
+        public void HeadShutup()
+        {
+            HeadText.Content = string.Empty;
+        }
         public void Speak(string text)
         {
             SnakeText.Content = text;
@@ -110,6 +122,13 @@ namespace Snakey.Models
                 GameState.Instance.GameArea.Children.Add(SnakeText);
                 Canvas.SetLeft(SnakeText, HeadLocation.X);
                 Canvas.SetTop(SnakeText, HeadLocation.Y - Settings.CellSize);
+            }
+            // Draw head text last
+            if (!string.IsNullOrEmpty(HeadText.Content as string))
+            {
+                GameState.Instance.GameArea.Children.Add(HeadText);
+                Canvas.SetLeft(HeadText, HeadLocation.X);
+                Canvas.SetTop(HeadText, HeadLocation.Y);
             }
         }
         private void DrawSquare(Vector2D location, Brush color)

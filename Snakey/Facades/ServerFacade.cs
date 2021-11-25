@@ -32,22 +32,6 @@ namespace Snakey.Facades
             ComponentDrawer = componentDrawer;
         }
 
-        //public async void ConnectToServer()
-        //{
-        //    try
-        //    {
-        //        GameState.Logger.Log(MessageType.Warning, "Connecting to server");
-        //        await MultiplayerManager.ConnectToServer();
-        //        BindMethods();
-        //        GameState.Logger.Log(MessageType.Warning, "Connected to server");
-        //    }
-        //    catch (System.Exception)
-        //    {
-        //        GameState.Logger.Log(MessageType.Error, "Encountered an error when connecting to the server");
-        //        Window.ConnectButton.IsEnabled = true;
-        //    }
-        //}
-
         public void SendPlayerPositions()
         {
             if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
@@ -187,11 +171,6 @@ namespace Snakey.Facades
                 SendSnackList();
             }
         }
-
-        //public bool IsConnected()
-        //{
-        //    return MultiplayerManager.Connection.State == HubConnectionState.Connected;
-        //}
 
         private void SendSnackList()
         {
