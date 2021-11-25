@@ -11,40 +11,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
+using Snakey.Proxy;
 
 namespace Snakey.Facades
 {
     public class ServerFacade
     {
-        private MultiplayerManager MultiplayerManager { get; set; }
+        public MultiplayerManager MultiplayerManager { get; set; }
         private GameState GameState;
         private ComponentDrawer ComponentDrawer;
-        private MainWindow Window;
-        public void Setup(MainWindow window, ComponentDrawer componentDrawer)
+        public MainWindow Window;
+
+        public void Setup(MainWindow window, ComponentDrawer componentDrawer, ConnectionManager connectionManager)
         {
-            MultiplayerManager = new("http://localhost:5000/gameHub"); // new("http://158.129.23.210:5003/gameHub");
-            GameState.Instance.MultiplayerManager = MultiplayerManager;
+            // MultiplayerManager = new("http://localhost:5000/gameHub"); // new("http://158.129.23.210:5003/gameHub");
+            MultiplayerManager = connectionManager.MultiplayerManager;
+            // GameState.Instance.MultiplayerManager = MultiplayerManager;
 
             GameState = GameState.Instance;
             Window = window;
             ComponentDrawer = componentDrawer;
         }
 
-        public async void ConnectToServer()
-        {
-            try
-            {
-                GameState.Logger.Log(MessageType.Warning, "Connecting to server");
-                await MultiplayerManager.ConnectToServer();
-                BindMethods();
-                GameState.Logger.Log(MessageType.Warning, "Connected to server");
-            }
-            catch (System.Exception)
-            {
-                GameState.Logger.Log(MessageType.Error, "Encountered an error when connecting to the server");
-                Window.ConnectButton.IsEnabled = true;
-            }
-        }
+        //public async void ConnectToServer()
+        //{
+        //    try
+        //    {
+        //        GameState.Logger.Log(MessageType.Warning, "Connecting to server");
+        //        await MultiplayerManager.ConnectToServer();
+        //        BindMethods();
+        //        GameState.Logger.Log(MessageType.Warning, "Connected to server");
+        //    }
+        //    catch (System.Exception)
+        //    {
+        //        GameState.Logger.Log(MessageType.Error, "Encountered an error when connecting to the server");
+        //        Window.ConnectButton.IsEnabled = true;
+        //    }
+        //}
+
         public void SendPlayerPositions()
         {
             if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
@@ -56,7 +60,7 @@ namespace Snakey.Facades
                 MultiplayerManager.Connection.SendAsync(methodName).Wait();
         }
 
-        private void BindMethods()
+        public void BindMethods()
         {
             MultiplayerManager.Connection.On<PlayerPackage>("RecievePositions", (package) =>
             {
@@ -185,10 +189,10 @@ namespace Snakey.Facades
             }
         }
 
-        public bool IsConnected()
-        {
-            return MultiplayerManager.Connection.State == HubConnectionState.Connected;
-        }
+        //public bool IsConnected()
+        //{
+        //    return MultiplayerManager.Connection.State == HubConnectionState.Connected;
+        //}
 
         private void SendSnackList()
         {
