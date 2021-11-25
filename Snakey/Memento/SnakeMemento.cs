@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Snakey.Memento
 {
-    public class SnakeMemento
+    public class SnakeMemento : IMemento
     {
         private Snake snake;
         private string snakeText;

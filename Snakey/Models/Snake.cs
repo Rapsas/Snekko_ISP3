@@ -13,7 +13,7 @@ using Snakey.Memento;
 
 namespace Snakey.Models
 {
-    public class Snake : IDrawableComponenet
+    public class Snake : IDrawableComponenet, IOriginator
     {
         public Vector2D HeadLocation { get; set; }
         public Vector2D TailLocation { get; set; }
@@ -140,7 +140,7 @@ namespace Snakey.Models
         {
             SnakeText.Content = text;
         }
-        public SnakeMemento Save()
+        public IMemento Save()
         {
             string text = "";
             if (SnakeText.Content is not null) text = SnakeText.Content.ToString();
