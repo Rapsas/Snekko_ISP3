@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using Snakey.States;
 
 namespace Snakey.Models
 {
@@ -24,6 +25,7 @@ namespace Snakey.Models
         public bool IsDead { get; set; }
         public bool IsMovementLocked { get; set; }
         public bool IgnoreBodyCollisionWithHead { get; set; }
+        public State State { get; set; }
         public Snake()
         {
             HeadColor = new();
@@ -42,6 +44,7 @@ namespace Snakey.Models
             SnakeText = new();
             SnakeText.FontSize = 24;
             SnakeText.FontWeight = FontWeights.Bold;
+            State = new RightState(this);
         }
 
         public PlayerPackage MakeServerPackage()
@@ -59,26 +62,8 @@ namespace Snakey.Models
         }
         public void Move()
         {
-            BodyParts.Enqueue(HeadLocation);
-            switch (CurrentMovementDirection)
-            {
-                case MovementDirection.Up:
-                    HeadLocation -= (0, Settings.CellSize);
-                    break;
-                case MovementDirection.Down:
-                    HeadLocation += (0, Settings.CellSize);
-                    break;
-                case MovementDirection.Left:
-                    HeadLocation -= (Settings.CellSize, 0);
-                    break;
-                case MovementDirection.Right:
-                    HeadLocation += (Settings.CellSize, 0);
-                    break;
-            }
-            var lastPart = BodyParts.Dequeue();
-            TailLocation = lastPart;
-            IsMovementLocked = false;
-            IgnoreBodyCollisionWithHead = false;
+            State.Move();
+            State.SpeakDirection();
         }
         public void Expand()
         {
@@ -126,7 +111,6 @@ namespace Snakey.Models
                 Canvas.SetTop(SnakeText, HeadLocation.Y - Settings.CellSize);
             }
         }
-
         private void DrawSquare(Vector2D location, Brush color)
         {
             Rectangle r = new()
@@ -139,6 +123,17 @@ namespace Snakey.Models
             GameState.Instance.GameArea.Children.Add(r);
             Canvas.SetLeft(r, location.X + 4);
             Canvas.SetTop(r, location.Y + 4);
+        }
+        public void SwitchState(State state)
+        {
+            if (this.State is UpState && state is not DownState)
+                this.State = state;
+            else if (this.State is DownState && state is not UpState)
+                this.State = state;
+            else if (this.State is LeftState && state is not RightState)
+                this.State = state;
+            else if (this.State is RightState && state is not LeftState)
+                this.State = state;
         }
     }
 }

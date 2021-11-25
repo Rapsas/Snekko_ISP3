@@ -1,6 +1,7 @@
 ﻿using Common.Enums;
 using Common.Utility;
 using Snakey.Config;
+using Snakey.States;
 using Xunit;
 
 namespace Snakey.Models.Tests
@@ -38,25 +39,25 @@ namespace Snakey.Models.Tests
             Snake player = new();
 
             player.HeadLocation = new(0, 0);
-            player.CurrentMovementDirection = MovementDirection.Up;
+            player.State = new UpState(player);
             player.Move();
             var newHeadLocation = new Vector2D(0, -Settings.CellSize);
             Assert.True(player.HeadLocation.IsOverlaping(newHeadLocation));
 
             player.HeadLocation = new(0, 0);
-            player.CurrentMovementDirection = MovementDirection.Down;
+            player.State = new DownState(player);
             player.Move();
             newHeadLocation = new Vector2D(0, Settings.CellSize);
             Assert.True(player.HeadLocation.IsOverlaping(newHeadLocation));
 
             player.HeadLocation = new(0, 0);
-            player.CurrentMovementDirection = MovementDirection.Left;
+            player.State = new LeftState(player);
             player.Move();
             newHeadLocation = new Vector2D(-Settings.CellSize, 0);
             Assert.True(player.HeadLocation.IsOverlaping(newHeadLocation));
 
             player.HeadLocation = new(0, 0);
-            player.CurrentMovementDirection = MovementDirection.Right;
+            player.State = new RightState(player);
             player.Move();
             newHeadLocation = new Vector2D(Settings.CellSize, 0);
             Assert.True(player.HeadLocation.IsOverlaping(newHeadLocation));

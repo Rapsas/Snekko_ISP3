@@ -2,6 +2,7 @@
 using Snakey.Config;
 using Snakey.Flyweight;
 using Snakey.Managers;
+using Snakey.Visitor;
 using System;
 
 namespace Snakey.Snacks
@@ -10,18 +11,8 @@ namespace Snakey.Snacks
     {
         public override void TriggerEffect()
         {
-            var choice = rnd.Next(11);
-
-            if (choice > 5)
-            {
-                if (GameState.Instance.MultiplayerManager.Connection.State == HubConnectionState.Connected)
-                    GameState.Instance.MultiplayerManager.Connection?.SendAsync("ChangePlayerSize", -2).Wait();
-            }
-            else
-            {
-                GameState.Instance.Player.Shrink();
-                GameState.Instance.Player.Shrink();
-            }
+            
+            Accept(new MysteryVisitor());
         }
 
         public override MysterySnack Clone()
@@ -48,6 +39,10 @@ namespace Snakey.Snacks
 
             _body.Source = ImageFactory.GetImage("mystery_lemon.png");
             _body.Width = _body.Height = Settings.CellSize;
+        }
+        public override void Accept(IVisitor visitor)
+        {
+            visitor.VisitLemon(this);
         }
     }
 }
