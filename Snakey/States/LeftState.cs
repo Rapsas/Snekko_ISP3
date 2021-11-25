@@ -19,7 +19,7 @@ namespace Snakey.States
 
         public override void SpeakDirection()
         {
-            this.Player.Speak("left");
+            this.Player.HeadSpeak("🢀");
         }
 
         //public override bool TryToSwitchState(State state)

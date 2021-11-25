@@ -68,7 +68,7 @@ namespace Snakey.Models
         public void Move()
         {
             State.Move();
-            //State.SpeakDirection();
+            State.SpeakDirection();
         }
         public void Expand()
         {
