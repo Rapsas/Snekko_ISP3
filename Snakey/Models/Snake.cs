@@ -3,13 +3,13 @@ using Common.Utility;
 using Snakey.Composite;
 using Snakey.Config;
 using Snakey.Managers;
+using Snakey.Memento;
+using Snakey.States;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using Snakey.States;
-using Snakey.Memento;
 
 namespace Snakey.Models
 {
@@ -142,9 +142,8 @@ namespace Snakey.Models
         }
         public IMemento Save()
         {
-            string text = "";
-            if (SnakeText.Content is not null) text = SnakeText.Content.ToString();
+            string text = SnakeText.Content?.ToString() ?? string.Empty;
             return new SnakeMemento(this, text);
-        } 
+        }
     }
 }

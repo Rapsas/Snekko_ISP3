@@ -1,6 +1,5 @@
 ﻿using Snakey.Config;
 using Snakey.Flyweight;
-using Snakey.Managers;
 using Snakey.Visitor;
 
 namespace Snakey.Snacks

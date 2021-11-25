@@ -1,17 +1,16 @@
 ﻿using Common.Enums;
 using Common.Utility;
 using Microsoft.AspNetCore.SignalR.Client;
-using Snakey.Chain_of_Responsibility;
 using Snakey.Composite;
 using Snakey.Config;
 using Snakey.Factories;
 using Snakey.Managers;
 using Snakey.Models;
+using Snakey.Proxy;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
-using Snakey.Proxy;
 
 namespace Snakey.Facades
 {

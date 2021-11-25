@@ -15,7 +15,7 @@ namespace Snakey.Snacks
 
         public override void Accept(IVisitor visitor)
         {
-            
+
         }
 
         public override void TriggerEffect()

@@ -8,7 +8,7 @@ namespace Snakey.Command
         private Snake _receiver;
         private string _parameters;
 
-        private IMemento _backup; 
+        private IMemento _backup;
 
         public SnakeSpeakCommand(Snake receiver, string wordsToSay)
         {

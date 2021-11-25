@@ -47,7 +47,7 @@ namespace Snakey.Managers
         }
 
         static GameState() { }
-        private GameState() 
+        private GameState()
         {
             if (!Directory.Exists(Settings.LogFolder))
                 Directory.CreateDirectory(Settings.LogFolder);

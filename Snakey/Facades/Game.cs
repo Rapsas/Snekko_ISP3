@@ -8,13 +8,12 @@ using Snakey.Managers;
 using Snakey.Maps;
 using Snakey.Models;
 using Snakey.Observer;
+using Snakey.Proxy;
 using Snakey.Strategies;
 using Snakey.Template_method;
 using System;
-using System.IO;
 using System.Windows;
 using System.Windows.Input;
-using Snakey.Proxy;
 
 namespace Snakey.Facades
 {
@@ -34,7 +33,7 @@ namespace Snakey.Facades
         {
             InitializeGameComponents(window);
             RegisterObservers();
-            ConnectionManager connectionManager = new ();
+            ConnectionManager connectionManager = new();
             ConnectionManagerProxy = new ConnectionManagerProxy(connectionManager, window);
             Server.Setup(window, ComponentDrawer, connectionManager);
             // Server.Setup(window, ComponentDrawer);

@@ -15,7 +15,7 @@ namespace Snakey.Flyweight
         {
 #if TESTS
             return null;
-#endif
+#else
             if (_cache.ContainsKey(imageName))
                 return _cache[imageName];
 
@@ -25,6 +25,7 @@ namespace Snakey.Flyweight
             GameState.Instance.Logger.Log(MessageType.File, fullPath);
 
             return image;
+#endif
         }
     }
 }

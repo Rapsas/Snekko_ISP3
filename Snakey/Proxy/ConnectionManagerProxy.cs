@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Snakey.Chain_of_Responsibility;
 using Snakey.Managers;
-using Snakey.Chain_of_Responsibility;
+using System;
 
 namespace Snakey.Proxy
 {

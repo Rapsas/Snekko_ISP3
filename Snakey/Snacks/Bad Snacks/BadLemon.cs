@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
-using Snakey.Config;
+﻿using Snakey.Config;
 using Snakey.Flyweight;
-using Snakey.Managers;
 using Snakey.Visitor;
 
 namespace Snakey.Snacks
@@ -10,7 +8,7 @@ namespace Snakey.Snacks
     {
         public override void TriggerEffect()
         {
-            
+
             Accept(new BadVisitor());
         }
 

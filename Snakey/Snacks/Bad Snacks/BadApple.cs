@@ -1,9 +1,6 @@
 ﻿using Snakey.Config;
 using Snakey.Flyweight;
-using Snakey.Managers;
 using Snakey.Visitor;
-using System;
-using System.Windows.Media;
 
 namespace Snakey.Snacks
 {
@@ -11,7 +8,7 @@ namespace Snakey.Snacks
     {
         public override void TriggerEffect()
         {
-            
+
             Accept(new BadVisitor());
         }
         public BadApple() : base()

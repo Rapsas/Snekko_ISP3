@@ -13,7 +13,7 @@ namespace Snakey.Strategies
                 player.CurrentMovementDirection = MovementDirection.Up;
                 player.SwitchState(new UpState(player));
             }
-            
+
         }
     }
 }
