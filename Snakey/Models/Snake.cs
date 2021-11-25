@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using Snakey.States;
+using Snakey.Memento;
 
 namespace Snakey.Models
 {
@@ -21,7 +22,7 @@ namespace Snakey.Models
         public SolidColorBrush HeadColor { get; set; }
         public SolidColorBrush BodyColor { get; set; }
         public SolidColorBrush TailColor { get; set; }
-        public Label SnakeText { get; }
+        private Label SnakeText { get; }
         public bool IsDead { get; set; }
         public bool IsMovementLocked { get; set; }
         public bool IgnoreBodyCollisionWithHead { get; set; }
@@ -63,7 +64,7 @@ namespace Snakey.Models
         public void Move()
         {
             State.Move();
-            State.SpeakDirection();
+            //State.SpeakDirection();
         }
         public void Expand()
         {
@@ -135,5 +136,15 @@ namespace Snakey.Models
             else if (this.State is RightState && state is not LeftState)
                 this.State = state;
         }
+        public void SetSnakeText(string text)
+        {
+            SnakeText.Content = text;
+        }
+        public SnakeMemento Save()
+        {
+            string text = "";
+            if (SnakeText.Content is not null) text = SnakeText.Content.ToString();
+            return new SnakeMemento(this, text);
+        } 
     }
 }

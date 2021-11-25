@@ -1,4 +1,5 @@
-﻿using Snakey.Models;
+﻿using Snakey.Memento;
+using Snakey.Models;
 
 namespace Snakey.Command
 {
@@ -7,6 +8,8 @@ namespace Snakey.Command
         private Snake _receiver;
         private string _parameters;
 
+        private SnakeMemento _backup; 
+
         public SnakeSpeakCommand(Snake receiver, string wordsToSay)
         {
             _receiver = receiver;
@@ -14,12 +17,16 @@ namespace Snakey.Command
         }
         public void Execute()
         {
+            _backup = _receiver.Save();
             _receiver.Speak(_parameters);
         }
 
         public void Undo()
         {
-            _receiver.Shutup();
+            if (_backup != null)
+            {
+                _backup.Restore();
+            }
         }
     }
 }
