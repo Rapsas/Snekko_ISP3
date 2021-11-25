@@ -1,4 +1,5 @@
 ﻿using Snakey.Models;
+using Snakey.Visitor;
 using System.Windows.Media;
 
 namespace Snakey.Snacks
@@ -12,6 +13,10 @@ namespace Snakey.Snacks
             WasConsumed = false;
         }
         public override void TriggerEffect()
+        {
+
+        }
+        public override void Accept(IVisitor visitor)
         {
 
         }

@@ -1,6 +1,7 @@
 ﻿using Snakey.Config;
 using Snakey.Flyweight;
 using Snakey.Managers;
+using Snakey.Visitor;
 
 namespace Snakey.Snacks
 {
@@ -8,7 +9,7 @@ namespace Snakey.Snacks
     {
         public override void TriggerEffect()
         {
-            GameState.Instance.Player.Expand();
+            Accept(new GoodVisitor());
         }
         public GoodApple() : base()
         {
@@ -16,6 +17,10 @@ namespace Snakey.Snacks
 
             _body.Source = ImageFactory.GetImage("good_apple.png");
             _body.Width = _body.Height = Settings.CellSize;
+        }
+        public override void Accept(IVisitor visitor)
+        {
+            visitor.VisitApple(this);
         }
     }
 }

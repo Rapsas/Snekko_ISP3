@@ -1,4 +1,5 @@
 ﻿using Snakey.Models;
+using Snakey.Visitor;
 using System;
 using System.Windows.Media;
 
@@ -20,5 +21,9 @@ namespace Snakey.Snacks
         }
         public abstract MysterySnack Clone();
         public abstract MysterySnack DeepClone();
+        public override void Accept(IVisitor visitor)
+        {
+
+        }
     }
 }

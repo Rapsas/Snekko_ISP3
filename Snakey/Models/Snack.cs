@@ -2,6 +2,7 @@
 using Common.Utility;
 using Snakey.Composite;
 using Snakey.Managers;
+using Snakey.Visitor;
 using System.Windows.Controls;
 
 namespace Snakey.Models
@@ -47,5 +48,7 @@ namespace Snakey.Models
         {
             return this;
         }
+
+        public virtual void Accept(IVisitor visitor) { }
     }
 }

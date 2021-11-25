@@ -2,6 +2,7 @@
 using Snakey.Config;
 using Snakey.Flyweight;
 using Snakey.Managers;
+using Snakey.Visitor;
 using System;
 
 namespace Snakey.Snacks
@@ -10,18 +11,8 @@ namespace Snakey.Snacks
     {
         public override void TriggerEffect()
         {
-            var choice = rnd.Next(11);
-
-            if (choice > 5)
-            {
-                if (GameState.Instance.MultiplayerManager.Connection.State == HubConnectionState.Connected)
-                    GameState.Instance.MultiplayerManager.Connection?.SendAsync("ChangePlayerSize", 2).Wait();
-            }
-            else
-            {
-                GameState.Instance.Player.Expand();
-                GameState.Instance.Player.Expand();
-            }
+            
+            Accept(new MysteryVisitor());
         }
 
         public override MysterySnack Clone()
@@ -52,6 +43,10 @@ namespace Snakey.Snacks
             MysteryApple other = (MysteryApple)this.Clone(); //same as shallow clone, setting new random
             other.rnd = new Random();
             return other;
+        }
+        public override void Accept(IVisitor visitor)
+        {
+            visitor.VisitApple(this);
         }
     }
 }
