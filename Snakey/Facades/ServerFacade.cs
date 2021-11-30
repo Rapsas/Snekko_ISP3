@@ -8,17 +8,20 @@ using Snakey.Managers;
 using Snakey.Models;
 using Snakey.Proxy;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 
 namespace Snakey.Facades
 {
+    [SuppressMessage("NDepend", "ND1400:AvoidNamespacesMutuallyDependent", Justification = "...")]
     public class ServerFacade
     {
         public MultiplayerManager MultiplayerManager { get; set; }
         private GameState GameState;
         private ComponentDrawer ComponentDrawer;
+        [SuppressMessage("NDepend", "ND1400:AvoidNamespacesMutuallyDependent", Justification = "...")]
         public MainWindow Window;
 
         public void Setup(MainWindow window, ComponentDrawer componentDrawer, ConnectionManager connectionManager)

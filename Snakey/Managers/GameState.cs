@@ -4,6 +4,7 @@ using Snakey.Config;
 using Snakey.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -16,13 +17,17 @@ namespace Snakey.Managers
         private int _gameScore = 0;
         private int _gameScoreEnemy = 0;
 
+        [SuppressMessage("NDepend", "ND1400:AvoidNamespacesMutuallyDependent", Justification = "...")]
         public Snake Player { get; set; }
+        [SuppressMessage("NDepend", "ND1400:AvoidNamespacesMutuallyDependent", Justification = "...")]
         public Snake SecondPlayer { get; set; }
+        [SuppressMessage("NDepend", "ND1400:AvoidNamespacesMutuallyDependent", Justification = "...")]
         public List<Snack> Snacks { get; set; }
         public DispatcherTimer GameTimer { get; set; }
         public Canvas GameArea { get; set; }
         public Label ScoreLabel { get; set; }
         public MultiplayerManager MultiplayerManager { get; set; }
+        [SuppressMessage("NDepend", "ND1400:AvoidNamespacesMutuallyDependent", Justification = "...")]
         public Map GameMap { get; set; }
         public Logger Logger { get; private set; }
         public int Score

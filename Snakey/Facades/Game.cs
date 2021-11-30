@@ -12,6 +12,7 @@ using Snakey.Proxy;
 using Snakey.Strategies;
 using Snakey.Template_method;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Input;
 
@@ -20,6 +21,7 @@ namespace Snakey.Facades
     public class Game
     {
         public GameState GameState { get; private set; }
+        [SuppressMessage("NDepend", "ND1400:AvoidNamespacesMutuallyDependent", Justification = "...")]
         public MainWindow Window { get; private set; }
         public Publisher Publisher { get; private set; }
         public ServerFacade Server { get; private set; }
@@ -87,6 +89,7 @@ namespace Snakey.Facades
             context.ExecuteStrategy(GameState.Player);
             GameState.Player.IsMovementLocked = true;
         }
+        [SuppressMessage("NDepend", "ND1400:AvoidNamespacesMutuallyDependent", Justification = "...")]
         public void ConnectToServer()
         {
             ConnectionManagerProxy.ConnectToServer();
@@ -153,6 +156,7 @@ namespace Snakey.Facades
             Server.ChangeMap(MapTypes.Expert);
         }
 
+        [SuppressMessage("NDepend", "ND1400:AvoidNamespacesMutuallyDependent", Justification = "...")]
         private void InitializeGameComponents(MainWindow window)
         {
             Window = window;

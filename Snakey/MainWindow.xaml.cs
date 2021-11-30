@@ -2,6 +2,7 @@
 using Snakey.Config;
 using Snakey.Facades;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -11,10 +12,13 @@ namespace Snakey
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
+    [SuppressMessage("NDepend", "ND1400:AvoidNamespacesMutuallyDependent", Justification = "...")]
     public partial class MainWindow : Window
     {
         Game _game = new();
 
+        [SuppressMessage("NDepend", "ND1400:AvoidNamespacesMutuallyDependent", Justification = "...")]
         public MainWindow()
         {
             InitializeComponent();

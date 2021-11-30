@@ -6,6 +6,7 @@ using Snakey.Managers;
 using Snakey.Memento;
 using Snakey.States;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -13,6 +14,7 @@ using System.Windows.Shapes;
 
 namespace Snakey.Models
 {
+    [SuppressMessage("NDepend", "ND1400:AvoidNamespacesMutuallyDependent", Justification = "...")]
     public class Snake : IDrawableComponenet, IOriginator
     {
         public Vector2D HeadLocation { get; set; }
@@ -27,7 +29,9 @@ namespace Snakey.Models
         public bool IsDead { get; set; }
         public bool IsMovementLocked { get; set; }
         public bool IgnoreBodyCollisionWithHead { get; set; }
+        [SuppressMessage("NDepend", "ND1400:AvoidNamespacesMutuallyDependent", Justification = "...")]
         public State State { get; set; }
+        [SuppressMessage("NDepend", "ND1400:AvoidNamespacesMutuallyDependent", Justification = "...")]
         public Snake()
         {
             HeadColor = new();
@@ -65,6 +69,7 @@ namespace Snakey.Models
                 TailColor = new(TailColor.Color.R, TailColor.Color.G, TailColor.Color.B)
             };
         }
+        [SuppressMessage("NDepend", "ND1400:AvoidNamespacesMutuallyDependent", Justification = "...")]
         public void Move()
         {
             State.Move();

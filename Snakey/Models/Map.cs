@@ -3,6 +3,7 @@ using Snakey.Bridge;
 using Snakey.Composite;
 using Snakey.Managers;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 
@@ -12,6 +13,7 @@ namespace Snakey.Models
     {
         public List<Line> GridLines { get; set; } = new();
         public List<(Vector2D, Rectangle)> Obsticles { get; set; } = new List<(Vector2D location, Rectangle body)>();
+        [SuppressMessage("NDepend", "ND1400:AvoidNamespacesMutuallyDependent", Justification = "...")]
         public ICollision collisionImp { get; set; }
 
         protected Map(ICollision collisionImp)

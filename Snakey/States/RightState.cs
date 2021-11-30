@@ -1,11 +1,14 @@
 ﻿using Snakey.Config;
 using Snakey.Models;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Snakey.States
 {
     public class RightState : State
     {
+        [SuppressMessage("NDepend", "ND1400:AvoidNamespacesMutuallyDependent", Justification = "...")]
         public RightState(Snake player) : base(player) { }
+        [SuppressMessage("NDepend", "ND1400:AvoidNamespacesMutuallyDependent", Justification = "...")]
         public override void Move()
         {
             this.Player.BodyParts.Enqueue(this.Player.HeadLocation);
@@ -16,7 +19,7 @@ namespace Snakey.States
             this.Player.IsMovementLocked = false;
             this.Player.IgnoreBodyCollisionWithHead = false;
         }
-
+        [SuppressMessage("NDepend", "ND1400:AvoidNamespacesMutuallyDependent", Justification = "...")]
         public override void SpeakDirection()
         {
             this.Player.HeadSpeak("🢂");

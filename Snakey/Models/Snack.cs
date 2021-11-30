@@ -3,12 +3,14 @@ using Common.Utility;
 using Snakey.Composite;
 using Snakey.Managers;
 using Snakey.Visitor;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows.Controls;
 
 namespace Snakey.Models
 {
     // NOTE: this shit wont send through SignalR so we will need some sort of 
     // new package to transfer type and location in rebuild the list it at the other end
+    [SuppressMessage("NDepend", "ND1400:AvoidNamespacesMutuallyDependent", Justification = "...")]
     public abstract class Snack : IDrawableComponenet
     {
         public virtual Vector2D Location { get; set; }

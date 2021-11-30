@@ -3,6 +3,7 @@ using Snakey.Config;
 using Snakey.Managers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Windows.Media.Imaging;
 
@@ -10,6 +11,7 @@ namespace Snakey.Flyweight
 {
     static class ImageFactory
     {
+        [SuppressMessage("NDepend", "ND1901:AvoidNonReadOnlyStaticFields", Justification = "TODO")]
         private static Dictionary<string, BitmapImage> _cache = new();
         public static BitmapImage GetImage(string imageName)
         {
