@@ -338,9 +338,18 @@ namespace Snakey.Facades
         public void ExecuteCommand(string text)
         {
             var tokens = text.Split();
-
+            if (tokens.Length != 3)
+            {
+                MessageBox.Show("Invalid syntax");
+                return;
+            }
             var commandExpression = ParseCommand(tokens);
 
+            if (commandExpression is null)
+            {
+                MessageBox.Show("Invalid command");
+                return;
+            }    
             commandExpression.Execute();
         }
 
@@ -358,7 +367,11 @@ namespace Snakey.Facades
             List<IExpression> expressions = new();
 
             var targetExpression = new ObjectExpression(token[0]);
-            var numberExpression = new NumberExpression(int.Parse(token[1]));
+            var ok = int.TryParse(token[1], out int result);
+            if (!ok)
+                result = int.MinValue;
+            
+            var numberExpression = new NumberExpression(result);
             
             expressions.Add(targetExpression);
             expressions.Add(numberExpression);

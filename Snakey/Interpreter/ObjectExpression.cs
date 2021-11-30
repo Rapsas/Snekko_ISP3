@@ -1,4 +1,5 @@
-﻿using Snakey.Chain_of_Responsibility;
+﻿using System.Windows;
+using Snakey.Chain_of_Responsibility;
 using Snakey.Facades;
 using Snakey.Managers;
 
@@ -25,10 +26,8 @@ namespace Snakey.Interpreter
                     return new Value() {Object = GameState.Instance, IsObject = true};
                 default:
                     GameState.Instance.Logger.Log(MessageType.Error, "Failed to match an object in switch");
-                    break;
+                    return null;
             }
-
-            return new Value() {String = "Object expression", IsString = true};
         }
     }
 }

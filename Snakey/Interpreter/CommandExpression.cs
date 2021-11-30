@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Windows;
 using Snakey.Chain_of_Responsibility;
 using Snakey.Managers;
 using Snakey.Models;
@@ -28,7 +29,18 @@ namespace Snakey.Interpreter
             
             var target = targetExpression.Execute();
             var value = valueExpression.Execute();
-            
+
+            if (target is null)
+            {
+                MessageBox.Show("Invalid  target");
+                return null;
+            }
+            if (value is null)
+            {
+                MessageBox.Show("Invalid  value");
+                return null;
+            }
+
             switch (_commandName)
             {
                 case "add":
@@ -41,6 +53,7 @@ namespace Snakey.Interpreter
                 
                 default:
                     GameState.Instance.Logger.Log(MessageType.Error, "Failed to match in switch case");
+                    MessageBox.Show("Invalid command");
                     break;
             }
 

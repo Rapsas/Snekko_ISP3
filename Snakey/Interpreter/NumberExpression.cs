@@ -11,6 +11,8 @@
 
         public Value Execute()
         {
+            if (_value == int.MinValue) // Error
+                return null;
             return new Value {Number = _value, IsNumber = true};
         }
     }
