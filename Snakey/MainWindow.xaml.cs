@@ -50,5 +50,11 @@ namespace Snakey
 
         public Label GetScoreLabel => ScoreLabel;
         public Canvas GetGameArea => GameArea;
+
+        private void Execute_command(object sender, RoutedEventArgs e)
+        {
+            _game.ExecuteCommand(CommandTextBox.Text);            
+            CommandTextBox.Clear();
+        }
     }
 }

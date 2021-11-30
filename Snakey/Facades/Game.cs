@@ -12,8 +12,10 @@ using Snakey.Proxy;
 using Snakey.Strategies;
 using Snakey.Template_method;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
+using Snakey.Interpreter;
 
 namespace Snakey.Facades
 {
@@ -331,6 +333,36 @@ namespace Snakey.Facades
         private void ClearScreen()
         {
             GameState.GameArea.Children.Clear();
+        }
+
+        public void ExecuteCommand(string text)
+        {
+            var tokens = text.Split();
+
+            var commandExpression = ParseCommand(tokens);
+
+            commandExpression.Execute();
+        }
+
+        private IExpression ParseCommand(string[] tokens)
+        {
+            var commandName = tokens[0];
+            var commandParams = ParseArguments(tokens[1..]);
+            IExpression command = new CommandExpression(commandName, commandParams);
+
+            return command;
+        }
+
+        private List<IExpression> ParseArguments(string[] token)
+        {
+            List<IExpression> expressions = new();
+
+            var targetExpression = new ObjectExpression(token[0]);
+            var numberExpression = new NumberExpression(int.Parse(token[1]));
+            
+            expressions.Add(targetExpression);
+            expressions.Add(numberExpression);
+            return expressions;
         }
     }
 }

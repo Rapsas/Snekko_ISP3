@@ -27,6 +27,8 @@
             <Button Name="Level2" Margin="2,1,2,1" Content="Level 2" Click="Switch_to_level_2"></Button>
             <Button Name="Level3" Margin="2,1,2,1" Content="Level 3" Click="Switch_to_level_3"></Button>
             <GridSplitter Width="3" Background="Black"></GridSplitter>
+            <TextBox Name="CommandTextBox" Width="250"></TextBox>
+            <Button Name="CommandButton" Width="80" Margin="2,1,2,1" Content="Execute" Click="Execute_command"></Button>
         </StackPanel>                                 
         
         <Border BorderBrush="Green" BorderThickness="5">
