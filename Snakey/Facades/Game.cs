@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using Snakey.Interpreter;
+using Snakey.Mediator;
 
 namespace Snakey.Facades
 {
@@ -256,11 +257,11 @@ namespace Snakey.Facades
                 ISnackFactory factory;
                 if (factoryDecider > 0)
                 {
-                    factory = new AppleFactory();
+                    factory = new AppleFactory(new SnackMediator());
                 }
                 else
                 {
-                    factory = new LemonFactory();
+                    factory = new LemonFactory(new SnackMediator());
                 }
 
                 int rndX = rnd.Next(0, Settings.WindowWidth / Settings.CellSize) * Settings.CellSize;
