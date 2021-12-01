@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
+using Snakey.Mediator;
 
 namespace Snakey.Facades
 {
@@ -78,8 +79,8 @@ namespace Snakey.Facades
                 {
                     ISnackFactory factory = item.FoodType switch
                     {
-                        FoodType.Apple => new AppleFactory(),
-                        FoodType.Lemon => new LemonFactory(),
+                        FoodType.Apple => new AppleFactory(new SnackMediator()),
+                        FoodType.Lemon => new LemonFactory(new SnackMediator()),
                         _ => null
                     };
 
@@ -104,8 +105,8 @@ namespace Snakey.Facades
             {
                 ISnackFactory factory = s.FoodType switch
                 {
-                    FoodType.Apple => new AppleFactory(),
-                    FoodType.Lemon => new LemonFactory(),
+                    FoodType.Apple => new AppleFactory(new SnackMediator()),
+                    FoodType.Lemon => new LemonFactory(new SnackMediator()),
                     _ => null
                 };
 

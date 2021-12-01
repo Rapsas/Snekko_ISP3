@@ -2,41 +2,34 @@
 using Snakey.Decorators;
 using Snakey.Models;
 using Snakey.Snacks;
+using Snakey.Mediator;
 
 namespace Snakey.Factories
 {
     public class LemonFactory : ISnackFactory
     {
+        private readonly IMediator _mediator;
 
-        private MysteryLemon _mysteryLemon;
+        public LemonFactory(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
         public Snack CreateBadSnack()
         {
-            var snack = new BadLemon();
-            var snackScoreDecorator = new DecreaseScoreTriggerEffectDecorator(snack);
-            snack.SetTypesForServer(EffectType.Bad, FoodType.Lemon);
-
-            return snackScoreDecorator;
+            return _mediator.Send(FoodType.Lemon, EffectType.Bad);
         }
 
         public Snack CreateGoodSnack()
         {
-            var snack = new GoodLemon();
-            var snackScoreDecorator = new IncreaseScoreTriggerEffectDecorator(snack);
-            snack.SetTypesForServer(EffectType.Good, FoodType.Lemon);
-
-            return snackScoreDecorator;
+            return _mediator.Send(FoodType.Lemon, EffectType.Good);
         }
 
         public Snack CreateMysterySnack()
         {
-            var clonedLemon = _mysteryLemon.DeepClone();
-            var snackScoreDecorator = new IncreaseScoreTriggerEffectDecorator(clonedLemon);
-            return snackScoreDecorator;
-        }
-        public LemonFactory()
-        {
-            _mysteryLemon = new MysteryLemon();
-            _mysteryLemon.SetTypesForServer(EffectType.Mystery, FoodType.Lemon);
+            var clonedLemon = (MysteryLemon)_mediator.Send(FoodType.Lemon, EffectType.Mystery);
+
+            return new IncreaseScoreTriggerEffectDecorator(clonedLemon.DeepClone());
         }
     }
 }
