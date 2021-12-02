@@ -11,7 +11,7 @@ namespace Snakey.Builders.Tests
 
             var map = builder.StartNew().AddGridLines().Build();
 
-            Assert.True(map.GridLines.Count != 0);
+            Assert.True(map.GridLines.Count() != 0);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Common.Utility;
+using Snakey.Iterator;
 using System.Collections.Generic;
 using System.Windows.Shapes;
 
@@ -6,6 +7,6 @@ namespace Snakey.Bridge
 {
     public interface ICollision
     {
-        public void MapCollision(List<(Vector2D, Rectangle)> Obsticles);
+        public void MapCollision(ObsticleCollection Obsticles);
     }
 }

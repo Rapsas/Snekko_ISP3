@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using Snakey.Chain_of_Responsibility;
 using Snakey.Config;
+using Snakey.Iterator;
 using Snakey.Models;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace Snakey.Managers
 
         public Snake Player { get; set; }
         public Snake SecondPlayer { get; set; }
-        public List<Snack> Snacks { get; set; }
+        public SnackCollection Snacks { get; set; }
         public DispatcherTimer GameTimer { get; set; }
         public Canvas GameArea { get; set; }
         public Label ScoreLabel { get; set; }

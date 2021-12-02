@@ -1,6 +1,7 @@
 ﻿using Common.Utility;
 using Snakey.Bridge;
 using Snakey.Config;
+using Snakey.Iterator;
 using Snakey.Maps;
 using System;
 using System.Windows.Media;
@@ -27,8 +28,10 @@ namespace Snakey.Builders
                 //    continue; // Try again
 
                 bool overlapped = false;
-                foreach (var (location, body) in _map.Obsticles)
+                IIterator obsticlesIterator = _map.Obsticles.CreateIterator();
+                while (obsticlesIterator.HasMore())
                 {
+                    var (location, body) = ((Vector2D, Rectangle))obsticlesIterator.GetNext();
                     if (location.IsOverlaping(obstacleLocation))
                     {
                         overlapped = true;

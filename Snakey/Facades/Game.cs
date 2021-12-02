@@ -17,6 +17,8 @@ using System.Windows;
 using System.Windows.Input;
 using Snakey.Interpreter;
 using Snakey.Mediator;
+using Snakey.Iterator;
+using System.Windows.Shapes;
 
 namespace Snakey.Facades
 {
@@ -225,8 +227,10 @@ namespace Snakey.Facades
         }
         private void CheckSnackCollision()
         {
-            foreach (var snack in GameState.Snacks)
+            IIterator iterator = GameState.Snacks.CreateIterator();
+            while (iterator.HasMore())
             {
+                var snack = (Snack)iterator.GetNext();
                 if (snack.Location.IsOverlaping(GameState.Player.HeadLocation))
                 {
                     Publisher.NotifyObservers(snack);
@@ -317,14 +321,18 @@ namespace Snakey.Facades
                 }
             }
             // Check if overlaps map obstacles
-            foreach (var (location, _) in GameState.GameMap.Obsticles)
+            IIterator obsticlesIterator = GameState.GameMap.Obsticles.CreateIterator();
+            while (obsticlesIterator.HasMore())
             {
+                var (location, body) = ((Vector2D, Rectangle))obsticlesIterator.GetNext();
                 if (newSnack.IsOverlaping(location))
                     return true;
             }
             // Check if overlaps other snacks
-            foreach (var snacks in GameState.Snacks)
+            IIterator snackIterator = GameState.Snacks.CreateIterator();
+            while (snackIterator.HasMore())
             {
+                var snacks = (Snack)snackIterator.GetNext();
                 if (snacks.Location.IsOverlaping(newSnack))
                     return true;
             }

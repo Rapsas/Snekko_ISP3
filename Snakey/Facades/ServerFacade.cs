@@ -12,6 +12,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using Snakey.Mediator;
+using Snakey.Iterator;
 
 namespace Snakey.Facades
 {
@@ -177,12 +178,18 @@ namespace Snakey.Facades
         {
             if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
             {
-                var snacks = GameState.Snacks.Select((snack) => snack.SnackPackage()).ToList();
+                List<SnackPackage> snacks = new();
+                IIterator iterator = GameState.Snacks.CreateIterator();
+                while (iterator.HasMore())
+                {
+                    var snack = (Snack)iterator.GetNext();
+                    snacks.Add(snack.SnackPackage());
+                }
                 MultiplayerManager.Connection.SendAsync("SendSnackList", snacks).Wait();
             }
         }
 
-        public void SendEatenSnacks(List<Snack> Snacks)
+        public void SendEatenSnacks(SnackCollection Snacks)
         {
             if (MultiplayerManager.Connection.State == HubConnectionState.Connected)
                 Snacks.ForEach(snack =>

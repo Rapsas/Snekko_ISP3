@@ -1,6 +1,7 @@
 ﻿using Common.Utility;
 using Snakey.Bridge;
 using Snakey.Composite;
+using Snakey.Iterator;
 using Snakey.Managers;
 using System.Collections.Generic;
 using System.Windows.Controls;
@@ -10,8 +11,8 @@ namespace Snakey.Models
 {
     public abstract class Map : IDrawableComponenet
     {
-        public List<Line> GridLines { get; set; } = new();
-        public List<(Vector2D, Rectangle)> Obsticles { get; set; } = new List<(Vector2D location, Rectangle body)>();
+        public GridlineCollection GridLines { get; set; } = new();
+        public ObsticleCollection Obsticles { get; set; } = new();
         public ICollision collisionImp { get; set; }
 
         protected Map(ICollision collisionImp)
@@ -23,13 +24,17 @@ namespace Snakey.Models
 
         public void Draw()
         {
-            foreach (var line in GridLines)
+            IIterator gridLineIterator = GridLines.CreateIterator();
+            while (gridLineIterator.HasMore())
             {
+                Line line = (Line)gridLineIterator.GetNext();
                 GameState.Instance.GameArea.Children.Add(line);
             }
 
-            foreach (var (location, body) in Obsticles)
+            IIterator obsticlesIterator = Obsticles.CreateIterator();
+            while (obsticlesIterator.HasMore())
             {
+                var (location, body) = ((Vector2D, Rectangle))obsticlesIterator.GetNext();
                 GameState.Instance.GameArea.Children.Add(body);
                 Canvas.SetLeft(body, location.X);
                 Canvas.SetTop(body, location.Y);
