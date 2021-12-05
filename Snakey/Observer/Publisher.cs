@@ -5,7 +5,7 @@ namespace Snakey.Observer
 {
     public class Publisher : ISubject
     {
-        private List<IObserver> Observers;
+        private readonly List<IObserver> Observers;
 
         public Publisher()
         {

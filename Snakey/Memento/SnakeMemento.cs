@@ -7,8 +7,8 @@ namespace Snakey.Memento
     public class SnakeMemento : IMemento
     {
         [SuppressMessage("NDepend", "ND1400:AvoidNamespacesMutuallyDependent", Justification = "...")]
-        private Snake snake;
-        private string snakeText;
+        private readonly Snake snake;
+        private readonly string snakeText;
         [SuppressMessage("NDepend", "ND1400:AvoidNamespacesMutuallyDependent", Justification = "...")]
         public SnakeMemento(Snake snake, string snakeText)
         {

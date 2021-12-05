@@ -12,7 +12,7 @@ namespace Snakey.Flyweight
     static class ImageFactory
     {
         [SuppressMessage("NDepend", "ND1901:AvoidNonReadOnlyStaticFields", Justification = "TODO")]
-        private static Dictionary<string, BitmapImage> _cache = new();
+        private static readonly Dictionary<string, BitmapImage> _cache = new();
         public static BitmapImage GetImage(string imageName)
         {
 #if TESTS

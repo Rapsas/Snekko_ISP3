@@ -7,7 +7,7 @@ namespace Snakey.Bridge
 {
     public class AdvancedCollision : ICollision
     {
-        GameState _gameState = GameState.Instance;
+        readonly GameState _gameState = GameState.Instance;
 
         public void MapCollision(List<(Vector2D, Rectangle)> Obsticles)
         {
