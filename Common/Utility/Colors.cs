@@ -2,11 +2,11 @@
 
 namespace Common.Utility
 {
-    public struct Colors : IEquatable<Colors>
+    public readonly struct Colors : IEquatable<Colors>
     {
-        public byte R { get; set; }
-        public byte G { get; set; }
-        public byte B { get; set; }
+        public byte R { get; }
+        public byte G { get; }
+        public byte B { get; }
 
         public Colors(byte r, byte g, byte b)
         {

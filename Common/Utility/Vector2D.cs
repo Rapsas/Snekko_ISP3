@@ -2,10 +2,10 @@
 
 namespace Common.Utility
 {
-    public struct Vector2D : IEquatable<Vector2D>
+    public readonly struct Vector2D : IEquatable<Vector2D>
     {
-        public int X { get; set; } // Need to expose set; for SignalR to correctly serialize :(
-        public int Y { get; set; }
+        public int X { get; } // Need to expose set; for SignalR to correctly serialize :(
+        public int Y { get; }
 
         public Vector2D(int x, int y)
         {

@@ -36,13 +36,12 @@ namespace Snakey.Models
         }
         public virtual SnackPackage SnackPackage()
         {
-            return new SnackPackage()
-            {
-                Location = Location,
-                EffectType = _effectType,
-                FoodType = _foodType,
-                WasConsumed = WasConsumed
-            };
+            return new SnackPackage(
+                Location,
+                _foodType,
+                _effectType,
+                WasConsumed
+            );
         }
         public abstract void TriggerEffect();
 

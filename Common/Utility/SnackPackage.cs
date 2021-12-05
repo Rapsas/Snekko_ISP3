@@ -4,13 +4,21 @@ using Common.Enums;
 
 namespace Common.Utility
 {
-    public struct SnackPackage : IEquatable<SnackPackage>
+    public readonly struct SnackPackage : IEquatable<SnackPackage>
 
     {
-        public Vector2D Location { get; set; }
-        public FoodType FoodType { get; set; }
-        public EffectType EffectType { get; set; }
-        public bool WasConsumed { get; set; }
+        public SnackPackage(Vector2D location, FoodType foodType, EffectType effectType, bool wasConsumed)
+        {
+            Location = location;
+            FoodType = foodType;
+            EffectType = effectType;
+            WasConsumed = wasConsumed;
+        }
+
+        public Vector2D Location { get; }
+        public FoodType FoodType { get; }
+        public EffectType EffectType { get;}
+        public bool WasConsumed { get; }
 
         public override bool Equals(object obj)
         {

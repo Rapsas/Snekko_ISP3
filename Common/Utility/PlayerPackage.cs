@@ -4,15 +4,26 @@ using System.Collections.Generic;
 
 namespace Common.Utility
 {
-    public struct PlayerPackage : IEquatable<PlayerPackage>
+    public readonly struct PlayerPackage : IEquatable<PlayerPackage>
     {
-        public Vector2D SnakeHeadLocation { get; set; }
-        public Vector2D SnakeTailLocation { get; set; }
-        public MovementDirection SnakeMovementDirection { get; set; }
-        public Queue<Vector2D> SnakeBodyLocation { get; set; }
-        public Colors HeadColor { get; set; }
-        public Colors BodyColor { get; set; }
-        public Colors TailColor { get; set; }
+        public PlayerPackage(Vector2D snakeHeadLocation, Vector2D snakeTailLocation, MovementDirection snakeMovementDirection, Queue<Vector2D> snakeBodyLocation, Colors headColor, Colors bodyColor, Colors tailColor)
+        {
+            SnakeHeadLocation = snakeHeadLocation;
+            SnakeTailLocation = snakeTailLocation;
+            SnakeMovementDirection = snakeMovementDirection;
+            SnakeBodyLocation = snakeBodyLocation;
+            HeadColor = headColor;
+            BodyColor = bodyColor;
+            TailColor = tailColor;
+        }
+
+        public Vector2D SnakeHeadLocation { get; }
+        public Vector2D SnakeTailLocation { get; }
+        public MovementDirection SnakeMovementDirection { get; }
+        public Queue<Vector2D> SnakeBodyLocation { get; }
+        public Colors HeadColor { get; }
+        public Colors BodyColor { get; }
+        public Colors TailColor { get; }
 
         public override bool Equals(object obj)
         {

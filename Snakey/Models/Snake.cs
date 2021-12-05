@@ -58,16 +58,15 @@ namespace Snakey.Models
 
         public PlayerPackage MakeServerPackage()
         {
-            return new()
-            {
-                SnakeHeadLocation = HeadLocation,
-                SnakeBodyLocation = BodyParts,
-                SnakeMovementDirection = CurrentMovementDirection,
-                SnakeTailLocation = TailLocation,
-                HeadColor = new(HeadColor.Color.R, HeadColor.Color.G, HeadColor.Color.B),
-                BodyColor = new(BodyColor.Color.R, BodyColor.Color.G, BodyColor.Color.B),
-                TailColor = new(TailColor.Color.R, TailColor.Color.G, TailColor.Color.B)
-            };
+            return new(
+                HeadLocation,
+                TailLocation,
+                CurrentMovementDirection,
+                BodyParts,
+                new (HeadColor.Color.R, HeadColor.Color.G, HeadColor.Color.B),
+                new (BodyColor.Color.R, BodyColor.Color.G, BodyColor.Color.B),
+                new (TailColor.Color.R, TailColor.Color.G, TailColor.Color.B)
+            );
         }
         [SuppressMessage("NDepend", "ND1400:AvoidNamespacesMutuallyDependent", Justification = "...")]
         public void Move()
