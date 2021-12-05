@@ -18,7 +18,7 @@ namespace Snakey.Builders
 
         public override MapBuilder StartNew()
         {
-            _map = new BasicMap(new BasicCollision());
+            Map = new BasicMap(new BasicCollision());
             return this;
         }
     }

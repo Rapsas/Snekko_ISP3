@@ -4,21 +4,21 @@
     {
         protected override void CheckIfPlayerCollidesWithBodyParts()
         {
-            if (!player.IgnoreBodyCollisionWithHead)
-                foreach (var bodyPart in player.BodyParts)
+            if (!Player.IgnoreBodyCollisionWithHead)
+                foreach (var bodyPart in Player.BodyParts)
                 {
-                    if (player.HeadLocation.IsOverlaping(bodyPart))
+                    if (Player.HeadLocation.IsOverlaping(bodyPart))
                     {
-                        player.IsDead = true;
+                        Player.IsDead = true;
                         break;
                     }
                 }
         }
         protected override void CheckIfPlayerCollidesWithTail()
         {
-            if (player.HeadLocation.IsOverlaping(player.TailLocation))
+            if (Player.HeadLocation.IsOverlaping(Player.TailLocation))
             {
-                player.IsDead = true;
+                Player.IsDead = true;
             }
         }
         protected override void CheckIfCollidesWithSecondPlayerBodyParts()

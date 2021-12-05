@@ -12,10 +12,10 @@ namespace Snakey.Snacks
         }
         public GoodApple() : base()
         {
-            _body = new();
+            Body = new();
 
-            _body.Source = ImageFactory.GetImage("good_apple.png");
-            _body.Width = _body.Height = Settings.CellSize;
+            Body.Source = ImageFactory.GetImage("good_apple.png");
+            Body.Width = Body.Height = Settings.CellSize;
         }
         public override void Accept(IVisitor visitor)
         {

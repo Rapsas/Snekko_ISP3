@@ -8,7 +8,7 @@ namespace Snakey.Decorators
     {
         public override Vector2D Location { get => Snack.Location; set => Snack.Location = value; }
         public override bool WasConsumed { get => Snack.WasConsumed; set => Snack.WasConsumed = value; }
-        protected Snack Snack;
+        private Snack Snack;
 
         public TriggerEffectDecorator(Snack snack)
         {

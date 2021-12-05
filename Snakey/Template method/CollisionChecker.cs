@@ -5,8 +5,12 @@ namespace Snakey.Template_method
 {
     public abstract class CollisionChecker
     {
-        protected Snake player;
-        protected Snake secondPlayer;
+        private Snake player;
+        private Snake secondPlayer;
+
+        protected Snake Player { get => player; set => player = value; }
+        protected Snake SecondPlayer { get => secondPlayer; set => secondPlayer = value; }
+
         public void CheckCollision()
         {
             player = GameState.Instance.Player;

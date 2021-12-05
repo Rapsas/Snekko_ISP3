@@ -7,18 +7,18 @@ namespace Snakey.Chain_of_Responsibility
     {
         public ErrorLogger(StreamWriter streamWriter)
         {
-            _streamWriter = streamWriter;
+            StreamWriter = streamWriter;
         }
         public override void Log(MessageType type, string message, [CallerFilePath] string file = "", [CallerMemberName] string member = "", [CallerLineNumber] int line = 0)
         {
             if (type != MessageType.Error)
-                _next?.Log(type, message, file, member, line);
+                Next?.Log(type, message, file, member, line);
             else
             {
-                _streamWriter.WriteLine("======================================");
-                _streamWriter.WriteLine("ERROR AT: {0}_{1}({2}): {3}", Path.GetFileName(file), member, line, message);
-                _streamWriter.WriteLine("======================================");
-                _streamWriter.Flush();
+                StreamWriter.WriteLine("======================================");
+                StreamWriter.WriteLine("ERROR AT: {0}_{1}({2}): {3}", Path.GetFileName(file), member, line, message);
+                StreamWriter.WriteLine("======================================");
+                StreamWriter.Flush();
             }
         }
     }

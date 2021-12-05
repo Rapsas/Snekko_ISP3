@@ -17,26 +17,26 @@ namespace Snakey.Snacks
         {
             var cloned = (MysteryLemon)this.MemberwiseClone();
 
-            cloned._body = new();
+            cloned.Body = new();
 
-            cloned._body.Source = ImageFactory.GetImage("mystery_lemon.png");
-            cloned._body.Width = cloned._body.Height = Settings.CellSize;
+            cloned.Body.Source = ImageFactory.GetImage("mystery_lemon.png");
+            cloned.Body.Width = cloned.Body.Height = Settings.CellSize;
             return cloned;
         }
 
         public override MysterySnack DeepClone()
         {
             MysteryLemon other = (MysteryLemon)this.Clone();
-            other.rnd = new Random();
+            other.Rnd = new Random();
             return other;
         }
 
         public MysteryLemon() : base()
         {
-            _body = new();
+            Body = new();
 
-            _body.Source = ImageFactory.GetImage("mystery_lemon.png");
-            _body.Width = _body.Height = Settings.CellSize;
+            Body.Source = ImageFactory.GetImage("mystery_lemon.png");
+            Body.Width = Body.Height = Settings.CellSize;
         }
         public override void Accept(IVisitor visitor)
         {

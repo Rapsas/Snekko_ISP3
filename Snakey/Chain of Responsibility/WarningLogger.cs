@@ -7,16 +7,16 @@ namespace Snakey.Chain_of_Responsibility
     {
         public WarningLogger(StreamWriter streamWriter)
         {
-            _streamWriter = streamWriter;
+            StreamWriter = streamWriter;
         }
         public override void Log(MessageType type, string message, [CallerFilePath] string file = "", [CallerMemberName] string member = "", [CallerLineNumber] int line = 0)
         {
             if (type != MessageType.Warning)
-                _next?.Log(type, message, file, member, line);
+                Next?.Log(type, message, file, member, line);
             else
             {
-                _streamWriter.WriteLine($"WARNING FROM: {Path.GetFileName(file)}({line}): {message}");
-                _streamWriter.Flush();
+                StreamWriter.WriteLine($"WARNING FROM: {Path.GetFileName(file)}({line}): {message}");
+                StreamWriter.Flush();
             }
         }
     }
