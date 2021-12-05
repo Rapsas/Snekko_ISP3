@@ -31,14 +31,15 @@
 - the query defined in {Project Rules \ API Breaking Changes}
 The query or rule name is used as a case-insensitive unique identifier in various situations, like when processing issues in the report and in the various build-process plugin.
 A query or rule name is defined in a comment in the query body this way:  // &lt;Name&gt;Query or Rule Name Here&lt;/Name&gt;</Warning>
-  <Info>Persisting code model snapshot in {D:\Snekko_ISP3\NDependOut2\NDependAnalysisResult_Snekko_2021Dec05_19h47.ndar}</Info>
+  <Info>Persisting code model snapshot in {D:\Snekko_ISP3\NDependOut2\NDependAnalysisResult_Snekko_2021Dec05_20h33.ndar}</Info>
   <Info>Execute queries and rules.</Info>
   <Warning>2 quality gates warn:
-  - 'New Debt since Baseline' value 0.51 man-days greater than warn threshold 0 man-days
-  - 'New Annual Interest since Baseline' value 0.78 man-days greater than warn threshold 0 man-days</Warning>
-  <Error>2 quality gates fail:
-  - 'New Blocker / Critical / High Issues' value 25 issues greater than fail threshold 0 issues
-  - 'Debt Rating per Namespace' value 5 namespaces greater than fail threshold 0 namespaces</Error>
+  - 'New Debt since Baseline' value 0.043 man-days greater than warn threshold 0 man-days
+  - 'New Annual Interest since Baseline' value 0.21 man-days greater than warn threshold 0 man-days</Warning>
+  <Error>3 quality gates fail:
+  - 'New Blocker / Critical / High Issues' value 18 issues greater than fail threshold 0 issues
+  - 'Critical Rules Violated' value 1 rules greater than fail threshold 0 rules
+  - 'Debt Rating per Namespace' value 3 namespaces greater than fail threshold 0 namespaces</Error>
   <Info>Building the report (standard).</Info>
-  <Info>NDepend analysis done. Duration: 00:09.535</Info>
+  <Info>NDepend analysis done. Duration: 00:09.125</Info>
 </InfoWarnings>

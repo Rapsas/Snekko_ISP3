@@ -1013,7 +1013,7 @@ select new {
 //</HowToFix>]]></Query>
       <Query Active="True" DisplayList="True" DisplayStat="False" DisplaySelectionView="False" IsCriticalRule="True"><![CDATA[// <Name>Avoid methods with too many parameters</Name>
 // <Id>ND1004:AvoidMethodsWithTooManyParameters</Id>
-warnif count > 0 from m in JustMyCode.Methods where 
+warnif count > 5 from m in JustMyCode.Methods where 
   m.NbParameters >= 7 &&
 
   // Don't match a method that overrides a third-party method with many parameters
@@ -1301,6 +1301,47 @@ select new {
 // varies linearly from 10 minutes for a method with 15 variables,
 // up to 2 hours for a methods with 80 or more variables.
 //</HowToFix>]]></Query>
+      <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Method too complex</Name>
+warnif count > 0
+from m in Methods
+where m.CyclomaticComplexity > 10
+select new { 
+ m,
+ m.CyclomaticComplexity,
+ m.NbLinesOfCode
+}
+
+// Get inspired from default rules source code
+// to write your own ones.
+// https://www.ndepend.com/default-rules/NDepend-Rules-Explorer.html?ruleid=ND1000
+//
+// Documentation:
+// https://www.ndepend.com/docs/cqlinq-syntax
+// https://www.ndepend.com/docs/cqlinq-features]]></Query>
+      <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Critical rules violated</Name>
+from r in Rules
+where r.IsCritical && r.IsViolated()
+orderby r.Debt().Value descending
+select new { 
+   r, 
+   Issues = r.Issues(), 
+   Debt = r.Debt(), 
+   AnnualInterest = r.AnnualInterest(), 
+   BreakingPoint = r.BreakingPoint(),
+   Category = r.Category
+}
+
+//<Description>
+// **Debt**: Estimated effort to fix all rule issues.
+//
+// **Annual Interest**: Estimated annual cost to leave all rule issues unfixed.
+//
+// **Breaking Point**: Estimated point in time from now, when leaving the rule issues unfixed cost as much as fixing the rule issues.
+// A low value indicates an a rule with easy-to-fix issue with high annual interest.
+// This value can be used to prioritize issues fix, to significantly reduce interest with minimum effort.
+//
+// More documentation: https://www.ndepend.com/docs/technical-debt
+//</Description>]]></Query>
     </Group>
     <Group Name="Code Smells Regression" Active="True" ShownInReport="False">
       <Query Active="True" DisplayList="True" DisplayStat="False" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>From now, all types added should respect basic quality principles</Name>

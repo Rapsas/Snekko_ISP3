@@ -61,18 +61,8 @@ namespace Snakey.Facades
                 GameState.SecondPlayer.BodyColor.Color = Color.FromRgb(package.BodyColor.R, package.BodyColor.G, package.BodyColor.B);
                 GameState.SecondPlayer.TailColor.Color = Color.FromRgb(package.TailColor.R, package.TailColor.G, package.TailColor.B);
             });
-            MultiplayerManager.Connection.On<SnackPackage>("RecieveEatenSnackPosition", (snack) =>
-            {
-                GameState.Snacks.RemoveAll((s) =>
-                {
-                    if (s.Location.IsOverlaping(snack.Location))//yeah this works
-                    {
-                        ComponentDrawer.Remove(s);
-                        return true;
-                    }
-                    return false;
-                });
-            });
+            RecieveEatenSnackPosition();
+            
             MultiplayerManager.Connection.On<List<SnackPackage>>("RecieveSnackList", (snacks) =>
             {
                 GameState.Snacks.ForEach(x => ComponentDrawer.Remove(x));
@@ -136,6 +126,45 @@ namespace Snakey.Facades
                 GameState.Player.Reset();
                 GameState.Player.HeadLocation += (0, Settings.CellSize);
             });
+
+            shortenSecondPLayer();
+            doSomeOtherstuffIDK();
+            
+        }
+        private void doSomeOtherstuffIDK()
+        {
+            MultiplayerManager.Connection.On<int>("RecieveScore", (n) =>
+            {
+                GameState.EnemyScore = n;
+            });
+            MultiplayerManager.Connection.On("ClearScore", () =>
+            {
+                GameState.Score = 0;
+            });
+            MultiplayerManager.Connection.On("PlayerDied", () =>
+            {
+                GameState.GameTimer.Stop();
+                MessageBox.Show("You win (⌐■_■)");//yeah this works
+                Window.Close();
+            });
+        }
+        private void RecieveEatenSnackPosition()
+        {
+            MultiplayerManager.Connection.On<SnackPackage>("RecieveEatenSnackPosition", (snack) =>
+            {
+                GameState.Snacks.RemoveAll((s) =>
+                {
+                    if (s.Location.IsOverlaping(snack.Location))//yeah this works
+                    {
+                        ComponentDrawer.Remove(s);
+                        return true;
+                    }
+                    return false;
+                });
+            });
+        }
+        private void shortenSecondPLayer()
+        {
             MultiplayerManager.Connection.On<int>("ShortenSecondPlayer", (n) =>
             {
                 if (n < 0)
@@ -151,20 +180,6 @@ namespace Snakey.Facades
                 }
                 GameState.Player.IgnoreBodyCollisionWithHead = true;
             });//yeah this works
-            MultiplayerManager.Connection.On<int>("RecieveScore", (n) =>
-            {
-                GameState.EnemyScore = n;
-            });
-            MultiplayerManager.Connection.On("ClearScore", () =>
-            {
-                GameState.Score = 0;
-            });
-            MultiplayerManager.Connection.On("PlayerDied", () =>
-            {
-                GameState.GameTimer.Stop();
-                MessageBox.Show("You win (⌐■_■)");//yeah this works
-                Window.Close();
-            });
         }
 
         public void ChangeMap(MapTypes mapType)

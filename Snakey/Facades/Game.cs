@@ -306,6 +306,11 @@ namespace Snakey.Facades
 
             // Check if overlaps player 2
             // if (Server.IsConnected())
+            return IsOverlappingBodyparts(newSnack) && IsOverlappingObsticle(newSnack) && IsOverlappingSnacks(newSnack);
+        }
+
+        private bool IsOverlappingBodyparts(Vector2D newSnack)
+        {
             if (ConnectionManagerProxy.IsConnected())
             {
                 if (GameState.SecondPlayer.HeadLocation.IsOverlaping(newSnack))
@@ -317,21 +322,29 @@ namespace Snakey.Facades
                         return true;
                 }
             }
-            // Check if overlaps map obstacles
+            return false;
+        }
+
+        private bool IsOverlappingSnacks(Vector2D newSnack)
+        {
+            foreach(var snacks in GameState.Snacks)
+            {
+                if (snacks.Location.IsOverlaping(newSnack))
+                    return true;
+            }
+            return false;
+        }
+
+        private bool IsOverlappingObsticle(Vector2D newSnack)
+        {
             foreach (var (location, _) in GameState.GameMap.Obsticles)
             {
                 if (newSnack.IsOverlaping(location))
                     return true;
             }
-            // Check if overlaps other snacks
-            foreach (var snacks in GameState.Snacks)
-            {
-                if (snacks.Location.IsOverlaping(newSnack))
-                    return true;
-            }
-
             return false;
         }
+
         private void ClearScreen()
         {
             GameState.GameArea.Children.Clear();
