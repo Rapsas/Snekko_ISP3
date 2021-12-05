@@ -48,6 +48,7 @@ namespace Snakey.Facades
 
         public void BindMethods()
         {
+            //yeah this works
             MultiplayerManager.Connection.On<PlayerPackage>("RecievePositions", (package) =>
             {
                 GameState.SecondPlayer.HeadLocation = package.SnakeHeadLocation;
@@ -64,7 +65,7 @@ namespace Snakey.Facades
             {
                 GameState.Snacks.RemoveAll((s) =>
                 {
-                    if (s.Location.IsOverlaping(snack.Location))
+                    if (s.Location.IsOverlaping(snack.Location))//yeah this works
                     {
                         ComponentDrawer.Remove(s);
                         return true;
@@ -79,7 +80,7 @@ namespace Snakey.Facades
                 // Build Snacks
                 foreach (var item in snacks)
                 {
-                    ISnackFactory factory = item.FoodType switch
+                    ISnackFactory factory = item.FoodType switch//yeah this works
                     {
                         FoodType.Apple => new AppleFactory(),
                         FoodType.Lemon => new LemonFactory(),
@@ -95,7 +96,7 @@ namespace Snakey.Facades
                     };
 
                     snack.Location = item.Location;
-                    GameState.Snacks.Add(snack);
+                    GameState.Snacks.Add(snack);//yeah this works
                     ComponentDrawer.Add(snack);
                 }
             });
@@ -110,7 +111,7 @@ namespace Snakey.Facades
                     FoodType.Apple => new AppleFactory(),
                     FoodType.Lemon => new LemonFactory(),
                     _ => null
-                };
+                };//yeah this works
 
                 Snack snack = s.EffectType switch
                 {
@@ -119,17 +120,17 @@ namespace Snakey.Facades
                     EffectType.Mystery => factory.CreateMysterySnack(),
                     _ => null
                 };
-
+                //yeah this works
                 snack.Location = s.Location;
                 GameState.Snacks.Add(snack);
                 ComponentDrawer.Add(snack);
             });
             MultiplayerManager.Connection.On<MapTypes>("ChangeMap", (map) =>
-            {
+            {//yeah this works
                 var mapFactory = new MapFactory();
 
                 ComponentDrawer.Remove(GameState.GameMap);
-                GameState.GameMap = mapFactory.CreateMap(map);
+                GameState.GameMap = mapFactory.CreateMap(map);//yeah this works
                 ComponentDrawer.Add(GameState.GameMap);
 
                 GameState.Player.Reset();
@@ -139,7 +140,7 @@ namespace Snakey.Facades
             {
                 if (n < 0)
                 {
-                    n *= -1;
+                    n *= -1;//yeah this works
                     for (int i = 0; i < n; i++)
                         GameState.Player.Shrink();
                 }
@@ -149,7 +150,7 @@ namespace Snakey.Facades
                         GameState.Player.Expand();
                 }
                 GameState.Player.IgnoreBodyCollisionWithHead = true;
-            });
+            });//yeah this works
             MultiplayerManager.Connection.On<int>("RecieveScore", (n) =>
             {
                 GameState.EnemyScore = n;
@@ -161,7 +162,7 @@ namespace Snakey.Facades
             MultiplayerManager.Connection.On("PlayerDied", () =>
             {
                 GameState.GameTimer.Stop();
-                MessageBox.Show("You win (⌐■_■)");
+                MessageBox.Show("You win (⌐■_■)");//yeah this works
                 Window.Close();
             });
         }

@@ -246,9 +246,9 @@ namespace Snakey.Facades
         {
             if (GameState.Snacks.Count >= Settings.MaximumSnackCount)
                 return;
-
+            //yeah this works
             Random rnd = new();
-
+            //yeah this works
             for (int i = 0; i < 100; i++) // 100 tries to place a snack randomly
             {
                 if (GameState.Snacks.Count >= Settings.MaximumSnackCount)
@@ -267,7 +267,7 @@ namespace Snakey.Facades
 
                 int rndX = rnd.Next(0, Settings.WindowWidth / Settings.CellSize) * Settings.CellSize;
                 int rndY = rnd.Next(0, Settings.WindowHeight / Settings.CellSize) * Settings.CellSize;
-
+                //yeah this works
                 var snackLocation = new Vector2D(rndX, rndY);
 
                 if (IsNewSnackColliding(snackLocation))
@@ -277,19 +277,19 @@ namespace Snakey.Facades
                 int c = rnd.Next(0, 11);
                 if (c <= 3)
                     snack = factory.CreateGoodSnack();
-                else if (c > 3 && c <= 7)
+                else if (c > 3 && c <= 7)//yeah this works
                 {
                     snack = factory.CreateBadSnack();
                 }
                 else
-                    snack = factory.CreateMysterySnack();
+                    snack = factory.CreateMysterySnack();//yeah this works
 
                 snack.Location = snackLocation;
 
-                GameState.Snacks.Add(snack);
+                GameState.Snacks.Add(snack);//yeah this works
                 ComponentDrawer.Add(snack);
 
-                Server.SendSnackPosition(snack);
+                Server.SendSnackPosition(snack);//yeah this works
 
             }
         }

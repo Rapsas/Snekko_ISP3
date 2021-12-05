@@ -9,9 +9,12 @@ using System.Windows.Shapes;
 
 namespace Snakey.Models
 {
+    [SuppressMessage("NDepend", "ND1501:APIBreakingChangesMethods", Scope = "method", Justification = "TODO")]
     public abstract class Map : IDrawableComponenet
     {
+        [SuppressMessage("NDepend", "ND1501:APIBreakingChangesMethods", Justification = "TODO")]
         public List<Line> GridLines { get; set; } = new();
+        [SuppressMessage("NDepend", "ND1501:APIBreakingChangesMethods", Justification = "TODO")]
         public List<(Vector2D, Rectangle)> Obsticles { get; set; } = new List<(Vector2D location, Rectangle body)>();
         [SuppressMessage("NDepend", "ND1400:AvoidNamespacesMutuallyDependent", Justification = "...")]
         public ICollision collisionImp { get; set; }
