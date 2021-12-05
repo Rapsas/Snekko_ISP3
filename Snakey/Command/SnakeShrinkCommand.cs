@@ -4,7 +4,7 @@ namespace Snakey.Command
 {
     public class SnakeShrinkCommand : ICommand
     {
-        private Snake _receiver;
+        private readonly Snake _receiver;
         public void Execute()
         {
             _receiver.Shrink();

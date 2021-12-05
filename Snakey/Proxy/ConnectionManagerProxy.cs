@@ -6,9 +6,9 @@ namespace Snakey.Proxy
 {
     public class ConnectionManagerProxy : IConnectionManager
     {
-        private ConnectionManager _connectionManager;
-        private GameState _gameState;
-        private MainWindow _window;
+        private readonly ConnectionManager _connectionManager;
+        private readonly GameState _gameState;
+        private readonly MainWindow _window;
 
         public ConnectionManagerProxy(ConnectionManager connectionManager, MainWindow window)
         {

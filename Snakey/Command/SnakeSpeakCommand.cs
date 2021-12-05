@@ -5,8 +5,8 @@ namespace Snakey.Command
 {
     public class SnakeSpeakCommand : ICommand
     {
-        private Snake _receiver;
-        private string _parameters;
+        private readonly Snake _receiver;
+        private readonly string _parameters;
 
         private IMemento _backup;
 
