@@ -2,14 +2,26 @@
 <NDepend AppName="Snekko" Platform="DotNet" FileWrittenByProductVersion="2021.2.4.9620">
   <OutputDir KeepXmlFiles="False">.\NDependOut2</OutputDir>
   <IDEFiles>
-    <IDEFile FilePath=".\Snekko.sln" Filters="-test" Configuration="DEBUG|AnyCPU">
+    <IDEFile FilePath=".\Snekko.sln" Filters="-test -server" Configuration="DEBUG|AnyCPU">
       <RootDirResolvingInfo Enabled="False" Hints="Debug|bin|.bin|AnyCPU|x64|x86|v*.*|net*" TimeOut="10">
         <RootDir>.</RootDir>
       </RootDirResolvingInfo>
     </IDEFile>
   </IDEFiles>
   <Assemblies />
-  <FrameworkAssemblies />
+  <FrameworkAssemblies>
+    <Name>System.Runtime</Name>
+    <Name>System.Collections</Name>
+    <Name>System.IO.FileSystem</Name>
+    <Name>PresentationFramework</Name>
+    <Name>System.Xaml</Name>
+    <Name>PresentationCore</Name>
+    <Name>System.Windows.Extensions</Name>
+    <Name>WindowsBase</Name>
+    <Name>Microsoft.AspNetCore.SignalR.Client.Core</Name>
+    <Name>Microsoft.AspNetCore.SignalR.Client</Name>
+    <Name>System.Linq</Name>
+  </FrameworkAssemblies>
   <Dirs>
     <Dir>C:\Windows\Microsoft.NET\Framework\v4.0.30319</Dir>
     <Dir>C:\Windows\Microsoft.NET\Framework\v4.0.30319\WPF</Dir>
@@ -712,7 +724,7 @@ select new {
     <Group Name="Code Smells" Active="True" ShownInReport="False">
       <Query Active="True" DisplayList="True" DisplayStat="False" DisplaySelectionView="False" IsCriticalRule="True"><![CDATA[// <Name>Avoid types too big</Name>
 // <Id>ND1000:AvoidTypesTooBig</Id>
-warnif count > 0 from t in JustMyCode.Types where 
+warnif count > 50 from t in JustMyCode.Types where 
 
    // First filter on type to optimize 
    t.NbLinesOfCode > 200 
@@ -1318,6 +1330,30 @@ select new {
 // Documentation:
 // https://www.ndepend.com/docs/cqlinq-syntax
 // https://www.ndepend.com/docs/cqlinq-features]]></Query>
+      <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Critical rules violated</Name>
+from r in Rules
+where r.IsCritical && r.IsViolated()
+orderby r.Debt().Value descending
+select new { 
+   r, 
+   Issues = r.Issues(), 
+   Debt = r.Debt(), 
+   AnnualInterest = r.AnnualInterest(), 
+   BreakingPoint = r.BreakingPoint(),
+   Category = r.Category
+}
+
+//<Description>
+// **Debt**: Estimated effort to fix all rule issues.
+//
+// **Annual Interest**: Estimated annual cost to leave all rule issues unfixed.
+//
+// **Breaking Point**: Estimated point in time from now, when leaving the rule issues unfixed cost as much as fixing the rule issues.
+// A low value indicates an a rule with easy-to-fix issue with high annual interest.
+// This value can be used to prioritize issues fix, to significantly reduce interest with minimum effort.
+//
+// More documentation: https://www.ndepend.com/docs/technical-debt
+//</Description>]]></Query>
       <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Critical rules violated</Name>
 from r in Rules
 where r.IsCritical && r.IsViolated()
@@ -4837,7 +4873,7 @@ select new {
       <Query Active="True" DisplayList="True" DisplayStat="False" DisplaySelectionView="False" IsCriticalRule="True"><![CDATA[// <Name>API Breaking Changes: Fields</Name>
 // <Id>ND1502:APIBreakingChangesFields</Id>
 
-warnif count > 0 from f in codeBase.OlderVersion().Application.Fields
+warnif count > 50 from f in codeBase.OlderVersion().Application.Fields
 where f.IsPubliclyVisible &&
 
      // The field has been removed, it was not tagged as obsolete
@@ -5143,6 +5179,30 @@ select new {
 from r in Rules
 where r.IsCritical && r.IsViolated() &&
       r.IsPresentInBothIssuesSet() && !r.OlderVersion().IsViolated()
+orderby r.Debt().Value descending
+select new { 
+   r, 
+   Issues = r.Issues(), 
+   Debt = r.Debt(), 
+   AnnualInterest = r.AnnualInterest(), 
+   BreakingPoint = r.BreakingPoint(),
+   Category = r.Category
+}
+
+//<Description>
+// **Debt**: Estimated effort to fix all rule issues.
+//
+// **Annual Interest**: Estimated annual cost to leave all rule issues unfixed.
+//
+// **Breaking Point**: Estimated point in time from now, when leaving the rule issues unfixed cost as much as fixing the rule issues.
+// A low value indicates an a rule with easy-to-fix issue with high annual interest.
+// This value can be used to prioritize issues fix, to significantly reduce interest with minimum effort.
+//
+// More documentation: https://www.ndepend.com/docs/technical-debt
+//</Description>]]></Query>
+      <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Critical rules violated</Name>
+from r in Rules
+where r.IsCritical && r.IsViolated()
 orderby r.Debt().Value descending
 select new { 
    r, 
@@ -6007,7 +6067,7 @@ select new {
       <Query Active="True" DisplayList="True" DisplayStat="False" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Potentially Dead Methods</Name>
 // <Id>ND1701:PotentiallyDeadMethods</Id>
 
-warnif count > 0
+warnif count > 50
 // Filter procedure for methods that shouldn't be considered as dead
 let canMethodBeConsideredAsDeadProc = new Func<IMethod, bool>(
     m => !m.IsPubliclyVisible &&       // Public methods might be used by client applications of your assemblies.
@@ -6264,6 +6324,31 @@ select new {
 // types, methods and fields matched by this rule
 // because this tag is not useful anymore.
 //</HowToFix>]]></Query>
+      <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Non-Critical Rules violated that were not violated in baseline</Name>
+from r in Rules
+where !r.IsCritical && r.IsViolated() &&
+      r.IsPresentInBothIssuesSet() && !r.OlderVersion().IsViolated()
+orderby r.Debt().Value descending
+select new { 
+   r, 
+   Issues = r.Issues(), 
+   Debt = r.Debt(), 
+   AnnualInterest = r.AnnualInterest(), 
+   BreakingPoint = r.BreakingPoint(),
+   Category = r.Category
+}
+
+//<Description>
+// **Debt**: Estimated effort to fix all rule issues.
+//
+// **Annual Interest**: Estimated annual cost to leave all rule issues unfixed.
+//
+// **Breaking Point**: Estimated point in time from now, when leaving the rule issues unfixed cost as much as fixing the rule issues.
+// A low value indicates an a rule with easy-to-fix issue with high annual interest.
+// This value can be used to prioritize issues fix, to significantly reduce interest with minimum effort.
+//
+// More documentation: https://www.ndepend.com/docs/technical-debt
+//</Description>]]></Query>
     </Group>
     <Group Name="Security" Active="True" ShownInReport="False">
       <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Don't use CoSetProxyBlanket and CoInitializeSecurity</Name>
@@ -8299,7 +8384,7 @@ select new {
       <Query Active="True" DisplayList="True" DisplayStat="False" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Methods name should begin with an Upper character</Name>
 // <Id>ND2007:MethodsNameShouldBeginWithAnUpperCharacter</Id>
 
-warnif count > 0 
+warnif count > 50
 from m in JustMyCode.Methods where 
   !m.NameLike (@"^[A-Z]") && 
   !m.IsSpecialName && 
@@ -8968,6 +9053,81 @@ select new {
 // Suffix the names of matched Controller classes with **Controller**.
 //</HowToFix>
 ]]></Query>
+      <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Non-Critical Rules violated that were not violated in baseline</Name>
+from r in Rules
+where !r.IsCritical && r.IsViolated() &&
+      r.IsPresentInBothIssuesSet() && !r.OlderVersion().IsViolated()
+orderby r.Debt().Value descending
+select new { 
+   r, 
+   Issues = r.Issues(), 
+   Debt = r.Debt(), 
+   AnnualInterest = r.AnnualInterest(), 
+   BreakingPoint = r.BreakingPoint(),
+   Category = r.Category
+}
+
+//<Description>
+// **Debt**: Estimated effort to fix all rule issues.
+//
+// **Annual Interest**: Estimated annual cost to leave all rule issues unfixed.
+//
+// **Breaking Point**: Estimated point in time from now, when leaving the rule issues unfixed cost as much as fixing the rule issues.
+// A low value indicates an a rule with easy-to-fix issue with high annual interest.
+// This value can be used to prioritize issues fix, to significantly reduce interest with minimum effort.
+//
+// More documentation: https://www.ndepend.com/docs/technical-debt
+//</Description>]]></Query>
+      <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Non-Critical Rules violated that were not violated in baseline</Name>
+from r in Rules
+where !r.IsCritical && r.IsViolated() &&
+      r.IsPresentInBothIssuesSet() && !r.OlderVersion().IsViolated()
+orderby r.Debt().Value descending
+select new { 
+   r, 
+   Issues = r.Issues(), 
+   Debt = r.Debt(), 
+   AnnualInterest = r.AnnualInterest(), 
+   BreakingPoint = r.BreakingPoint(),
+   Category = r.Category
+}
+
+//<Description>
+// **Debt**: Estimated effort to fix all rule issues.
+//
+// **Annual Interest**: Estimated annual cost to leave all rule issues unfixed.
+//
+// **Breaking Point**: Estimated point in time from now, when leaving the rule issues unfixed cost as much as fixing the rule issues.
+// A low value indicates an a rule with easy-to-fix issue with high annual interest.
+// This value can be used to prioritize issues fix, to significantly reduce interest with minimum effort.
+//
+// More documentation: https://www.ndepend.com/docs/technical-debt
+//</Description>]]></Query>
+      <Query Active="True" DisplayList="True" DisplayStat="True" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Non-Critical Rules violated that were not violated in baseline</Name>
+from r in Rules
+where !r.IsCritical && r.IsViolated() &&
+      r.IsPresentInBothIssuesSet() && !r.OlderVersion().IsViolated()
+orderby r.Debt().Value descending
+select new { 
+   r, 
+   Issues = r.Issues(), 
+   Debt = r.Debt(), 
+   AnnualInterest = r.AnnualInterest(), 
+   BreakingPoint = r.BreakingPoint(),
+   Category = r.Category
+}
+
+//<Description>
+// **Debt**: Estimated effort to fix all rule issues.
+//
+// **Annual Interest**: Estimated annual cost to leave all rule issues unfixed.
+//
+// **Breaking Point**: Estimated point in time from now, when leaving the rule issues unfixed cost as much as fixing the rule issues.
+// A low value indicates an a rule with easy-to-fix issue with high annual interest.
+// This value can be used to prioritize issues fix, to significantly reduce interest with minimum effort.
+//
+// More documentation: https://www.ndepend.com/docs/technical-debt
+//</Description>]]></Query>
     </Group>
     <Group Name="Source Files Organization" Active="True" ShownInReport="False">
       <Query Active="True" DisplayList="True" DisplayStat="False" DisplaySelectionView="False" IsCriticalRule="False"><![CDATA[// <Name>Avoid referencing source file out of Visual Studio project directory</Name>

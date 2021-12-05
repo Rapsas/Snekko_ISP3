@@ -62,7 +62,8 @@ namespace Snakey.Facades
                 GameState.SecondPlayer.TailColor.Color = Color.FromRgb(package.TailColor.R, package.TailColor.G, package.TailColor.B);
             });
             RecieveEatenSnackPosition();
-            
+
+
             MultiplayerManager.Connection.On<List<SnackPackage>>("RecieveSnackList", (snacks) =>
             {
                 GameState.Snacks.ForEach(x => ComponentDrawer.Remove(x));
@@ -128,8 +129,8 @@ namespace Snakey.Facades
             });
 
             shortenSecondPLayer();
+
             doSomeOtherstuffIDK();
-            
         }
         private void doSomeOtherstuffIDK()
         {
