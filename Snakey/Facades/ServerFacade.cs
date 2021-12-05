@@ -22,7 +22,7 @@ namespace Snakey.Facades
         private GameState GameState;
         private ComponentDrawer ComponentDrawer;
         [SuppressMessage("NDepend", "ND1400:AvoidNamespacesMutuallyDependent", Justification = "...")]
-        public MainWindow Window;
+        private MainWindow Window;
 
         public void Setup(MainWindow window, ComponentDrawer componentDrawer, ConnectionManager connectionManager)
         {

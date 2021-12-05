@@ -7,10 +7,13 @@ namespace Snakey.Builders
 {
     public abstract class MapBuilder
     {
-        protected Map _map;
+        private Map map;
+
+        protected Map Map { get => map; set => map = value; }
+
         public Map Build()
         {
-            return _map;
+            return Map;
         }
         public abstract MapBuilder StartNew();
         public MapBuilder AddGridLines()
@@ -26,7 +29,7 @@ namespace Snakey.Builders
                     StrokeThickness = 1,
                     Stroke = Brushes.Black
                 };
-                _map.GridLines.Add(line);
+                Map.GridLines.Add(line);
             }
             // Draw vertical lines
             for (int column = 0; column < Settings.WindowWidth; column += Settings.CellSize)
@@ -40,7 +43,7 @@ namespace Snakey.Builders
                     StrokeThickness = 1,
                     Stroke = Brushes.Black
                 };
-                _map.GridLines.Add(line2);
+                Map.GridLines.Add(line2);
             }
 
             return this;

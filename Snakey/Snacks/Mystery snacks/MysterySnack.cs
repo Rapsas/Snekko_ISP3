@@ -7,9 +7,14 @@ namespace Snakey.Snacks
 {
     public abstract class MysterySnack : Snack
     {
-        protected SolidColorBrush Stroke = Brushes.Blue;
-        protected double StrokeThickness = 5;
-        public Random rnd;
+        private SolidColorBrush stroke = Brushes.Blue;
+        private double strokeThickness = 5;
+        private Random rnd;
+
+        protected SolidColorBrush Stroke { get => stroke; set => stroke = value; }
+        protected double StrokeThickness { get => strokeThickness; set => strokeThickness = value; }
+        public Random Rnd { get => rnd; set => rnd = value; }
+
         public MysterySnack()
         {
             WasConsumed = false;

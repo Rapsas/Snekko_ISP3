@@ -6,8 +6,12 @@ namespace Snakey.Snacks
 {
     public class BadSnack : Snack
     {
-        protected SolidColorBrush Stroke = Brushes.Red;
-        protected double StrokeThickness = 5;
+        private SolidColorBrush stroke = Brushes.Red;
+        private double strokeThickness = 5;
+
+        protected SolidColorBrush Stroke { get => stroke; set => stroke = value; }
+        protected double StrokeThickness { get => strokeThickness; set => strokeThickness = value; }
+
         public BadSnack()
         {
             WasConsumed = false;

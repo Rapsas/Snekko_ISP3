@@ -27,7 +27,7 @@ namespace Snakey.Builders
                 //    continue; // Try again
 
                 bool overlapped = false;
-                foreach (var (location, body) in _map.Obsticles)
+                foreach (var (location, body) in Map.Obsticles)
                 {
                     if (location.IsOverlaping(obstacleLocation))
                     {
@@ -39,7 +39,7 @@ namespace Snakey.Builders
                 if (overlapped)
                     continue; // Try again
 
-                _map.Obsticles.Add((
+                Map.Obsticles.Add((
                     obstacleLocation,
                     new Rectangle()
                     {
@@ -58,13 +58,13 @@ namespace Snakey.Builders
             // Add top and bottom walls
             for (int i = 0; i < Settings.WindowWidth; i += Settings.CellSize)
             {
-                _map.Obsticles.Add((new(i, 0), new Rectangle()
+                Map.Obsticles.Add((new(i, 0), new Rectangle()
                 {
                     Width = Settings.CellSize,
                     Height = Settings.CellSize,
                     Fill = Brushes.Black
                 }));
-                _map.Obsticles.Add((new(i, Settings.WindowHeight - Settings.CellSize), new Rectangle()
+                Map.Obsticles.Add((new(i, Settings.WindowHeight - Settings.CellSize), new Rectangle()
                 {
                     Width = Settings.CellSize,
                     Height = Settings.CellSize,
@@ -74,13 +74,13 @@ namespace Snakey.Builders
             // Add side walls
             for (int i = Settings.CellSize; i < Settings.WindowHeight - Settings.CellSize; i += Settings.CellSize)
             {
-                _map.Obsticles.Add((new(0, i), new Rectangle()
+                Map.Obsticles.Add((new(0, i), new Rectangle()
                 {
                     Width = Settings.CellSize,
                     Height = Settings.CellSize,
                     Fill = Brushes.Black
                 }));
-                _map.Obsticles.Add((new(Settings.WindowWidth - Settings.CellSize, i), new Rectangle()
+                Map.Obsticles.Add((new(Settings.WindowWidth - Settings.CellSize, i), new Rectangle()
                 {
                     Width = Settings.CellSize,
                     Height = Settings.CellSize,
@@ -92,7 +92,7 @@ namespace Snakey.Builders
 
         public override MapBuilder StartNew()
         {
-            _map = new ExpertMap(new ExpertCollision());
+            Map = new ExpertMap(new ExpertCollision());
             return this;
         }
     }

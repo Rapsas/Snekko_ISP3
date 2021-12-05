@@ -14,10 +14,10 @@ namespace Snakey.Snacks
 
         public BadLemon() : base()
         {
-            _body = new();
+            Body = new();
 
-            _body.Source = ImageFactory.GetImage("bad_lemon.png");
-            _body.Width = _body.Height = Settings.CellSize;
+            Body.Source = ImageFactory.GetImage("bad_lemon.png");
+            Body.Width = Body.Height = Settings.CellSize;
         }
         public override void Accept(IVisitor visitor)
         {

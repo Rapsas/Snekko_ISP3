@@ -27,7 +27,7 @@ namespace Snakey.Builders
                 //    continue; // Try again
 
                 bool overlapped = false;
-                foreach (var (location, body) in _map.Obsticles)
+                foreach (var (location, body) in Map.Obsticles)
                 {
                     if (location.IsOverlaping(obstacleLocation))
                     {
@@ -39,7 +39,7 @@ namespace Snakey.Builders
                 if (overlapped)
                     continue; // Try again
 
-                _map.Obsticles.Add((
+                Map.Obsticles.Add((
                     obstacleLocation,
                     new Rectangle()
                     {
@@ -60,7 +60,7 @@ namespace Snakey.Builders
 
         public override MapBuilder StartNew()
         {
-            _map = new AdvanceMap(new AdvancedCollision());
+            Map = new AdvanceMap(new AdvancedCollision());
             return this;
         }
     }

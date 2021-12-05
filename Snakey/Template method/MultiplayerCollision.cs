@@ -4,46 +4,46 @@
     {
         protected override void CheckIfPlayerCollidesWithBodyParts()
         {
-            if (!player.IgnoreBodyCollisionWithHead)
-                foreach (var bodyPart in player.BodyParts)
+            if (!Player.IgnoreBodyCollisionWithHead)
+                foreach (var bodyPart in Player.BodyParts)
                 {
-                    if (player.HeadLocation.IsOverlaping(bodyPart))
+                    if (Player.HeadLocation.IsOverlaping(bodyPart))
                     {
-                        player.IsDead = true;
+                        Player.IsDead = true;
                         break;
                     }
                 }
         }
         protected override void CheckIfPlayerCollidesWithTail()
         {
-            if (player.HeadLocation.IsOverlaping(player.TailLocation))
+            if (Player.HeadLocation.IsOverlaping(Player.TailLocation))
             {
-                player.IsDead = true;
+                Player.IsDead = true;
             }
         }
         protected override void CheckIfCollidesWithSecondPlayerHead()
         {
-            if (player.HeadLocation.IsOverlaping(secondPlayer.HeadLocation))
+            if (Player.HeadLocation.IsOverlaping(SecondPlayer.HeadLocation))
             {
-                player.IsDead = true;
+                Player.IsDead = true;
             }
         }
         protected override void CheckIfCollidesWithSecondPlayerBodyParts()
         {
-            foreach (var bodyPart in secondPlayer.BodyParts)
+            foreach (var bodyPart in SecondPlayer.BodyParts)
             {
-                if (player.HeadLocation.IsOverlaping(bodyPart))
+                if (Player.HeadLocation.IsOverlaping(bodyPart))
                 {
-                    player.IsDead = true;
+                    Player.IsDead = true;
                     break;
                 }
             }
         }
         protected override void CheckIfCollidesWithSecondPlayerTail()
         {
-            if (player.HeadLocation.IsOverlaping(secondPlayer.TailLocation))
+            if (Player.HeadLocation.IsOverlaping(SecondPlayer.TailLocation))
             {
-                player.IsDead = true;
+                Player.IsDead = true;
             }
         }
     }

@@ -28,7 +28,7 @@ namespace Snakey.Snacks.Tests
         {
             var apple = new MysteryApple();
             Random r = new Random();
-            apple.rnd = r;
+            apple.Rnd = r;
             var expected = r.GetHashCode().ToString();
             var result = apple.ToString();
             Assert.True(expected.Equals(result));
