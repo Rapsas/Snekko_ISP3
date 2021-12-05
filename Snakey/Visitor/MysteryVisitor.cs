@@ -5,7 +5,7 @@ using System;
 
 namespace Snakey.Visitor
 {
-    class MysteryVisitor : IVisitor
+    sealed class MysteryVisitor : IVisitor
     {
         public void VisitApple(Snack snack)
         {

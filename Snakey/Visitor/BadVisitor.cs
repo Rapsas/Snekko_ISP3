@@ -6,7 +6,7 @@ using System.Windows.Media;
 
 namespace Snakey.Visitor
 {
-    class BadVisitor : IVisitor
+    sealed class BadVisitor : IVisitor
     {
         public void VisitApple(Snack snack)
         {

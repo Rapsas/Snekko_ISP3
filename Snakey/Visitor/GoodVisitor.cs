@@ -4,7 +4,7 @@ using Snakey.Models;
 
 namespace Snakey.Visitor
 {
-    class GoodVisitor : IVisitor
+    sealed class GoodVisitor : IVisitor
     {
         public void VisitApple(Snack snack)
         {
