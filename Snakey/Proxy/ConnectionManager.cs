@@ -9,7 +9,7 @@ namespace Snakey.Proxy
 
         public ConnectionManager()
         {
-            MultiplayerManager = new("http://localhost:5000/gameHub"); // new("http://158.129.23.210:5003/gameHub");
+            MultiplayerManager = new("http://158.129.23.210:5000/gameHub");
             GameState.Instance.MultiplayerManager = MultiplayerManager;
         }
 
