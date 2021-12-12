@@ -12,7 +12,7 @@
                         player.IsDead = true;
                         break;
                     }
-                }
+                }//asdfghjkl
         }
         protected override void CheckIfPlayerCollidesWithTail()
         {
