@@ -18,7 +18,7 @@ namespace Snakey.Observer
             BadSound = new(Path.Combine(Settings.AssetFolder, "soundBad.wav"));
             MysterySound = new(Path.Combine(Settings.AssetFolder, "soundMystery.wav"));
         }
-
+        //Some changes here
         public void Update(Snack snack)
         {
             if (Settings.EnableSoundEffects)
