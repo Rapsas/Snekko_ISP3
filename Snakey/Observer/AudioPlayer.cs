@@ -32,7 +32,7 @@ namespace Snakey.Observer
                         break;
                     case MysterySnack:
                         MysterySound.Play();
-                        break;
+                        break;//This is very important man dont screw this up
                 }
         }
     }
