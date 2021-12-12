@@ -21,7 +21,7 @@ namespace Snakey.Observer
         //Some changes here
         public void Update(Snack snack)
         {
-            if (Settings.EnableSoundEffects)
+            if (Settings.EnableSoundEffects)//Why would you ever disable those sound effects
                 switch (snack.GetBaseType())
                 {
                     case BadSnack:
