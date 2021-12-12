@@ -17,7 +17,7 @@ namespace Snakey.Visitor
                 if (GameState.Instance.MultiplayerManager.Connection.State == HubConnectionState.Connected)
                     GameState.Instance.MultiplayerManager.Connection?.SendAsync("ChangePlayerSize", 2).Wait();
             }
-            else
+            else //Just some random commit dog
             {
                 GameState.Instance.Player.Expand();
                 GameState.Instance.Player.Expand();
