@@ -22,6 +22,7 @@ namespace Snakey.Visitor
                 GameState.Instance.Player.Expand();
                 GameState.Instance.Player.Expand();
             }
+            //Kaip cia dabar bus
         }
 
         public void VisitLemon(Snack snack)
