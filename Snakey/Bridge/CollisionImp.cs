@@ -1,7 +1,4 @@
-﻿using Common.Utility;
-using Snakey.Iterator;
-using System.Collections.Generic;
-using System.Windows.Shapes;
+﻿using Snakey.Iterator;
 
 namespace Snakey.Bridge
 {

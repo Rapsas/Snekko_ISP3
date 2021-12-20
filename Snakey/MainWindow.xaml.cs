@@ -53,7 +53,7 @@ namespace Snakey
 
         private void Execute_command(object sender, RoutedEventArgs e)
         {
-            _game.ExecuteCommand(CommandTextBox.Text);            
+            _game.ExecuteCommand(CommandTextBox.Text);
             CommandTextBox.Clear();
         }
     }

@@ -1,8 +1,8 @@
 ﻿using Common.Enums;
 using Snakey.Decorators;
+using Snakey.Mediator;
 using Snakey.Models;
 using Snakey.Snacks;
-using Snakey.Mediator;
 
 namespace Snakey.Factories
 {

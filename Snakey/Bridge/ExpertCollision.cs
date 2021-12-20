@@ -1,7 +1,6 @@
 ﻿using Common.Utility;
 using Snakey.Iterator;
 using Snakey.Managers;
-using System.Collections.Generic;
 using System.Windows.Shapes;
 
 namespace Snakey.Bridge
@@ -17,7 +16,7 @@ namespace Snakey.Bridge
             while (obsticlesIterator.HasMore())
             {
                 var (location, _) = ((Vector2D, Rectangle))obsticlesIterator.GetNext();
-                if(location.IsOverlaping(player.HeadLocation))
+                if (location.IsOverlaping(player.HeadLocation))
                 {
                     player.IsDead = true;
                     return;

@@ -4,15 +4,14 @@ using Microsoft.AspNetCore.SignalR.Client;
 using Snakey.Composite;
 using Snakey.Config;
 using Snakey.Factories;
+using Snakey.Iterator;
 using Snakey.Managers;
+using Snakey.Mediator;
 using Snakey.Models;
 using Snakey.Proxy;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Media;
-using Snakey.Mediator;
-using Snakey.Iterator;
 
 namespace Snakey.Facades
 {

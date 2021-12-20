@@ -4,7 +4,6 @@ using Snakey.Config;
 using Snakey.Iterator;
 using Snakey.Models;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Windows.Controls;
 using System.Windows.Threading;

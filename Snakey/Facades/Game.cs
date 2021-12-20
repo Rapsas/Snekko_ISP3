@@ -4,8 +4,11 @@ using Snakey.Chain_of_Responsibility;
 using Snakey.Composite;
 using Snakey.Config;
 using Snakey.Factories;
+using Snakey.Interpreter;
+using Snakey.Iterator;
 using Snakey.Managers;
 using Snakey.Maps;
+using Snakey.Mediator;
 using Snakey.Models;
 using Snakey.Observer;
 using Snakey.Proxy;
@@ -15,9 +18,6 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
-using Snakey.Interpreter;
-using Snakey.Mediator;
-using Snakey.Iterator;
 using System.Windows.Shapes;
 
 namespace Snakey.Facades
@@ -358,7 +358,7 @@ namespace Snakey.Facades
             {
                 MessageBox.Show("Invalid command");
                 return;
-            }    
+            }
             commandExpression.Execute();
         }
 
@@ -379,9 +379,9 @@ namespace Snakey.Facades
             var ok = int.TryParse(token[1], out int result);
             if (!ok)
                 result = int.MinValue;
-            
+
             var numberExpression = new NumberExpression(result);
-            
+
             expressions.Add(targetExpression);
             expressions.Add(numberExpression);
             return expressions;

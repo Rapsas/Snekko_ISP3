@@ -1,16 +1,13 @@
 ﻿using Snakey.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Snakey.Iterator
 {
     public class SnackCollection : IIterableCollection
     {
         List<Snack> Snacks;
-        public int Count { get => Length();}
+        public int Count { get => Length(); }
 
         public SnackCollection()
         {

@@ -3,7 +3,6 @@ using Snakey.Bridge;
 using Snakey.Composite;
 using Snakey.Iterator;
 using Snakey.Managers;
-using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 
