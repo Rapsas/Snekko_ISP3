@@ -13,9 +13,6 @@ namespace Snakey.Flyweight
         private static Dictionary<string, BitmapImage> _cache = new();
         public static BitmapImage GetImage(string imageName)
         {
-#if TESTS
-            return null;
-#else
             if (_cache.ContainsKey(imageName))
                 return _cache[imageName];
 
@@ -25,7 +22,6 @@ namespace Snakey.Flyweight
             GameState.Instance.Logger.Log(MessageType.File, fullPath);
 
             return image;
-#endif
         }
     }
 }
