@@ -55,7 +55,10 @@ namespace Snakey.Managers
             var logPath = Path.Combine(Settings.LogFolder, $"{DateTime.Now:D}_log.txt");
             var logger = new StreamWriter(logPath, true);
             Logger = new DefaultLogger(logger);
-            Logger.SetNext(new WarningLogger(logger)).SetNext(new FileLogger(logger)).SetNext(new ErrorLogger(logger));
+            Logger.SetNext(new WarningLogger(logger))
+                  .SetNext(new FileLogger(logger))
+                  .SetNext(new ErrorLogger(logger))
+                  .SetNext(new NetworkLogger(logger));
         }
 
         public static GameState Instance

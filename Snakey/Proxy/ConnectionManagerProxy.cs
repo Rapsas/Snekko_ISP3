@@ -21,9 +21,9 @@ namespace Snakey.Proxy
         {
             try
             {
-                _gameState.Logger.Log(MessageType.Warning, "Connecting to server");
+                _gameState.Logger.Log(MessageType.Network, "Connecting to server");
                 _connectionManager.ConnectToServer();
-                _gameState.Logger.Log(MessageType.Warning, "Connected to server");
+                _gameState.Logger.Log(MessageType.Network, "Connected to server");
             }
             catch (Exception)
             {

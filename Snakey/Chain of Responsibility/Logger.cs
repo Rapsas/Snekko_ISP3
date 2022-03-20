@@ -8,6 +8,7 @@ namespace Snakey.Chain_of_Responsibility
         Default,
         File,
         Warning,
+        Network,
         Error
     }
 

@@ -10,7 +10,7 @@ namespace Snakey.Managers
         public HubConnection Connection { get; set; }
         public MultiplayerManager(string url)
         {
-            GameState.Instance.Logger.Log(MessageType.Warning, $"Creating connection via {url}");
+            GameState.Instance.Logger.Log(MessageType.Network, $"Creating connection via {url}");
             Connection = new HubConnectionBuilder()
                .WithUrl(new Uri(url))
                .WithAutomaticReconnect()
@@ -19,6 +19,7 @@ namespace Snakey.Managers
 
         public async Task ConnectToServer()
         {
+            GameState.Instance.Logger.Log(MessageType.Network, $"Trying to establish conncetion");
             await Connection.StartAsync();
         }
         public async Task DisconnectFromServer()
