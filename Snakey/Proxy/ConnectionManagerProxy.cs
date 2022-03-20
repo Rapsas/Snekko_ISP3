@@ -32,20 +32,6 @@ namespace Snakey.Proxy
             }
         }
 
-        public bool IsConnected()
-        {
-            _gameState.Logger.Log(MessageType.Warning, "Checking if player connected...");
-
-            if (_connectionManager.IsConnected())
-            {
-                _gameState.Logger.Log(MessageType.Warning, "Player has connected");
-                return true;
-            }
-            else
-            {
-                _gameState.Logger.Log(MessageType.Warning, "Player has disconnected");
-                return false;
-            }
-        }
+        public bool IsConnected() => _connectionManager.IsConnected();
     }
 }
