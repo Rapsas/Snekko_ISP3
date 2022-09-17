@@ -1,35 +1,34 @@
-﻿using Common.Enums;
+﻿namespace Snakey.Factories;
+
+using Common.Enums;
 using Snakey.Decorators;
 using Snakey.Mediator;
 using Snakey.Models;
 using Snakey.Snacks;
 
-namespace Snakey.Factories
+public class LemonFactory : ISnackFactory
 {
-    public class LemonFactory : ISnackFactory
+    private readonly IMediator _mediator;
+
+    public LemonFactory(IMediator mediator)
     {
-        private readonly IMediator _mediator;
+        _mediator = mediator;
+    }
 
-        public LemonFactory(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
+    public Snack CreateBadSnack()
+    {
+        return _mediator.Send(FoodType.Lemon, EffectType.Bad);
+    }
 
-        public Snack CreateBadSnack()
-        {
-            return _mediator.Send(FoodType.Lemon, EffectType.Bad);
-        }
+    public Snack CreateGoodSnack()
+    {
+        return _mediator.Send(FoodType.Lemon, EffectType.Good);
+    }
 
-        public Snack CreateGoodSnack()
-        {
-            return _mediator.Send(FoodType.Lemon, EffectType.Good);
-        }
+    public Snack CreateMysterySnack()
+    {
+        var clonedLemon = (MysteryLemon)_mediator.Send(FoodType.Lemon, EffectType.Mystery);
 
-        public Snack CreateMysterySnack()
-        {
-            var clonedLemon = (MysteryLemon)_mediator.Send(FoodType.Lemon, EffectType.Mystery);
-
-            return new IncreaseScoreTriggerEffectDecorator(clonedLemon.DeepClone());
-        }
+        return new IncreaseScoreTriggerEffectDecorator(clonedLemon.DeepClone());
     }
 }

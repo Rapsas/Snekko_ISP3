@@ -1,8 +1,7 @@
-﻿namespace Snakey.Proxy
+﻿namespace Snakey.Proxy;
+
+public interface IConnectionManager
 {
-    public interface IConnectionManager
-    {
-        bool IsConnected();
-        void ConnectToServer();
-    }
+    bool IsConnected();
+    void ConnectToServer();
 }

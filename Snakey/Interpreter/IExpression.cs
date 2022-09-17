@@ -1,7 +1,6 @@
-﻿namespace Snakey.Interpreter
+﻿namespace Snakey.Interpreter;
+
+public interface IExpression
 {
-    public interface IExpression
-    {
-        public Value Execute();
-    }
+    public Value Execute();
 }

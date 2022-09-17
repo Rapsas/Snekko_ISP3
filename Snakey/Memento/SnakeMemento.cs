@@ -1,19 +1,18 @@
-﻿using Snakey.Models;
+﻿namespace Snakey.Memento;
 
-namespace Snakey.Memento
+using Snakey.Models;
+
+public class SnakeMemento : IMemento
 {
-    public class SnakeMemento : IMemento
+    private readonly Snake snake;
+    private readonly string snakeText;
+    public SnakeMemento(Snake snake, string snakeText)
     {
-        private Snake snake;
-        private string snakeText;
-        public SnakeMemento(Snake snake, string snakeText)
-        {
-            this.snake = snake;
-            this.snakeText = snakeText;
-        }
-        public void Restore()
-        {
-            snake.SetSnakeText(snakeText);
-        }
+        this.snake = snake;
+        this.snakeText = snakeText;
+    }
+    public void Restore()
+    {
+        snake.Speak(snakeText);
     }
 }

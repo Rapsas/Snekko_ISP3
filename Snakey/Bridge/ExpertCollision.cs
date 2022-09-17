@@ -1,26 +1,25 @@
-﻿using Common.Utility;
+﻿namespace Snakey.Bridge;
+
+using Common.Utility;
 using Snakey.Iterator;
 using Snakey.Managers;
 using System.Windows.Shapes;
 
-namespace Snakey.Bridge
+public class ExpertCollision : ICollision
 {
-    public class ExpertCollision : ICollision
-    {
-        GameState _gameState = GameState.Instance;
+    GameState _gameState = GameState.Instance;
 
-        public void MapCollision(ObsticleCollection Obsticles)
+    public void MapCollision(ObsticleCollection Obsticles)
+    {
+        var player = _gameState.Player;
+        IIterator obsticlesIterator = Obsticles.CreateIterator();
+        while (obsticlesIterator.HasMore())
         {
-            var player = _gameState.Player;
-            IIterator obsticlesIterator = Obsticles.CreateIterator();
-            while (obsticlesIterator.HasMore())
+            var (location, _) = ((Vector2D, Rectangle))obsticlesIterator.GetNext();
+            if (location.IsOverlaping(player.HeadLocation))
             {
-                var (location, _) = ((Vector2D, Rectangle))obsticlesIterator.GetNext();
-                if (location.IsOverlaping(player.HeadLocation))
-                {
-                    player.IsDead = true;
-                    return;
-                }
+                player.IsDead = true;
+                return;
             }
         }
     }

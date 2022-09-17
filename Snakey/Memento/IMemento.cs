@@ -1,7 +1,6 @@
-﻿namespace Snakey.Memento
+﻿namespace Snakey.Memento;
+
+public interface IMemento
 {
-    public interface IMemento
-    {
-        public void Restore();
-    }
+    public void Restore();
 }

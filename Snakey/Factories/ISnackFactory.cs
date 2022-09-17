@@ -1,11 +1,10 @@
-﻿using Snakey.Models;
+﻿namespace Snakey.Factories;
 
-namespace Snakey.Factories
+using Snakey.Models;
+
+public interface ISnackFactory
 {
-    public interface ISnackFactory
-    {
-        Snack CreateGoodSnack();
-        Snack CreateBadSnack();
-        Snack CreateMysterySnack();
-    }
+    Snack CreateGoodSnack();
+    Snack CreateBadSnack();
+    Snack CreateMysterySnack();
 }

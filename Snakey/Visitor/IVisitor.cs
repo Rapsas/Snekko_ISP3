@@ -1,10 +1,9 @@
-﻿using Snakey.Models;
+﻿namespace Snakey.Visitor;
 
-namespace Snakey.Visitor
+using Snakey.Models;
+
+public interface IVisitor
 {
-    public interface IVisitor
-    {
-        public void VisitApple(Snack snack);
-        public void VisitLemon(Snack snack);
-    }
+    public void VisitApple(Snack snack);
+    public void VisitLemon(Snack snack);
 }

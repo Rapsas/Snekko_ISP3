@@ -1,78 +1,77 @@
-﻿using Common.Enums;
+﻿namespace Snakey.Mediator;
+
+using Common.Enums;
 using Snakey.Decorators;
 using Snakey.Models;
 using Snakey.Snacks;
 
-namespace Snakey.Mediator
+public class SnackMediator : IMediator
 {
-    public class SnackMediator : IMediator
+    public Snack Send(FoodType foodType, EffectType effectType)
     {
-        public Snack Send(FoodType foodType, EffectType effectType)
+        return foodType switch
         {
-            return foodType switch
-            {
-                FoodType.Apple => CreateApple(effectType),
-                FoodType.Lemon => CreateLemon(effectType),
-                _ => null,
-            };
+            FoodType.Apple => CreateApple(effectType),
+            FoodType.Lemon => CreateLemon(effectType),
+            _ => null,
+        };
+    }
+
+    private Snack CreateApple(EffectType effectType)
+    {
+        Snack snack;
+        TriggerEffectDecorator snackScoreDecorator;
+        switch (effectType)
+        {
+            case EffectType.Good:
+                snack = new GoodApple();
+                snackScoreDecorator = new IncreaseScoreTriggerEffectDecorator(snack);
+                snack.SetTypesForServer(EffectType.Good, FoodType.Apple);
+                return snackScoreDecorator;
+
+            case EffectType.Bad:
+                snack = new BadApple();
+                snackScoreDecorator = new DecreaseScoreTriggerEffectDecorator(snack);
+                var snackSizeDecorator = new ShrinkSnakeTriggerEffectDecorator(snackScoreDecorator);
+                snack.SetTypesForServer(EffectType.Bad, FoodType.Apple);
+                return snackSizeDecorator;
+
+            case EffectType.Mystery:
+                snack = new MysteryApple();
+                snack.SetTypesForServer(EffectType.Mystery, FoodType.Apple);
+                return snack;
+
+            default:
+                return null;
         }
+    }
 
-        private Snack CreateApple(EffectType effectType)
+    private Snack CreateLemon(EffectType effectType)
+    {
+        Snack snack;
+        TriggerEffectDecorator snackScoreDecorator;
+
+        switch (effectType)
         {
-            Snack snack;
-            TriggerEffectDecorator snackScoreDecorator;
-            switch (effectType)
-            {
-                case EffectType.Good:
-                    snack = new GoodApple();
-                    snackScoreDecorator = new IncreaseScoreTriggerEffectDecorator(snack);
-                    snack.SetTypesForServer(EffectType.Good, FoodType.Apple);
-                    return snackScoreDecorator;
+            case EffectType.Good:
+                snack = new BadLemon();
+                snackScoreDecorator = new DecreaseScoreTriggerEffectDecorator(snack);
+                snack.SetTypesForServer(EffectType.Bad, FoodType.Lemon);
+                return snackScoreDecorator;
 
-                case EffectType.Bad:
-                    snack = new BadApple();
-                    snackScoreDecorator = new DecreaseScoreTriggerEffectDecorator(snack);
-                    var snackSizeDecorator = new ShrinkSnakeTriggerEffectDecorator(snackScoreDecorator);
-                    snack.SetTypesForServer(EffectType.Bad, FoodType.Apple);
-                    return snackSizeDecorator;
+            case EffectType.Bad:
+                snack = new GoodLemon();
+                snackScoreDecorator = new IncreaseScoreTriggerEffectDecorator(snack);
+                snack.SetTypesForServer(EffectType.Good, FoodType.Lemon);
+                return snackScoreDecorator;
 
-                case EffectType.Mystery:
-                    snack = new MysteryApple();
-                    snack.SetTypesForServer(EffectType.Mystery, FoodType.Apple);
-                    return snack;
+            case EffectType.Mystery:
+                snack = new MysteryLemon();
+                snack.SetTypesForServer(EffectType.Mystery, FoodType.Lemon);
+                return snack;
 
-                default:
-                    return null;
-            }
-        }
-
-        private Snack CreateLemon(EffectType effectType)
-        {
-            Snack snack;
-            TriggerEffectDecorator snackScoreDecorator;
-
-            switch (effectType)
-            {
-                case EffectType.Good:
-                    snack = new BadLemon();
-                    snackScoreDecorator = new DecreaseScoreTriggerEffectDecorator(snack);
-                    snack.SetTypesForServer(EffectType.Bad, FoodType.Lemon);
-                    return snackScoreDecorator;
-
-                case EffectType.Bad:
-                    snack = new GoodLemon();
-                    snackScoreDecorator = new IncreaseScoreTriggerEffectDecorator(snack);
-                    snack.SetTypesForServer(EffectType.Good, FoodType.Lemon);
-                    return snackScoreDecorator;
-
-                case EffectType.Mystery:
-                    snack = new MysteryLemon();
-                    snack.SetTypesForServer(EffectType.Mystery, FoodType.Lemon);
-                    return snack;
-
-                default:
-                    return null;
-            }
+            default:
+                return null;
         }
     }
 }

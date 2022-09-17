@@ -1,9 +1,8 @@
-﻿using Snakey.Models;
+﻿namespace Snakey.Strategies;
 
-namespace Snakey.Strategies
+using Snakey.Models;
+
+public interface IMovementStrategy
 {
-    public interface IMovementStrategy
-    {
-        public void ChangeMovementDirection(Snake player);
-    }
+    public void ChangeMovementDirection(Snake player);
 }

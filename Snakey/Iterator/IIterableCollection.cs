@@ -1,7 +1,6 @@
-﻿namespace Snakey.Iterator
+﻿namespace Snakey.Iterator;
+
+interface IIterableCollection
 {
-    interface IIterableCollection
-    {
-        IIterator CreateIterator();
-    }
+    IIterator CreateIterator();
 }

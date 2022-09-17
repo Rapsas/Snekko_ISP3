@@ -1,7 +1,6 @@
-﻿namespace Snakey.Memento
+﻿namespace Snakey.Memento;
+
+public interface IOriginator
 {
-    public interface IOriginator
-    {
-        public IMemento Save();
-    }
+    public IMemento Save();
 }

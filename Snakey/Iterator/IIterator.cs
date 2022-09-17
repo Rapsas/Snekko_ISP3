@@ -1,8 +1,7 @@
-﻿namespace Snakey.Iterator
+﻿namespace Snakey.Iterator;
+
+public interface IIterator
 {
-    public interface IIterator
-    {
-        object GetNext();
-        bool HasMore();
-    }
+    object GetNext();
+    bool HasMore();
 }

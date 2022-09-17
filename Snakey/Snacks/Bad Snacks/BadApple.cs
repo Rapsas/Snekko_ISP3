@@ -1,27 +1,25 @@
-﻿using Snakey.Config;
+﻿namespace Snakey.Snacks;
+
+using Snakey.Config;
 using Snakey.Flyweight;
 using Snakey.Visitor;
 
-namespace Snakey.Snacks
+public class BadApple : BadSnack
 {
-    public class BadApple : BadSnack
+    public override void TriggerEffect()
     {
-        public override void TriggerEffect()
-        {
+        Accept(new BadVisitor());
+    }
+    public BadApple() : base()
+    {
+        _body = new();
 
-            Accept(new BadVisitor());
-        }
-        public BadApple() : base()
-        {
-            _body = new();
+        _body.Source = ImageFactory.GetImage("bad_apple.png");
+        _body.Width = _body.Height = Settings.CellSize;
 
-            _body.Source = ImageFactory.GetImage("bad_apple.png");
-            _body.Width = _body.Height = Settings.CellSize;
-
-        }
-        public override void Accept(IVisitor visitor)
-        {
-            visitor.VisitApple(this);
-        }
+    }
+    public override void Accept(IVisitor visitor)
+    {
+        visitor.VisitApple(this);
     }
 }

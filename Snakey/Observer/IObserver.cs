@@ -1,9 +1,8 @@
-﻿using Snakey.Models;
+﻿namespace Snakey.Observer;
 
-namespace Snakey.Observer
+using Snakey.Models;
+
+public interface IObserver
 {
-    public interface IObserver
-    {
-        void Update(Snack snack);
-    }
+    void Update(Snack snack);
 }

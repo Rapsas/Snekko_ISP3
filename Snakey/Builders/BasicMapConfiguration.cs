@@ -1,25 +1,18 @@
-﻿using Snakey.Bridge;
+﻿namespace Snakey.Builders;
+
+using Snakey.Bridge;
 using Snakey.Maps;
 
-namespace Snakey.Builders
+public class BasicMapConfiguration : MapBuilder
 {
-    public class BasicMapConfiguration : MapBuilder
+
+    public override MapBuilder AddObstacles() => this;
+
+    public override MapBuilder AddWalls() => this;
+
+    public override MapBuilder StartNew()
     {
-
-        public override MapBuilder AddObstacles()
-        {
-            return this;
-        }
-
-        public override MapBuilder AddWalls()
-        {
-            return this;
-        }
-
-        public override MapBuilder StartNew()
-        {
-            _map = new BasicMap(new BasicCollision());
-            return this;
-        }
+        _map = new BasicMap(new BasicCollision());
+        return this;
     }
 }

@@ -1,9 +1,8 @@
-﻿using Snakey.Iterator;
+﻿namespace Snakey.Bridge;
 
-namespace Snakey.Bridge
+using Snakey.Iterator;
+
+public interface ICollision
 {
-    public interface ICollision
-    {
-        public void MapCollision(ObsticleCollection Obsticles);
-    }
+    public void MapCollision(ObsticleCollection Obsticles);
 }

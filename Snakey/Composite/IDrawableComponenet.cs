@@ -1,7 +1,6 @@
-﻿namespace Snakey.Composite
+﻿namespace Snakey.Composite;
+
+public interface IDrawableComponenet
 {
-    public interface IDrawableComponenet
-    {
-        public void Draw();
-    }
+    public void Draw();
 }

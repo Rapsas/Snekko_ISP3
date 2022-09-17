@@ -1,89 +1,88 @@
-﻿using Snakey.Chain_of_Responsibility;
+﻿namespace Snakey.Interpreter;
+
+using Snakey.Chain_of_Responsibility;
 using Snakey.Managers;
 using Snakey.Models;
 using System.Collections.Generic;
 using System.Windows;
 
-namespace Snakey.Interpreter
+public class CommandExpression : IExpression
 {
-    public class CommandExpression : IExpression
+    private readonly string _commandName;
+    private readonly List<IExpression> _params;
+
+    public CommandExpression(string commandName, List<IExpression> @params)
     {
-        private readonly string _commandName;
-        private readonly List<IExpression> _params;
+        _commandName = commandName;
+        _params = @params;
+    }
 
-        public CommandExpression(string commandName, List<IExpression> @params)
+    // commands add (player|score) number
+    // commands set score number
+    public Value Execute()
+    {
+        if (_params.Count != 2)
+            return null;
+
+        var targetExpression = _params[0];
+        var valueExpression = _params[1];
+
+        var target = targetExpression.Execute();
+        var value = valueExpression.Execute();
+
+        if (target is null)
         {
-            _commandName = commandName;
-            _params = @params;
+            MessageBox.Show("Invalid  target");
+            return null;
+        }
+        if (value is null)
+        {
+            MessageBox.Show("Invalid  value");
+            return null;
         }
 
-        // commands add (player|score) number
-        // commands set score number
-        public Value Execute()
+        switch (_commandName)
         {
-            if (_params.Count != 2)
-                return null;
+            case "add":
+                ExecuteAdd(target, value);
+                break;
 
-            var targetExpression = _params[0];
-            var valueExpression = _params[1];
+            case "set":
+                ExecuteSet(target, value);
+                break;
 
-            var target = targetExpression.Execute();
-            var value = valueExpression.Execute();
-
-            if (target is null)
-            {
-                MessageBox.Show("Invalid  target");
-                return null;
-            }
-            if (value is null)
-            {
-                MessageBox.Show("Invalid  value");
-                return null;
-            }
-
-            switch (_commandName)
-            {
-                case "add":
-                    ExecuteAdd(target, value);
-                    break;
-
-                case "set":
-                    ExecuteSet(target, value);
-                    break;
-
-                default:
-                    GameState.Instance.Logger.Log(MessageType.Error, "Failed to match in switch case");
-                    MessageBox.Show("Invalid command");
-                    break;
-            }
-
-            return new Value() { String = "Command expression", IsString = true };
+            default:
+                GameState.Instance.Logger.Log(MessageType.Error, "Failed to match in switch case");
+                MessageBox.Show("Invalid command");
+                break;
         }
 
-        private static void ExecuteSet(Value target, Value value)
+        return new Value() { String = "Command expression", IsString = true };
+    }
+
+    private static void ExecuteSet(Value target, Value value)
+    {
+        switch (target.Object)
         {
-            switch (target.Object)
-            {
-                case GameState state:
-                    state.Score = value.Number;
-                    break;
-            }
+            case GameState state:
+                state.Score = value.Number;
+                break;
         }
+    }
 
-        private static void ExecuteAdd(Value target, Value value)
+    private static void ExecuteAdd(Value target, Value value)
+    {
+        switch (target.Object)
         {
-            switch (target.Object)
-            {
-                case GameState state:
-                    state.Score += value.Number;
-                    break;
-                case Snake player: // What about negative values?
-                    for (int i = 0; i < value.Number; i++)
-                        player.Expand();
+            case GameState state:
+                state.Score += value.Number;
+                break;
+            case Snake player: // What about negative values?
+                for (int i = 0; i < value.Number; i++)
+                    player.Expand();
 
-                    player.IgnoreBodyCollisionWithHead = true;
-                    break;
-            }
+                player.IgnoreBodyCollisionWithHead = true;
+                break;
         }
     }
 }

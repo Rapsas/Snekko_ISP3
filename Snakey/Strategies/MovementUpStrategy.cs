@@ -1,19 +1,17 @@
-﻿using Common.Enums;
+﻿namespace Snakey.Strategies;
+
+using Common.Enums;
 using Snakey.Models;
 using Snakey.States;
 
-namespace Snakey.Strategies
+public class MovementUpStrategy : IMovementStrategy
 {
-    public class MovementUpStrategy : IMovementStrategy
+    public void ChangeMovementDirection(Snake player)
     {
-        public void ChangeMovementDirection(Snake player)
-        {
-            if (player.CurrentMovementDirection != MovementDirection.Down)
-            {
-                player.CurrentMovementDirection = MovementDirection.Up;
-                player.SwitchState(new UpState(player));
-            }
+        if (player.CurrentMovementDirection == MovementDirection.Down)
+            return;
+        player.CurrentMovementDirection = MovementDirection.Up;
+        player.SwitchState(new UpState(player));
 
-        }
     }
 }

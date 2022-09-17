@@ -1,18 +1,14 @@
-﻿using Snakey.Bridge;
+﻿namespace Snakey.Maps;
+
+using Snakey.Bridge;
 using Snakey.Models;
 
-namespace Snakey.Maps
+public class ExpertMap : Map
 {
-    public class ExpertMap : Map
+    public ExpertMap(ICollision collisionImp) : base(collisionImp) { }
+
+    public override void MapCollisionCheck()
     {
-        public ExpertMap(ICollision collisionImp) : base(collisionImp)
-        {
-
-        }
-
-        public override void MapCollisionCheck()
-        {
-            collisionImp.MapCollision(Obsticles);
-        }
+        collisionImp.MapCollision(Obsticles);
     }
 }

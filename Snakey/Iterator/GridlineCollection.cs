@@ -1,29 +1,25 @@
-﻿using System.Collections.Generic;
+﻿namespace Snakey.Iterator;
+
+using System.Collections.Generic;
 using System.Windows.Shapes;
 
-namespace Snakey.Iterator
+public class GridlineCollection : IIterableCollection
 {
-    public class GridlineCollection : IIterableCollection
+    List<Line> GridLines;
+
+    public GridlineCollection()
     {
-        List<Line> GridLines;
-
-        public GridlineCollection()
-        {
-            this.GridLines = new();
-        }
-        public IIterator CreateIterator()
-        {
-            return new GridlineIterator(GridLines);
-        }
-
-        public void Add(Line line)
-        {
-            this.GridLines.Add(line);
-        }
-
-        public int Count()
-        {
-            return GridLines.Count;
-        }
+        GridLines = new();
     }
+    public IIterator CreateIterator()
+    {
+        return new GridlineIterator(GridLines);
+    }
+
+    public void Add(Line line)
+    {
+        GridLines.Add(line);
+    }
+
+    public int Count() => GridLines.Count;
 }

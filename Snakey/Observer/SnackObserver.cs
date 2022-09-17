@@ -1,13 +1,12 @@
-﻿using Snakey.Models;
+﻿namespace Snakey.Observer;
 
-namespace Snakey.Observer
+using Snakey.Models;
+
+public class SnackObserver : IObserver
 {
-    public class SnackObserver : IObserver
+    public void Update(Snack snack)
     {
-        public void Update(Snack snack)
-        {
-            snack.TriggerEffect();
-            snack.WasConsumed = true;
-        }
+        snack.TriggerEffect();
+        snack.WasConsumed = true;
     }
 }

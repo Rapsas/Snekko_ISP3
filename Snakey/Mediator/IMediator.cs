@@ -1,10 +1,9 @@
-﻿using Common.Enums;
+﻿namespace Snakey.Mediator;
+
+using Common.Enums;
 using Snakey.Models;
 
-namespace Snakey.Mediator
+public interface IMediator
 {
-    public interface IMediator
-    {
-        Snack Send(FoodType foodType, EffectType effectType);
-    }
+    Snack Send(FoodType foodType, EffectType effectType);
 }

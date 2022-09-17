@@ -1,38 +1,37 @@
-﻿using Common.Utility;
+﻿namespace Snakey.Adapter;
+
+using Common.Utility;
 using Snakey.Models;
 using System;
 
-namespace Snakey.Adapter
+public class SnackAdapter : ISnackTarget
 {
-    public class SnackAdapter : ISnackTarget
+    public Vector2D Location { get => _snack.Location; set => _snack.Location = value; }
+    public bool WasConsumed { get => _snack.WasConsumed; set => _snack.WasConsumed = value; }
+    private readonly Snack _snack;
+
+    public SnackAdapter(Snack snack)
     {
-        public Vector2D Location { get => _snack.Location; set => _snack.Location = value; }
-        public bool WasConsumed { get => _snack.WasConsumed; set => _snack.WasConsumed = value; }
-        private readonly Snack _snack;
+        _snack = snack;
+    }
 
-        public SnackAdapter(Snack snack)
-        {
-            _snack = snack;
-        }
+    public void Draw()
+    {
+        _snack.Draw();
+    }
 
-        public void Draw()
-        {
-            _snack.Draw();
-        }
+    public SnackPackage SnackPackage()
+    {
+        return _snack.SnackPackage();
+    }
 
-        public SnackPackage SnackPackage()
-        {
-            return _snack.SnackPackage();
-        }
+    public Type GetSnackType()
+    {
+        return _snack.GetType();
+    }
 
-        public Type GetSnackType()
-        {
-            return _snack.GetType();
-        }
-
-        public void TriggerEffect()
-        {
-            _snack.TriggerEffect();
-        }
+    public void TriggerEffect()
+    {
+        _snack.TriggerEffect();
     }
 }

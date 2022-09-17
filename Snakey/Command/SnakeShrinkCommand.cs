@@ -1,22 +1,21 @@
-﻿using Snakey.Models;
+﻿namespace Snakey.Command;
 
-namespace Snakey.Command
+using Snakey.Models;
+
+public class SnakeShrinkCommand : ICommand
 {
-    public class SnakeShrinkCommand : ICommand
+    private Snake _receiver;
+    public void Execute()
     {
-        private Snake _receiver;
-        public void Execute()
-        {
-            _receiver.Shrink();
-        }
+        _receiver.Shrink();
+    }
 
-        public void Undo()
-        {
-            _receiver.Expand();
-        }
-        public SnakeShrinkCommand(Snake receiver)
-        {
-            _receiver = receiver;
-        }
+    public void Undo()
+    {
+        _receiver.Expand();
+    }
+    public SnakeShrinkCommand(Snake receiver)
+    {
+        _receiver = receiver;
     }
 }

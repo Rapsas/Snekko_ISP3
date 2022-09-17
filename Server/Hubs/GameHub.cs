@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Server.Hubs
 {
-    public class Storage
+    public static class Storage
     {
-        public static int UserCount = 0;
+        public static int UserCount { get; set; } = 0;
         public static List<string> Players = new();
     }
 
@@ -17,31 +17,26 @@ namespace Server.Hubs
     {
         public async Task SendPositions(PlayerPackage package)
         {
-            //Console.WriteLine($"Got player data from ID {Context.ConnectionId} with data {package.SnakeHeadLocation}");
             await Clients.Others.SendAsync("RecievePositions", package);
         }
 
         public async Task SendEatenSnackPosition(SnackPackage snack)
         {
-            //Console.WriteLine($"Got snack data from ID {Context.ConnectionId} with location {snack.Location}");
             await Clients.Others.SendAsync("RecieveEatenSnackPosition", snack);
         }
 
         public async Task SendSnackList(List<SnackPackage> snack)
         {
-            //Console.WriteLine($"Got snack list");
             await Clients.Others.SendAsync("RecieveSnackList", snack);
         }
 
         public async Task AddNewSnack(SnackPackage snack)
         {
-            //Console.WriteLine($"Got newly made snack ");
             await Clients.Others.SendAsync("AddSnack", snack);
         }
 
         public async Task ChangeMap(MapTypes mapType)
         {
-            //Console.WriteLine($"Got newly made snack ");
             await Clients.Others.SendAsync("ChangeMap", mapType);
         }
 

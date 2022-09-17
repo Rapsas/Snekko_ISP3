@@ -1,30 +1,26 @@
-﻿using Common.Utility;
+﻿namespace Snakey.Iterator;
+
+using Common.Utility;
 using System.Collections.Generic;
 using System.Windows.Shapes;
 
-namespace Snakey.Iterator
+public class ObsticleCollection : IIterableCollection
 {
-    public class ObsticleCollection : IIterableCollection
+    List<(Vector2D, Rectangle)> Obsticles;
+
+    public ObsticleCollection()
     {
-        List<(Vector2D, Rectangle)> Obsticles;
-
-        public ObsticleCollection()
-        {
-            this.Obsticles = new();
-        }
-        public IIterator CreateIterator()
-        {
-            return new ObsticleIterator(Obsticles);
-        }
-
-        public void Add((Vector2D, Rectangle) line)
-        {
-            this.Obsticles.Add(line);
-        }
-
-        public int Count()
-        {
-            return Obsticles.Count;
-        }
+        Obsticles = new();
     }
+    public IIterator CreateIterator()
+    {
+        return new ObsticleIterator(Obsticles);
+    }
+
+    public void Add((Vector2D, Rectangle) line)
+    {
+        Obsticles.Add(line);
+    }
+
+    public int Count() => Obsticles.Count;
 }

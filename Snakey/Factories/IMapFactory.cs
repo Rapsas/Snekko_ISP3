@@ -1,10 +1,9 @@
-﻿using Common.Enums;
+﻿namespace Snakey.Factories;
+
+using Common.Enums;
 using Snakey.Models;
 
-namespace Snakey.Factories
+interface IMapFactory
 {
-    interface IMapFactory
-    {
-        Map CreateMap(MapTypes map);
-    }
+    Map CreateMap(MapTypes map);
 }

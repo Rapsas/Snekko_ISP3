@@ -1,17 +1,15 @@
-﻿using Snakey.Models;
+﻿namespace Snakey.States;
 
-namespace Snakey.States
+using Snakey.Models;
+
+public abstract class State
 {
-    public abstract class State
+    protected Snake Player;
+    public State(Snake player)
     {
-        protected Snake Player;
-        public State(Snake player)
-        {
-            Player = player;
-        }
-
-        public abstract void Move();
-        public abstract void SpeakDirection();
-        //public abstract bool TryToSwitchState(State state);
+        Player = player;
     }
+
+    public abstract void Move();
+    public abstract void SpeakDirection();
 }

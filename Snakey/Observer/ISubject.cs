@@ -1,11 +1,10 @@
-﻿using Snakey.Models;
+﻿namespace Snakey.Observer;
 
-namespace Snakey.Observer
+using Snakey.Models;
+
+public interface ISubject
 {
-    public interface ISubject
-    {
-        IObserver RegisterObserver(IObserver observer);
-        IObserver RemoveObserver(IObserver observer);
-        int NotifyObservers(Snack snack);
-    }
+    IObserver RegisterObserver(IObserver observer);
+    IObserver RemoveObserver(IObserver observer);
+    int NotifyObservers(Snack snack);
 }
