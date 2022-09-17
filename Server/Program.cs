@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Snakey.Config;
 
 namespace Server
 {
@@ -15,7 +16,7 @@ namespace Server
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseUrls("http://158.129.23.210:5000");
+                    webBuilder.UseUrls(Settings.ServerIPAddress);
                 });
     }
 }

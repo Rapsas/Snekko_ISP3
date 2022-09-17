@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
+using Snakey.Config;
 using Snakey.Managers;
 
 namespace Snakey.Proxy
@@ -9,7 +10,7 @@ namespace Snakey.Proxy
 
         public ConnectionManager()
         {
-            MultiplayerManager = new("http://158.129.23.210:5000/gameHub");
+            MultiplayerManager = new($"{Settings.ServerIPAddress}/gameHub");
             GameState.Instance.MultiplayerManager = MultiplayerManager;
         }
 
