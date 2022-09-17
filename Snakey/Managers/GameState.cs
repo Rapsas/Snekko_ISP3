@@ -51,8 +51,7 @@ namespace Snakey.Managers
         {
             if (!Directory.Exists(Settings.LogFolder))
                 Directory.CreateDirectory(Settings.LogFolder);
-
-            var logPath = Path.Combine(Settings.LogFolder, $"{DateTime.Now:D}_log.txt");
+            var logPath = Path.Combine(Settings.LogFolder, $"{DateTime.Now.Ticks}_log.txt");
             var logger = new StreamWriter(logPath, true);
             Logger = new DefaultLogger(logger);
             Logger.SetNext(new WarningLogger(logger))
